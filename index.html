@@ -6,13 +6,54 @@
 -->
 <html>
 	<head>
-		<title>Dimension by HTML5 UP</title>
+		<title>Exoplanetary Research in Chile</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	
+		<style>
+			/* Custom additions for the Exoplanets Chile landing page */
+			.logo .planet-logo {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+				height: 100%;
+			}
+			.logo .planet-logo svg {
+				width: 2.35rem;
+				height: 2.35rem;
+				display: block;
+				filter: drop-shadow(0 0 0.55rem rgba(129, 221, 255, 0.65));
+			}
+			.home-button {
+				position: fixed;
+				top: 1rem;
+				left: 1rem;
+				z-index: 10000;
+				display: none;
+				border-bottom: 0;
+				border: solid 1px rgba(255,255,255,0.55);
+				border-radius: 4px;
+				padding: 0.45rem 0.75rem;
+				background: rgba(10, 12, 18, 0.72);
+				backdrop-filter: blur(8px);
+				font-size: 0.75rem;
+				letter-spacing: 0.14rem;
+				text-transform: uppercase;
+				line-height: 1;
+			}
+			.home-button:hover { background: rgba(255,255,255,0.10); }
+			body.is-article-visible .home-button { display: inline-flex; align-items: center; gap: 0.35rem; }
+			@media screen and (max-width: 736px) {
+				.home-button { top: 0.65rem; left: 0.65rem; }
+			}
+		</style>
 	</head>
 	<body class="is-preload">
+
+		<a class="home-button" href="#" aria-label="Return to opening page">← Home</a>
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -20,7 +61,30 @@
 				<!-- Header -->
 					<header id="header">
 						<div class="logo">
-							<span class="icon fa-gem"></span>
+							<span class="planet-logo" aria-hidden="true">
+								<svg viewBox="0 0 100 100" role="img" focusable="false">
+									<defs>
+										<radialGradient id="planetBody" cx="34%" cy="28%" r="70%">
+											<stop offset="0%" stop-color="#ffffff"/>
+											<stop offset="16%" stop-color="#bdf7ff"/>
+											<stop offset="45%" stop-color="#4fd1c5"/>
+											<stop offset="78%" stop-color="#3156d4"/>
+											<stop offset="100%" stop-color="#101c45"/>
+										</radialGradient>
+										<linearGradient id="planetRing" x1="0" x2="1">
+											<stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+											<stop offset="18%" stop-color="#ffffff"/>
+											<stop offset="52%" stop-color="#8ff4ff"/>
+											<stop offset="82%" stop-color="#ffffff"/>
+											<stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+										</linearGradient>
+									</defs>
+									<ellipse cx="50" cy="56" rx="44" ry="13" fill="none" stroke="url(#planetRing)" stroke-width="7" transform="rotate(-17 50 56)" opacity="0.95"/>
+									<circle cx="50" cy="50" r="27" fill="url(#planetBody)"/>
+									<path d="M23 55 C38 63 62 61 78 49" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+									<path d="M32 36 C47 42 60 41 72 35" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="3" stroke-linecap="round"/>
+								</svg>
+							</span>
 						</div>
 						<div class="content">
 							<div class="inner">
@@ -31,10 +95,10 @@
 						</div>
 						<nav>
 							<ul>
-								<li><a href="#intro">Intro</a></li>
-								<li><a href="#work">Work</a></li>
-								<li><a href="#about">About</a></li>
-								<li><a href="#contact">Contact</a></li>
+								<li><a href="#intro">News</a></li>
+								<li><a href="https://exochile2026.github.io/">ExoChile2026</a></li>
+								<li><a href="xo-chile.html">XO-Chile</a></li>
+								<li><a href="#links">Links</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
@@ -43,9 +107,9 @@
 				<!-- Main -->
 					<div id="main">
 
-						<!-- Intro -->
+						<!-- News -->
 							<article id="intro">
-								<h2 class="major">Intro</h2>
+								<h2 class="major">News</h2>
 								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
 								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
 								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
@@ -66,35 +130,15 @@
 								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
 							</article>
 
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Contact</h2>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="4"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
-									</ul>
-								</form>
-								<ul class="icons">
-									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						<!-- Links -->
+							<article id="links">
+								<h2 class="major">Links</h2>
+								<p>Useful entry points for the Chilean exoplanet community.</p>
+								<ul class="actions stacked">
+									<li><a href="https://exochile2026.github.io/" class="button primary">ExoChile2026 meeting</a></li>
+									<li><a href="xo-chile.html" class="button">XO-Chile searchable database</a></li>
 								</ul>
+								<p>XO-Chile is a prototype searchable database for finding people, institutes, scientific interests, languages, and technical skills within the exoplanet community in Chile.</p>
 							</article>
 
 						<!-- Elements -->

@@ -1155,7 +1155,7 @@ input, select, textarea {
 			-webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out;
 			-ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out;
 			transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
-			background-image: url("../../images/bg.jpg");
+			background-image: url("../../images/bg_exoplanet_system.svg");
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -1656,3 +1656,30 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+/* Exoplanets Chile custom refinements */
+#bg:after {
+	background-image: url("../../images/bg_exoplanet_user.jpg");
+	background-position: center center;
+	background-size: cover;
+}
+
+#header nav ul li a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	min-width: 8.75rem;
+	height: 2.75rem;
+	line-height: 1.1;
+	padding: 0 1rem;
+	letter-spacing: 0.12rem;
+	white-space: nowrap;
+}
+
+@media screen and (max-width: 736px) {
+	#header nav ul li a {
+		min-width: 7.5rem;
+		letter-spacing: 0.08rem;
+		padding: 0 0.65rem;
+	}
+}
