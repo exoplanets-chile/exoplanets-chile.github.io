@@ -62,27 +62,53 @@
 					<header id="header">
 						<div class="logo">
 							<span class="planet-logo" aria-hidden="true">
-								<svg viewBox="0 0 100 100" role="img" focusable="false">
+								<svg viewBox="-85 -85 270 270" role="img" focusable="false">
 									<defs>
-										<radialGradient id="planetBody" cx="34%" cy="28%" r="70%">
+										<radialGradient id="starGlow" cx="38%" cy="32%" r="70%">
 											<stop offset="0%" stop-color="#ffffff"/>
-											<stop offset="16%" stop-color="#bdf7ff"/>
-											<stop offset="45%" stop-color="#4fd1c5"/>
-											<stop offset="78%" stop-color="#3156d4"/>
-											<stop offset="100%" stop-color="#101c45"/>
+											<stop offset="28%" stop-color="#fff6b8"/>
+											<stop offset="62%" stop-color="#ffd15c"/>
+											<stop offset="100%" stop-color="#ff8a3d"/>
 										</radialGradient>
-										<linearGradient id="planetRing" x1="0" x2="1">
-											<stop offset="0%" stop-color="rgba(255,255,255,0)"/>
-											<stop offset="18%" stop-color="#ffffff"/>
-											<stop offset="52%" stop-color="#8ff4ff"/>
-											<stop offset="82%" stop-color="#ffffff"/>
-											<stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-										</linearGradient>
+										<radialGradient id="planetBlue" cx="35%" cy="30%" r="70%">
+											<stop offset="0%" stop-color="#ffffff"/>
+											<stop offset="45%" stop-color="#7ee7ff"/>
+											<stop offset="100%" stop-color="#3156d4"/>
+										</radialGradient>
+										<radialGradient id="planetTeal" cx="35%" cy="30%" r="70%">
+											<stop offset="0%" stop-color="#ffffff"/>
+											<stop offset="50%" stop-color="#4fd1c5"/>
+											<stop offset="100%" stop-color="#0f6b73"/>
+										</radialGradient>
+										<radialGradient id="planetRose" cx="35%" cy="30%" r="70%">
+											<stop offset="0%" stop-color="#ffffff"/>
+											<stop offset="48%" stop-color="#ffb0d4"/>
+											<stop offset="100%" stop-color="#b24a82"/>
+										</radialGradient>
 									</defs>
-									<ellipse cx="50" cy="56" rx="44" ry="13" fill="none" stroke="url(#planetRing)" stroke-width="7" transform="rotate(-17 50 56)" opacity="0.95"/>
-									<circle cx="50" cy="50" r="27" fill="url(#planetBody)"/>
-									<path d="M23 55 C38 63 62 61 78 49" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
-									<path d="M32 36 C47 42 60 41 72 35" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="3" stroke-linecap="round"/>
+
+									<!-- Three orbital periods follow Kepler's third law approximately: P ∝ a^(3/2).
+									     Orbital radii are increased by a further factor of 1.5: 60, 90, and 120 SVG units.
+									     The animateTransform elements rotate each planet around the star at (50,50). -->
+									<circle class="orbit-ring" cx="50" cy="50" r="60"/>
+									<circle class="orbit-ring" cx="50" cy="50" r="90"/>
+									<circle class="orbit-ring" cx="50" cy="50" r="120"/>
+
+									<circle cx="50" cy="50" r="19" fill="url(#starGlow)"/>
+									<circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,210,95,0.28)" stroke-width="7"/>
+
+									<g class="orbiting-planet planet-inner">
+										<animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="5.9s" repeatCount="indefinite" />
+										<circle cx="110" cy="50" r="6.2" fill="url(#planetBlue)"/>
+									</g>
+									<g class="orbiting-planet planet-middle">
+										<animateTransform attributeName="transform" type="rotate" from="110 50 50" to="470 50 50" dur="10.8s" repeatCount="indefinite" />
+										<circle cx="140" cy="50" r="7.6" fill="url(#planetTeal)"/>
+									</g>
+									<g class="orbiting-planet planet-outer">
+										<animateTransform attributeName="transform" type="rotate" from="235 50 50" to="595 50 50" dur="16.7s" repeatCount="indefinite" />
+										<circle cx="170" cy="50" r="8.4" fill="url(#planetRose)"/>
+									</g>
 								</svg>
 							</span>
 						</div>
@@ -135,10 +161,13 @@
 								<h2 class="major">Links</h2>
 								<p>Useful entry points for the Chilean exoplanet community.</p>
 								<ul class="actions stacked">
+								        <li><a href="https://sochias.cl/" class="button primary">Sociedad Chilena de Astronomía (SOCHIAS)</a></li>
+									<li><a href="https://www.eso.org/public/chile/" class="button primary">ESO Chile</a></li>
+									<li><a href="https://science.nasa.gov/exoplanets/" class="button primary">NASA Exoplanets</a></li>
+									<li><a href="https://iauarchive.eso.org/public/themes/naming_exoplanets/" class="button primary">IAU Naming of Exoplanets</a></li>
 									<li><a href="https://exochile2026.github.io/" class="button primary">ExoChile2026 meeting</a></li>
-									<li><a href="xo-chile.html" class="button">XO-Chile searchable database</a></li>
 								</ul>
-								<p>XO-Chile is a prototype searchable database for finding people, institutes, scientific interests, languages, and technical skills within the exoplanet community in Chile.</p>
+								<!-- <p>XO-Chile is a prototype searchable database for finding people, institutes, scientific interests, languages, and technical skills within the exoplanet community in Chile.</p> -->
 							</article>
 
 						<!-- Elements -->
