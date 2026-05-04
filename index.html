@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Exoplanetary Research in Chile</title>
+		<title data-i18n-title="pageTitle">Exoplanetary Research in Chile</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -49,11 +49,51 @@
 			@media screen and (max-width: 736px) {
 				.home-button { top: 0.65rem; left: 0.65rem; }
 			}
+			.language-toggle-home {
+				position: fixed;
+				top: 1rem;
+				right: 1rem;
+				z-index: 10001;
+				display: inline-flex;
+				gap: 0.25rem;
+				padding: 0.18rem;
+				border: solid 1px rgba(255,255,255,0.55);
+				border-radius: 4px;
+				background: rgba(10, 12, 18, 0.72);
+				backdrop-filter: blur(8px);
+			}
+			.language-toggle-home button {
+				border: 0;
+				box-shadow: none;
+				height: 1.65rem;
+				line-height: 1.65rem;
+				padding: 0 0.65rem;
+				font-size: 0.65rem;
+				letter-spacing: 0.12rem;
+				background: transparent;
+				color: rgba(255,255,255,0.78) !important;
+				border-radius: 3px;
+			}
+			.language-toggle-home button.active {
+				background: rgba(255,255,255,0.95);
+				color: #1b1f22 !important;
+				font-weight: 600;
+			}
+			@media screen and (max-width: 736px) {
+				.language-toggle-home { top: 0.65rem; right: 0.65rem; }
+				.language-toggle-home button { padding: 0 0.5rem; }
+			}
+
 		</style>
 	</head>
 	<body class="is-preload">
 
-		<a class="home-button" href="#" aria-label="Return to opening page">← Home</a>
+		<a class="home-button" href="#" aria-label="Return to opening page" data-i18n="homeButton">← Home</a>
+
+		<div class="language-toggle-home" aria-label="Language switcher">
+			<button type="button" class="lang-btn-home active" data-lang="en">EN</button>
+			<button type="button" class="lang-btn-home" data-lang="es">ES</button>
+		</div>
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -114,17 +154,17 @@
 						</div>
 						<div class="content">
 							<div class="inner">
-								<h1>Exoplanetary Research in Chile</h1>
+								<h1 data-i18n="mainTitle">Exoplanetary Research in Chile</h1>
 								<!--<p>A fully responsive site template designed by <a href="https://html5up.net">HTML5 UP</a> and released<br />
 								for free under the <a href="https://html5up.net/license">Creative Commons</a> license.</p>-->
 							</div>
 						</div>
 						<nav>
 							<ul>
-								<li><a href="#intro">News</a></li>
-								<li><a href="https://exochile2026.github.io/">ExoChile2026</a></li>
-								<li><a href="xo-chile.html">XO-Chile</a></li>
-								<li><a href="#links">Links</a></li>
+								<li><a href="#intro" data-i18n="navNews">News</a></li>
+								<li><a href="https://exochile2026.github.io/" data-i18n="navExoChile">ExoChile2026</a></li>
+								<li><a id="xo-chile-link" href="xo-chile.html" data-i18n="navXOChile">XO-Chile</a></li>
+								<li><a href="#links" data-i18n="navLinks">Links</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
@@ -135,10 +175,10 @@
 
 						<!-- News -->
 							<article id="intro">
-								<h2 class="major">News</h2>
+								<h2 class="major" data-i18n="newsTitle">News</h2>
 								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+								<p data-i18n="newsParagraph1">Welcome to a growing entry point for exoplanetary research in Chile. This page connects community news, the ExoChile2026 meeting, the XO-Chile searchable community database, and useful links for students and researchers.</p>
+								<p data-i18n="newsParagraph2">The site is meant to remain simple and easy to update as the Chilean exoplanet community develops new meetings, tools, initiatives, and collaborations.</p>
 							</article>
 
 						<!-- Work -->
@@ -158,14 +198,14 @@
 
 						<!-- Links -->
 							<article id="links">
-								<h2 class="major">Links</h2>
-								<p>Useful entry points for the Chilean exoplanet community.</p>
+								<h2 class="major" data-i18n="linksTitle">Links</h2>
+								<p data-i18n="linksIntro">Useful entry points for the Chilean exoplanet community.</p>
 								<ul class="actions stacked">
-								        <li><a href="https://sochias.cl/" class="button primary">Sociedad Chilena de Astronomía (SOCHIAS)</a></li>
-									<li><a href="https://www.eso.org/public/chile/" class="button primary">ESO Chile</a></li>
-									<li><a href="https://science.nasa.gov/exoplanets/" class="button primary">NASA Exoplanets</a></li>
-									<li><a href="https://iauarchive.eso.org/public/themes/naming_exoplanets/" class="button primary">IAU Naming of Exoplanets</a></li>
-									<li><a href="https://exochile2026.github.io/" class="button primary">ExoChile2026 meeting</a></li>
+								        <li><a href="https://sochias.cl/" class="button primary" data-i18n="linkSOCHIAS">Sociedad Chilena de Astronomía (SOCHIAS)</a></li>
+									<li><a href="https://www.eso.org/public/chile/" class="button primary" data-i18n="linkESO">ESO Chile</a></li>
+									<li><a href="https://science.nasa.gov/exoplanets/" class="button primary" data-i18n="linkNASA">NASA Exoplanets</a></li>
+									<li><a href="https://iauarchive.eso.org/public/themes/naming_exoplanets/" class="button primary" data-i18n="linkIAU">IAU Naming of Exoplanets</a></li>
+									<li><a href="https://exochile2026.github.io/" class="button primary" data-i18n="linkExoChile">ExoChile2026 meeting</a></li>
 								</ul>
 								<!-- <p>XO-Chile is a prototype searchable database for finding people, institutes, scientific interests, languages, and technical skills within the exoplanet community in Chile.</p> -->
 							</article>
@@ -416,7 +456,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 				<!-- Footer -->
 					<footer id="footer">
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+						<p class="copyright"><span data-i18n="footerText">&copy; Exoplanetary Research in Chile. Design:</span> <a href="https://html5up.net">HTML5 UP</a>.</p>
 					</footer>
 
 			</div>
@@ -425,6 +465,79 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<div id="bg"></div>
 
 		<!-- Scripts -->
+			<script>
+				const homeTranslations = {
+					en: {
+						pageTitle: "Exoplanetary Research in Chile",
+						homeButton: "← Home",
+						mainTitle: "Exoplanetary Research in Chile",
+						navNews: "News",
+						navExoChile: "ExoChile2026",
+						navXOChile: "XO-Chile",
+						navLinks: "Links",
+						newsTitle: "News",
+						newsParagraph1: "Welcome to a growing entry point for exoplanetary research in Chile. This page connects community news, the ExoChile2026 meeting, the XO-Chile searchable community database, and useful links for students and researchers.",
+						newsParagraph2: "The site is meant to remain simple and easy to update as the Chilean exoplanet community develops new meetings, tools, initiatives, and collaborations.",
+						linksTitle: "Links",
+						linksIntro: "Useful entry points for the Chilean exoplanet community.",
+						linkSOCHIAS: "Sociedad Chilena de Astronomía (SOCHIAS)",
+						linkESO: "ESO Chile",
+						linkNASA: "NASA Exoplanets",
+						linkIAU: "IAU Naming of Exoplanets",
+						linkExoChile: "ExoChile2026 meeting",
+						footerText: "© Exoplanetary Research in Chile. Design:"
+					},
+					es: {
+						pageTitle: "Investigación exoplanetaria en Chile",
+						homeButton: "← Inicio",
+						mainTitle: "Investigación exoplanetaria en Chile",
+						navNews: "Noticias",
+						navExoChile: "ExoChile2026",
+						navXOChile: "XO-Chile",
+						navLinks: "Enlaces",
+						newsTitle: "Noticias",
+						newsParagraph1: "Bienvenidos a un punto de entrada en desarrollo para la investigación exoplanetaria en Chile. Esta página conecta noticias de la comunidad, el encuentro ExoChile2026, la base de datos comunitaria XO-Chile y enlaces útiles para estudiantes e investigadores.",
+						newsParagraph2: "El sitio está pensado para mantenerse simple y fácil de actualizar a medida que la comunidad chilena de exoplanetas desarrolla nuevas reuniones, herramientas, iniciativas y colaboraciones.",
+						linksTitle: "Enlaces",
+						linksIntro: "Puntos de entrada útiles para la comunidad chilena de exoplanetas.",
+						linkSOCHIAS: "Sociedad Chilena de Astronomía (SOCHIAS)",
+						linkESO: "ESO Chile",
+						linkNASA: "Exoplanetas NASA",
+						linkIAU: "Nomenclatura de exoplanetas de la IAU",
+						linkExoChile: "Encuentro ExoChile2026",
+						footerText: "© Investigación exoplanetaria en Chile. Diseño:"
+					}
+				};
+
+				function setHomeLanguage(lang) {
+					const dictionary = homeTranslations[lang] || homeTranslations.en;
+					document.documentElement.lang = lang;
+					document.title = dictionary.pageTitle;
+					document.querySelectorAll("[data-i18n]").forEach(function(element) {
+						const key = element.getAttribute("data-i18n");
+						if (dictionary[key]) element.textContent = dictionary[key];
+					});
+					document.querySelectorAll(".lang-btn-home").forEach(function(button) {
+						button.classList.toggle("active", button.getAttribute("data-lang") === lang);
+					});
+					var xoChileLink = document.getElementById("xo-chile-link");
+					if (xoChileLink) {
+						xoChileLink.setAttribute("href", lang === "es" ? "xo-chile.html?lang=es" : "xo-chile.html?lang=en");
+					}
+					try { localStorage.setItem("exoChileLanguage", lang); } catch (error) {}
+				}
+
+				document.querySelectorAll(".lang-btn-home").forEach(function(button) {
+					button.addEventListener("click", function() {
+						setHomeLanguage(button.getAttribute("data-lang"));
+					});
+				});
+
+				let savedLanguage = "en";
+				try { savedLanguage = localStorage.getItem("exoChileLanguage") || "en"; } catch (error) {}
+				setHomeLanguage(savedLanguage);
+			</script>
+
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>

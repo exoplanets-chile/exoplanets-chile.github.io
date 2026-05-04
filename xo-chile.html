@@ -100,10 +100,10 @@
     .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
     .xo-hero {
-      max-width: 1120px; margin: 0 auto; padding: 3rem 1.5rem 2.2rem;
-      display: grid; grid-template-columns: minmax(0, 3fr) minmax(300px, 1.8fr); gap: 2.5rem; align-items: center;
+      max-width: 1120px; margin: 0 auto; padding: 2.2rem 1.5rem 1.2rem;
+      display: block;
     }
-    @media (max-width: 900px) { .xo-hero { grid-template-columns: 1fr; padding-top: 2rem; } }
+    @media (max-width: 900px) { .xo-hero { padding-top: 1.5rem; } }
 
     .language-toggle { display: inline-flex; gap: 0.35rem; padding: 0.18rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); background: rgba(5, 8, 20, 0.72); }
     .lang-btn { padding: 0.36rem 0.75rem; border-radius: var(--radius-pill); border: 0; background: transparent; color: var(--muted); cursor: pointer; font-weight: 700; }
@@ -112,6 +112,7 @@
     /* Static Chile map */
     .map-panel {
       position: relative; border-radius: 32px; overflow: hidden;
+      max-width: 720px; margin: 0 auto;
       background: radial-gradient(circle at top left, #29314e, #13182b);
       border: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 0 14px 30px rgba(79, 209, 197, 0.35);
@@ -181,7 +182,7 @@
     footer { border-top: 1px solid var(--border-subtle); padding: 1.4rem 1.5rem 1.8rem; font-size: 0.8rem; color: var(--muted); background: #050814; }
     .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.8rem; align-items: center; }
     .footer-links { display: flex; gap: 0.9rem; }
-    body { background: #1b1f22 url("images/exoplanet_1.jpg") center center / cover fixed no-repeat; }
+    body { background: #1b1f22 url("images/eso0603a.jpg") center center / cover fixed no-repeat; }
     body::before { content:""; position:fixed; inset:0; background:rgba(0,0,0,.58); z-index:-1; }
     header, footer, .xo-search-panel, .xo-category-card, .xo-card, .map-panel { background: rgba(27,31,34,.82); border-color: rgba(255,255,255,.18); }
     .map-frame, .xo-field select, .xo-field input { background: rgba(0,0,0,.28); border-color: rgba(255,255,255,.22); }
@@ -231,10 +232,10 @@
       <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('nav ul').classList.toggle('open')">Menu ▾</button>
       <nav>
         <ul>
-          <li><a href="index.html#intro">News</a></li>
-          <li><a href="https://exochile2026.github.io/">ExoChile2026</a></li>
-          <li><a href="xo-chile.html">XO-Chile</a></li>
-          <li><a href="index.html#links">Links</a></li>
+	  <li><a href="index.html#intro" data-i18n="navNews">News</a></li>
+	  <li><a href="https://exochile2026.github.io/">ExoChile2026</a></li>
+	  <li><a href="xo-chile.html">XO-Chile</a></li>
+	  <li><a href="index.html#links" data-i18n="navLinks">Links</a></li>
           <li>
             <div class="language-toggle" aria-label="Language switcher">
               <button class="lang-btn active" type="button" data-lang="en">EN</button>
@@ -248,22 +249,7 @@
 
   <main>
     <section class="xo-hero" id="top">
-      <div class="hero-text">
-        <div class="hero-subtitle" data-i18n="heroSubtitle">Legacy · Community Search · Exoplanets in Chile</div>
-        <h1><span>XO-Chile</span></h1>
-        <p data-i18n="heroText">A searchable prototype database for the Chilean exoplanet community. Select tags for institute, city, career stage, scientific focus, language, and technical skills to identify potential collaborators.</p>
-        <div class="hero-meta">
-          <span class="hero-chip" data-i18n="chipPrototype">Prototype with fictional entries</span>
-          <span class="hero-chip" data-i18n="chipMatching">Exact + near-match search</span>
-          <span class="hero-chip" data-i18n="chipStatic">Static GitHub Pages compatible</span>
-        </div>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#search" data-i18n="searchDatabase">Search database</a>
-          <a class="btn btn-outline" href="index.html" data-i18n="backMain">Back to main site</a>
-        </div>
-      </div>
-
-      <div class="map-panel">
+<div class="map-panel">
         <div class="map-header">
           <div>
             <div class="map-title" data-i18n="mapTitle">Institutes map</div>
@@ -362,7 +348,7 @@
 <script>
   const i18n = {
     en: {
-      navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
+      navNews: "News", navLinks: "Links",navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
       heroText: "A searchable prototype database for the Chilean exoplanet community. Select tags for institute, city, career stage, scientific focus, language, and technical skills to identify potential collaborators.",
       chipPrototype: "Prototype with fictional entries", chipMatching: "Exact + near-match search", chipStatic: "Static GitHub Pages compatible",
       searchDatabase: "Search database", backMain: "Back to main site", mapTitle: "Institutes map", mapNote: "Click a cluster to zoom. Click an institute to search.", regionalView: "Regional view",
@@ -377,7 +363,7 @@
       zoomedTo: city => `Zoomed to ${city}`
     },
     es: {
-      navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
+	navNews: "Noticias", navLinks: "Enlaces", navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
       heroText: "Un prototipo de base de datos searchable para la comunidad chilena de exoplanetas. Selecciona etiquetas de instituto, ciudad, etapa profesional, foco científico, idioma y habilidades técnicas para identificar posibles colaboradores.",
       chipPrototype: "Prototipo con entradas ficticias", chipMatching: "Búsqueda exacta + aproximada", chipStatic: "Compatible con GitHub Pages estático",
       searchDatabase: "Buscar en la base de datos", backMain: "Volver al sitio principal", mapTitle: "Mapa de institutos", mapNote: "Haz clic en un grupo para acercar. Haz clic en un instituto para buscar.", regionalView: "Vista regional",
@@ -393,7 +379,16 @@
     }
   };
 
-  let currentLang = "en";
+  function getInitialLanguage() {
+    const params = new URLSearchParams(window.location.search);
+    const queryLang = params.get("lang");
+    if (queryLang === "es" || queryLang === "en") return queryLang;
+    const savedLang = localStorage.getItem("siteLanguage") || localStorage.getItem("xoChileLanguage");
+    if (savedLang === "es" || savedLang === "en") return savedLang;
+    return "en";
+  }
+
+  let currentLang = getInitialLanguage();
   const t = key => i18n[currentLang][key];
 
   const focusTaxonomy = {
@@ -753,12 +748,23 @@
     multiCategories.forEach(category => { document.querySelectorAll(`#xo-${category}-stack select`).forEach(select => addOptionsToSelect(select, category)); });
   }
 
-  document.querySelectorAll(".lang-btn").forEach(btn => btn.addEventListener("click", () => {
-    currentLang = btn.dataset.lang;
+  function setLanguage(lang, updateUrl = true) {
+    currentLang = lang;
+    localStorage.setItem("siteLanguage", lang);
+    localStorage.setItem("xoChileLanguage", lang);
+    if (updateUrl) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", lang);
+      window.history.replaceState({}, "", url);
+    }
     translateStaticText();
     rebuildDynamicLabels();
     render();
     renderMap();
+  }
+
+  document.querySelectorAll(".lang-btn").forEach(btn => btn.addEventListener("click", () => {
+    setLanguage(btn.dataset.lang);
   }));
 
   populateSingleSelects();
