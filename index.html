@@ -90,24 +90,24 @@
 									<!-- Three orbital periods follow Kepler's third law approximately: P ∝ a^(3/2).
 									     Orbital radii are increased by a further factor of 1.5: 60, 90, and 120 SVG units.
 									     The animateTransform elements rotate each planet around the star at (50,50). -->
-									<circle class="orbit-ring" cx="50" cy="50" r="60"/>
+									<!-- <circle class="orbit-ring" cx="50" cy="50" r="60"/>
 									<circle class="orbit-ring" cx="50" cy="50" r="90"/>
-									<circle class="orbit-ring" cx="50" cy="50" r="120"/>
+									<circle class="orbit-ring" cx="50" cy="50" r="180"/> -->
 
-									<circle cx="50" cy="50" r="19" fill="url(#starGlow)"/>
-									<circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,210,95,0.28)" stroke-width="7"/>
+									<circle cx="50" cy="50" r="25" fill="url(#starGlow)"/>
+									<!-- <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,210,95,0.28)" stroke-width="7"/> -->
 
 									<g class="orbiting-planet planet-inner">
 										<animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="5.9s" repeatCount="indefinite" />
-										<circle cx="110" cy="50" r="6.2" fill="url(#planetBlue)"/>
+										<circle cx="150" cy="50" r="9.2" fill="url(#planetBlue)"/>
 									</g>
 									<g class="orbiting-planet planet-middle">
 										<animateTransform attributeName="transform" type="rotate" from="110 50 50" to="470 50 50" dur="10.8s" repeatCount="indefinite" />
-										<circle cx="140" cy="50" r="7.6" fill="url(#planetTeal)"/>
+										<circle cx="220" cy="50" r="10.2" fill="url(#planetTeal)"/>
 									</g>
 									<g class="orbiting-planet planet-outer">
 										<animateTransform attributeName="transform" type="rotate" from="235 50 50" to="595 50 50" dur="16.7s" repeatCount="indefinite" />
-										<circle cx="170" cy="50" r="8.4" fill="url(#planetRose)"/>
+										<circle cx="290" cy="50" r="12.0" fill="url(#planetRose)"/>
 									</g>
 								</svg>
 							</span>

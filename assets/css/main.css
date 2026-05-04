@@ -1293,11 +1293,18 @@ input, select, textarea {
 			line-height: 5.5rem;
 			border: solid 1px #ffffff;
 			border-radius: 100%;
+			overflow: visible;
 		}
 
 			#header .logo .icon:before {
 				font-size: 2rem;
 			}
+
+			.logo .planet-logo svg {
+			    overflow: visible;
+			}
+			
+
 
 		#header .content {
 			border-style: solid;
