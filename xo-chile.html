@@ -125,18 +125,35 @@
     .map-reset { padding: 0.35rem 0.7rem; font-size: 0.76rem; }
     .map-frame {
       position: relative; z-index: 2; height: 315px; border-radius: 24px; overflow: hidden;
-      background: linear-gradient(180deg, rgba(37, 48, 78, 0.9), rgba(9, 14, 32, 0.95));
-      border: 1px solid var(--border-subtle);
+      background: #090e20;
+      border: 0;
     }
-    .chile-map { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .land { fill: rgba(79, 209, 197, 0.13); stroke: rgba(79, 209, 197, 0.85); stroke-width: 1.5; filter: drop-shadow(0 0 8px rgba(79,209,197,0.22)); }
-    .region-line { stroke: rgba(245,247,255,0.12); stroke-width: 1; fill: none; }
-    .city-label { fill: rgba(245,247,255,0.48); font-size: 9px; letter-spacing: 0.02em; }
+    .chile-map { position: absolute; inset: 0; width: 100%; height: 100%; background: #090e20; }
+    .land { display: none; }
+    .region-line { stroke: rgba(255,255,255,0.62); stroke-width: 0.48; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+    .regional-border { display: inline; stroke: rgba(255,255,255,0.58); stroke-width: 0.52; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+    .regional-border.real { display: inline; stroke: rgba(255,255,255,0.58); stroke-width: 0.52; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+    .regional-border.real:hover { stroke: rgba(79,209,197,0.92); }
+    .geo-load-note { fill: rgba(245,247,255,0.55); font-size: 11px; letter-spacing: 0.02em; }
+    .regional-border-label { fill: rgba(245,247,255,0.62); font-size: 12px; letter-spacing: 0.03em; font-weight: 700; }
+    .communa-border { stroke: rgba(255,255,255,0.28); stroke-width: 0.38; stroke-dasharray: 1.8 2.4; fill: none; }
+    .communa-border.real { stroke: rgba(255,255,255,0.50); stroke-width: 0.20; stroke-dasharray: none; fill: rgba(255,255,255,0.006); stroke-linejoin: round; }
+    .communa-border.real:hover { stroke: rgba(79,209,197,0.90); fill: rgba(79,209,197,0.06); }
+    .communa-label { fill: rgba(255,255,255,0.78); font-size: 3.2px; letter-spacing: 0.005em; font-weight: 700; text-anchor: middle; paint-order: stroke; stroke: rgba(5,8,20,0.85); stroke-width: 2px; stroke-linejoin: round; }
+    .city-zoom-label { fill: rgba(255,255,255,0.86); font-size: 4.0px; font-weight: 800; text-anchor: middle; paint-order: stroke; stroke: rgba(5,8,20,0.95); stroke-width: 3px; stroke-linejoin: round; }
+    .city-label { fill: rgba(245,247,255,0.72); font-size: 13px; font-weight: 700; letter-spacing: 0.02em; paint-order: stroke; stroke: rgba(5,8,20,0.82); stroke-width: 3px; stroke-linejoin: round; }
     .map-marker, .map-cluster { cursor: pointer; transform-box: fill-box; transform-origin: center; }
-    .map-marker circle.main { fill: var(--accent); stroke: #050814; stroke-width: 2; filter: drop-shadow(0 0 6px rgba(79,209,197,0.65)); }
+    .map-marker circle.main { fill: var(--accent); stroke: #050814; stroke-width: 1.1; filter: drop-shadow(0 0 4px rgba(79,209,197,0.58)); }
     .map-marker.selected circle.main { fill: #f5f7ff; stroke: var(--accent); }
-    .map-cluster circle { fill: #f5f7ff; stroke: var(--accent); stroke-width: 3; filter: drop-shadow(0 0 7px rgba(79,209,197,0.65)); }
-    .map-cluster text { fill: #050814; font-size: 13px; font-weight: 900; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .map-marker.city-marker circle.main { stroke-width: 1.1; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 1px rgba(79,209,197,0.50)); }
+    .city-reference-river { stroke: rgba(72,156,255,0.95); stroke-width: 0.34; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .city-reference-coast { stroke: rgba(255,255,255,0.60); stroke-width: 0.36; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .city-reference-bay { stroke: rgba(255,255,255,0.22); stroke-width: 0.22; fill: rgba(79,209,197,0.018); stroke-linejoin: round; }
+    .country-border.real { display: inline; stroke: rgba(255,255,255,0.72); stroke-width: 0.62; stroke-dasharray: none; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .map-cluster circle { fill: #f5f7ff; stroke: var(--accent); stroke-width: 1.0; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 3px rgba(79,209,197,0.45)); }
+    .map-cluster text { fill: #050814; font-size: 16px; font-weight: 900; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+    .osm-tile { opacity: 0.68; }
+    .osm-tile-bg { fill: rgba(245,247,255,0.06); }
     .map-marker:hover, .map-cluster:hover { opacity: 0.88; }
     .zoom-label { position: absolute; left: 0.8rem; bottom: 0.65rem; z-index: 3; font-size: 0.75rem; color: var(--muted); background: rgba(5,8,20,0.75); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 0.22rem 0.65rem; }
     .tooltip {
@@ -182,7 +199,7 @@
     footer { border-top: 1px solid var(--border-subtle); padding: 1.4rem 1.5rem 1.8rem; font-size: 0.8rem; color: var(--muted); background: #050814; }
     .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.8rem; align-items: center; }
     .footer-links { display: flex; gap: 0.9rem; }
-    body { background: #1b1f22 url("images/eso0603a.jpg") center center / cover fixed no-repeat; }
+    body { background: #1b1f22 url("images/exoplanet_1.jpg") center center / cover fixed no-repeat; }
     body::before { content:""; position:fixed; inset:0; background:rgba(0,0,0,.58); z-index:-1; }
     header, footer, .xo-search-panel, .xo-category-card, .xo-card, .map-panel { background: rgba(27,31,34,.82); border-color: rgba(255,255,255,.18); }
     .map-frame, .xo-field select, .xo-field input { background: rgba(0,0,0,.28); border-color: rgba(255,255,255,.22); }
@@ -224,7 +241,7 @@
   </style>
 </head>
 <body>
-<a class="site-home-button" href="index.html" aria-label="Return to opening page">← Home</a>
+<a class="site-home-button" href="index.html" aria-label="Return to opening page" data-i18n="homeButton">← Home</a>
 <div class="page">
   <header>
     <div class="nav-inner">
@@ -232,10 +249,10 @@
       <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('nav ul').classList.toggle('open')">Menu ▾</button>
       <nav>
         <ul>
-	  <li><a href="index.html#intro" data-i18n="navNews">News</a></li>
-	  <li><a href="https://exochile2026.github.io/">ExoChile2026</a></li>
-	  <li><a href="xo-chile.html">XO-Chile</a></li>
-	  <li><a href="index.html#links" data-i18n="navLinks">Links</a></li>
+          <li><a id="nav-news-link" href="index.html#intro" data-i18n="navNews">News</a></li>
+          <li><a href="https://exochile2026.github.io/" data-i18n="navExoChile">ExoChile2026</a></li>
+          <li><a id="nav-xochile-link" href="xo-chile.html" data-i18n="navXOChile">XO-Chile</a></li>
+          <li><a id="nav-links-link" href="index.html#links" data-i18n="navLinks">Links</a></li>
           <li>
             <div class="language-toggle" aria-label="Language switcher">
               <button class="lang-btn active" type="button" data-lang="en">EN</button>
@@ -258,23 +275,22 @@
           <button id="map-reset" class="btn btn-outline map-reset" type="button" data-i18n="regionalView">Regional view</button>
         </div>
         <div class="map-frame" id="map-frame">
-          <svg class="chile-map" id="chile-map" viewBox="0 0 420 620" role="img" aria-label="Map of central and northern Chile showing institutes">
+          <svg class="chile-map" id="chile-map" viewBox="0 0 420 620" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Geographic map of Chile showing institutes">
             <defs>
               <linearGradient id="oceanGlow" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%" stop-color="rgba(79,209,197,0.08)" />
                 <stop offset="100%" stop-color="rgba(5,8,20,0.05)" />
               </linearGradient>
             </defs>
-            <rect x="0" y="0" width="420" height="620" fill="url(#oceanGlow)" />
-            <!-- Stylised but geography-inspired strip from Antofagasta to Concepción. -->
-            <path class="land" d="M251 18 C238 51 241 86 226 119 C214 145 218 174 204 201 C192 225 195 252 184 279 C173 306 177 334 166 361 C154 393 160 424 151 452 C142 482 132 515 139 550 C145 581 161 603 184 611 C171 577 181 540 192 509 C204 476 202 441 213 408 C223 378 219 345 232 315 C244 287 241 259 252 232 C263 203 260 174 271 145 C281 117 278 83 292 55 C277 43 266 31 251 18 Z"/>
-            <path class="region-line" d="M229 112 C249 123 260 141 264 163" />
-            <path class="region-line" d="M191 264 C214 273 232 290 238 314" />
-            <path class="region-line" d="M157 454 C180 467 193 487 198 512" />
-            <text x="308" y="74" class="city-label">Antofagasta</text>
-            <text x="270" y="250" class="city-label">La Serena</text>
-            <text x="249" y="372" class="city-label">Valparaíso / Santiago</text>
-            <text x="218" y="555" class="city-label">Concepción</text>
+            <rect x="0" y="0" width="420" height="620" fill="#090e20" />
+            <g id="osm-tiles"></g>
+            <!-- Geographic outline: simplified from real longitude/latitude positions for the institute-bearing region. -->
+            <path id="chile-outline" class="land" d="" />
+            <path id="coastline" class="region-line" d="" />
+            <path id="andes-line" class="region-line" d="" />
+            <g id="regional-borders"></g>
+            <g id="communa-borders"></g>
+            <g id="city-labels"></g>
             <g id="map-markers"></g>
           </svg>
           <div class="zoom-label" id="zoom-label" data-i18n="regionalView">Regional view</div>
@@ -348,7 +364,7 @@
 <script>
   const i18n = {
     en: {
-      navNews: "News", navLinks: "Links",navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
+      homeButton: "← Home", navNews: "News", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navLinks: "Links", navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
       heroText: "A searchable prototype database for the Chilean exoplanet community. Select tags for institute, city, career stage, scientific focus, language, and technical skills to identify potential collaborators.",
       chipPrototype: "Prototype with fictional entries", chipMatching: "Exact + near-match search", chipStatic: "Static GitHub Pages compatible",
       searchDatabase: "Search database", backMain: "Back to main site", mapTitle: "Institutes map", mapNote: "Click a cluster to zoom. Click an institute to search.", regionalView: "Regional view",
@@ -363,7 +379,7 @@
       zoomedTo: city => `Zoomed to ${city}`
     },
     es: {
-	navNews: "Noticias", navLinks: "Enlaces", navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
+      homeButton: "← Inicio", navNews: "Noticias", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navLinks: "Enlaces", navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
       heroText: "Un prototipo de base de datos searchable para la comunidad chilena de exoplanetas. Selecciona etiquetas de instituto, ciudad, etapa profesional, foco científico, idioma y habilidades técnicas para identificar posibles colaboradores.",
       chipPrototype: "Prototipo con entradas ficticias", chipMatching: "Búsqueda exacta + aproximada", chipStatic: "Compatible con GitHub Pages estático",
       searchDatabase: "Buscar en la base de datos", backMain: "Volver al sitio principal", mapTitle: "Mapa de institutos", mapNote: "Haz clic en un grupo para acercar. Haz clic en un instituto para buscar.", regionalView: "Vista regional",
@@ -413,28 +429,438 @@
   ];
 
   const instituteCoords = {
-    /* Coordinates are tuned to the cropped stylised map: coast-to-inland offsets are represented more realistically,
-       with Santiago institutes placed east of Valparaíso/Viña del Mar and Concepción farther south-west. */
-    "Universidad de Antofagasta": { city: "Antofagasta", x: 253, y: 66, dx: -10, dy: 7 },
-    "Universidad Católica del Norte": { city: "Antofagasta", x: 260, y: 58, dx: 11, dy: -7 },
-    "Universidad de La Serena": { city: "La Serena", x: 225, y: 280, dx: 0, dy: 0 },
-    "Universidad de Valparaíso": { city: "Valparaíso", x: 197, y: 412, dx: 0, dy: 0 },
-    "Universidad Andrés Bello": { city: "Viña del Mar", x: 202, y: 398, dx: 0, dy: 0 },
-    "Universidad de Chile": { city: "Santiago", x: 242, y: 428, dx: -18, dy: -12 },
-    "Pontificia Universidad Católica de Chile": { city: "Santiago", x: 253, y: 425, dx: 19, dy: -10 },
-    "Universidad Diego Portales": { city: "Santiago", x: 247, y: 433, dx: -9, dy: 16 },
-    "Universidad de Santiago de Chile": { city: "Santiago", x: 238, y: 435, dx: 17, dy: 18 },
-    "Universidad de Concepción": { city: "Concepción", x: 158, y: 575, dx: 0, dy: 0 }
+    // Real latitude/longitude values or close campus/address geocodes. The SVG projection converts these into map positions. Universidad de Chile is placed at Cerro Calán / OAN.
+    "Universidad de Antofagasta": { city: "Antofagasta", lat: -23.70300, lon: -70.41950, dx: 0.000, dy: 0.000 },
+    "Universidad Católica del Norte": { city: "Antofagasta", lat: -23.68130, lon: -70.41130, dx: 0.000, dy: 0.000 },
+    "Universidad de La Serena": { city: "La Serena", lat: -29.96128, lon: -71.33761, dx: 0.000, dy: 0.000 },
+    "Universidad de Valparaíso": { city: "Valparaíso", lat: -33.03060, lon: -71.63520, dx: 0.000, dy: 0.000 },
+    "Universidad Andrés Bello": { city: "Viña del Mar", lat: -33.02440, lon: -71.55040, dx: 0.000, dy: 0.000 },
+    "Universidad de Chile": { city: "Santiago", lat: -33.39605137006949, lon: -70.53511347137565, dx: 0.000, dy: 0.000 },
+    "Pontificia Universidad Católica de Chile": { city: "Santiago", lat: -33.50008507727742, lon: -70.61196766999073, dx: 0.000, dy: 0.000 },
+    "Universidad Diego Portales": { city: "Santiago", lat: -33.45246877308848, lon: -70.66061652263141, dx: 0.000, dy: 0.000 },
+    "Universidad de Santiago de Chile": { city: "Santiago", lat: -33.45039928204054, lon: -70.68389225986945, dx: 0.000, dy: 0.000 },
+    "Universidad de Concepción": { city: "Concepción", lat: -36.82993, lon: -73.03570, dx: 0.000, dy: 0.000 }
   };
 
   const cityCoords = {
-    "Antofagasta": { x: 257, y: 62, zoomBox: "210 25 95 85" },
-    "La Serena": { x: 225, y: 280, zoomBox: "180 235 95 95" },
-    "Valparaíso": { x: 197, y: 412, zoomBox: "170 370 125 95" },
-    "Viña del Mar": { x: 202, y: 398, zoomBox: "170 370 125 95" },
-    "Santiago": { x: 245, y: 430, zoomBox: "205 390 100 90" },
-    "Concepción": { x: 158, y: 575, zoomBox: "125 535 90 80" }
+    "Antofagasta": { lat: -23.692, lon: -70.415, zoomBox: null },
+    "La Serena": { lat: -29.961, lon: -71.338, zoomBox: null },
+    "Valparaíso": { lat: -33.031, lon: -71.635, zoomBox: null },
+    "Viña del Mar": { lat: -33.024, lon: -71.550, zoomBox: null },
+    "Valparaíso / Viña del Mar": { lat: -33.027, lon: -71.595, zoomBox: null, cities: ["Valparaíso", "Viña del Mar"] },
+    "Santiago": { lat: -33.450, lon: -70.623, zoomBox: null },
+    "Concepción": { lat: -36.830, lon: -73.036, zoomBox: null }
   };
+
+  const mapBounds = { minLon: -73.35, maxLon: -69.95, minLat: -37.15, maxLat: -23.25 };
+  const mapPadding = { x: 22, y: 18 };
+
+  function projectPoint(lat, lon) {
+    const width = 420 - 2 * mapPadding.x;
+    const height = 620 - 2 * mapPadding.y;
+    const x = mapPadding.x + ((lon - mapBounds.minLon) / (mapBounds.maxLon - mapBounds.minLon)) * width;
+    const y = mapPadding.y + ((mapBounds.maxLat - lat) / (mapBounds.maxLat - mapBounds.minLat)) * height;
+    return { x, y };
+  }
+
+  const cityMapSize = { width: 1000, height: 430 };
+
+  function mercatorX(lon) {
+    return (lon + 180) / 360;
+  }
+
+  function mercatorY(lat) {
+    const rad = lat * Math.PI / 180;
+    return (1 - Math.log(Math.tan(rad) + 1 / Math.cos(rad)) / Math.PI) / 2;
+  }
+
+  function inverseMercatorY(y) {
+    const latRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * y)));
+    return latRad * 180 / Math.PI;
+  }
+
+
+  function cityBoundsFor(city) {
+    if (city === "Santiago") {
+      // Wide Santiago view similar to a Google/OSM city map: airport/western Santiago to Las Condes/Cerro Calán.
+      return { minLat: -33.525, maxLat: -33.365, minLon: -70.735, maxLon: -70.500 };
+    }
+    if (city === "Valparaíso / Viña del Mar") {
+      return { minLat: -33.065, maxLat: -32.995, minLon: -71.660, maxLon: -71.515 };
+    }
+    if (city === "Antofagasta") {
+      return { minLat: -23.720, maxLat: -23.665, minLon: -70.435, maxLon: -70.395 };
+    }
+    if (city === "La Serena") {
+      return { minLat: -29.985, maxLat: -29.945, minLon: -71.355, maxLon: -71.315 };
+    }
+    if (city === "Concepción") {
+      return { minLat: -36.850, maxLat: -36.810, minLon: -73.055, maxLon: -73.015 };
+    }
+    const c = cityCoords[city];
+    return { minLat: c.lat - 0.03, maxLat: c.lat + 0.03, minLon: c.lon - 0.04, maxLon: c.lon + 0.04 };
+  }
+
+
+
+  function displayCityBoundsFor(city) {
+    // Return bounds adjusted to the same aspect ratio as the SVG city canvas.
+    // This keeps OSM tiles and institute positions geographically proportional,
+    // avoiding the horizontal/vertical stretching seen in city zoom views.
+    const b = cityBoundsFor(city);
+    const targetAspect = cityMapSize.width / cityMapSize.height;
+
+    let minX = mercatorX(b.minLon);
+    let maxX = mercatorX(b.maxLon);
+    let minY = mercatorY(b.maxLat);
+    let maxY = mercatorY(b.minLat);
+
+    const cx = (minX + maxX) / 2;
+    const cy = (minY + maxY) / 2;
+    let width = maxX - minX;
+    let height = maxY - minY;
+    const currentAspect = width / height;
+
+    if (currentAspect > targetAspect) {
+      // Too wide for the frame: add vertical extent rather than squeezing.
+      height = width / targetAspect;
+    } else {
+      // Too tall/narrow for the frame: add horizontal extent rather than stretching.
+      width = height * targetAspect;
+    }
+
+    minX = cx - width / 2;
+    maxX = cx + width / 2;
+    minY = cy - height / 2;
+    maxY = cy + height / 2;
+
+    return {
+      minLat: inverseMercatorY(maxY),
+      maxLat: inverseMercatorY(minY),
+      minLon: minX * 360 - 180,
+      maxLon: maxX * 360 - 180
+    };
+  }
+
+  function projectCityPoint(lat, lon, city = zoomedCity) {
+    const b = displayCityBoundsFor(city);
+    const minX = mercatorX(b.minLon), maxX = mercatorX(b.maxLon);
+    const minY = mercatorY(b.maxLat), maxY = mercatorY(b.minLat);
+    const x = ((mercatorX(lon) - minX) / (maxX - minX)) * cityMapSize.width;
+    const y = ((mercatorY(lat) - minY) / (maxY - minY)) * cityMapSize.height;
+    return { x, y };
+  }
+
+  function projectCurrentPoint(lat, lon) {
+    return mapMode === "city" ? projectCityPoint(lat, lon, zoomedCity) : projectPoint(lat, lon);
+  }
+
+  function projectedPath(points, close = false) {
+    return points.map((p, i) => {
+      const q = projectPoint(p[0], p[1]);
+      return `${i === 0 ? "M" : "L"}${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
+    }).join(" ") + (close ? " Z" : "");
+  }
+
+  // Simplified Chile outline for the lat/lon range Antofagasta--Concepción.
+  // West side follows the Pacific coast; east side follows the Andean border at the same latitudes.
+  const chileCoast = [
+    [-23.25,-70.55], [-23.70,-70.43], [-24.50,-70.50], [-25.50,-70.62], [-26.50,-70.78],
+    [-27.50,-71.02], [-28.60,-71.22], [-29.95,-71.35], [-30.80,-71.55], [-31.65,-71.62],
+    [-32.25,-71.53], [-33.02,-71.64], [-33.45,-71.70], [-34.20,-72.00], [-35.05,-72.32],
+    [-36.00,-72.75], [-36.83,-73.06], [-37.15,-73.18]
+  ];
+  const chileAndes = [
+    [-37.15,-71.15], [-36.60,-71.05], [-35.60,-70.85], [-34.55,-70.55], [-33.45,-70.18],
+    [-32.50,-70.05], [-31.50,-69.95], [-30.30,-69.98], [-29.00,-69.95], [-27.70,-69.98],
+    [-26.30,-69.95], [-25.00,-70.02], [-23.25,-70.05]
+  ];
+  const chileOutline = chileCoast.concat(chileAndes, [chileCoast[0]]);
+
+  // Approximate but geographically scaled regional borders for the institute-bearing part of Chile.
+  // Each border is stored as a short lat/lon polyline, then projected with the same map projection as the institutes.
+  // These are intended as visual references for the website map, not as legal/GIS boundary data.
+  const regionalBorders = [
+    { name: "Antofagasta / Atacama", points: [[-25.45,-70.62],[-25.52,-70.42],[-25.55,-70.24],[-25.48,-70.08]] },
+    { name: "Atacama / Coquimbo", points: [[-29.05,-71.30],[-29.00,-71.05],[-28.92,-70.74],[-28.86,-70.40],[-28.90,-70.02]] },
+    { name: "Coquimbo / Valparaíso", points: [[-32.12,-71.48],[-32.07,-71.22],[-32.00,-70.92],[-31.88,-70.55],[-31.78,-70.10]] },
+    { name: "Valparaíso / Metropolitana", points: [[-32.98,-71.34],[-33.08,-71.10],[-33.22,-70.86],[-33.34,-70.60],[-33.42,-70.28]] },
+    { name: "Metropolitana / O'Higgins", points: [[-34.02,-71.72],[-33.98,-71.34],[-34.06,-71.02],[-34.16,-70.70],[-34.27,-70.36]] },
+    { name: "O'Higgins / Maule", points: [[-34.78,-72.12],[-34.83,-71.78],[-34.92,-71.38],[-35.02,-70.96],[-35.10,-70.58]] },
+    { name: "Maule / Ñuble", points: [[-36.02,-72.72],[-36.00,-72.25],[-36.02,-71.82],[-36.08,-71.38],[-36.15,-70.92]] },
+    { name: "Ñuble / Biobío", points: [[-36.43,-72.95],[-36.44,-72.48],[-36.50,-72.05],[-36.58,-71.60],[-36.65,-71.18]] }
+  ];
+
+  const regionLabels = [
+    { label: "Antofagasta", lat: -24.35, lon: -70.23 },
+    { label: "Atacama", lat: -27.65, lon: -70.30 },
+    { label: "Coquimbo", lat: -30.55, lon: -70.40 },
+    { label: "Valparaíso", lat: -32.82, lon: -70.38 },
+    { label: "RM", lat: -33.55, lon: -70.32 },
+    { label: "O'Higgins", lat: -34.40, lon: -70.75 },
+    { label: "Maule", lat: -35.45, lon: -71.30 },
+    { label: "Ñuble", lat: -36.25, lon: -71.35 },
+    { label: "Biobío", lat: -36.78, lon: -71.70 }
+  ];
+
+  const comunaBorders = {
+    "Antofagasta": [
+      { name: "Antofagasta / Mejillones", points: [[-23.50,-70.47],[-23.55,-70.37],[-23.60,-70.25],[-23.67,-70.12]] },
+      { name: "Antofagasta / Sierra Gorda", points: [[-23.76,-70.45],[-23.72,-70.30],[-23.72,-70.12]] }
+    ],
+    "La Serena": [
+      { name: "La Serena / Coquimbo", points: [[-29.91,-71.38],[-29.94,-71.33],[-29.98,-71.28],[-30.02,-71.23]] },
+      { name: "La Serena / Vicuña", points: [[-29.86,-71.20],[-29.93,-71.08],[-30.02,-70.95]] }
+    ],
+    "Valparaíso / Viña del Mar": [
+      { name: "Valparaíso / Viña del Mar", points: [[-32.99,-71.565],[-33.005,-71.552],[-33.025,-71.535],[-33.045,-71.520]] },
+      { name: "Viña del Mar / Concón", points: [[-32.965,-71.525],[-32.985,-71.500],[-33.010,-71.480]] },
+      { name: "Viña del Mar / Quilpué", points: [[-33.025,-71.500],[-33.045,-71.455],[-33.065,-71.425]] }
+    ],
+    "Santiago": [
+      { name: "Santiago / Providencia", points: [[-33.425,-70.675],[-33.430,-70.655],[-33.438,-70.635],[-33.448,-70.615]] },
+      { name: "Santiago / Ñuñoa", points: [[-33.455,-70.665],[-33.460,-70.645],[-33.468,-70.625],[-33.475,-70.605]] },
+      { name: "Santiago / Estación Central", points: [[-33.430,-70.705],[-33.445,-70.695],[-33.463,-70.688],[-33.478,-70.680]] },
+      { name: "Providencia / Las Condes", points: [[-33.400,-70.610],[-33.420,-70.590],[-33.445,-70.570],[-33.470,-70.550]] },
+      { name: "Santiago / San Miguel", points: [[-33.485,-70.665],[-33.490,-70.640],[-33.495,-70.615]] }
+    ],
+    "Concepción": [
+      { name: "Concepción / Talcahuano", points: [[-36.75,-73.10],[-36.78,-73.08],[-36.82,-73.05],[-36.86,-73.03]] },
+      { name: "Concepción / San Pedro de la Paz", points: [[-36.82,-73.10],[-36.84,-73.07],[-36.87,-73.04],[-36.90,-73.01]] },
+      { name: "Concepción / Chiguayante", points: [[-36.84,-72.99],[-36.87,-72.96],[-36.90,-72.93],[-36.94,-72.90]] },
+      { name: "Concepción / Hualpén", points: [[-36.78,-73.13],[-36.81,-73.10],[-36.84,-73.08]] }
+    ]
+  };
+
+  const comunaLabels = {
+    "Antofagasta": [
+      { label: "Antofagasta", lat: -23.68, lon: -70.37 },
+      { label: "Mejillones", lat: -23.53, lon: -70.28 }
+    ],
+    "La Serena": [
+      { label: "La Serena", lat: -29.92, lon: -71.35 },
+      { label: "Coquimbo", lat: -30.00, lon: -71.30 }
+    ],
+    "Valparaíso / Viña del Mar": [
+      { label: "Valparaíso", lat: -33.045, lon: -71.555 },
+      { label: "Viña", lat: -33.000, lon: -71.505 },
+      { label: "Quilpué", lat: -33.055, lon: -71.440 }
+    ],
+    "Santiago": [
+      { label: "Santiago", lat: -33.445, lon: -70.665 },
+      { label: "Providencia", lat: -33.425, lon: -70.615 },
+      { label: "Ñuñoa", lat: -33.462, lon: -70.600 },
+      { label: "USACH", lat: -33.455, lon: -70.695 }
+    ],
+    "Concepción": [
+      { label: "Concepción", lat: -36.830, lon: -73.035 },
+      { label: "Talcahuano", lat: -36.785, lon: -73.095 },
+      { label: "San Pedro", lat: -36.870, lon: -73.075 }
+    ]
+  };
+
+  function pathFromLatLon(points) {
+    return points.map((p, i) => {
+      const q = projectPoint(p[0], p[1]);
+      return `${i === 0 ? "M" : "L"}${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
+    }).join(" ");
+  }
+
+  function renderRegionalBorders() {
+    const borderLayer = document.getElementById("regional-borders");
+    if (!borderLayer) return;
+    borderLayer.innerHTML = "";
+    if (mapMode !== "regional") return;
+
+    regionalBorders.forEach(border => {
+      const path = createSvgEl("path");
+      path.setAttribute("class", "regional-border");
+      path.setAttribute("d", pathFromLatLon(border.points));
+      const title = createSvgEl("title");
+      title.textContent = border.name;
+      path.appendChild(title);
+      borderLayer.appendChild(path);
+    });
+
+    regionLabels.forEach(item => {
+      const p = projectPoint(item.lat, item.lon);
+      const text = createSvgEl("text");
+      text.setAttribute("x", p.x.toFixed(1));
+      text.setAttribute("y", p.y.toFixed(1));
+      text.setAttribute("class", "regional-border-label");
+      text.textContent = item.label;
+      borderLayer.appendChild(text);
+    });
+  }
+
+  function renderComunaBorders() {
+    const layer = document.getElementById("communa-borders");
+    if (!layer) return;
+    layer.innerHTML = "";
+    if (mapMode !== "city" || !zoomedCity) return;
+
+    const borders = comunaBorders[zoomedCity] || [];
+    borders.forEach(border => {
+      const path = createSvgEl("path");
+      path.setAttribute("class", "communa-border");
+      path.setAttribute("d", pathFromLatLon(border.points));
+      const title = createSvgEl("title");
+      title.textContent = border.name;
+      path.appendChild(title);
+      layer.appendChild(path);
+    });
+
+    const labels = comunaLabels[zoomedCity] || [];
+    labels.forEach(item => {
+      const p = projectPoint(item.lat, item.lon);
+      const text = createSvgEl("text");
+      text.setAttribute("x", p.x.toFixed(1));
+      text.setAttribute("y", p.y.toFixed(1));
+      text.setAttribute("class", "communa-label");
+      text.textContent = item.label;
+      layer.appendChild(text);
+    });
+  }
+
+
+  function lonLatToTile(lon, lat, z) {
+    const latRad = lat * Math.PI / 180;
+    const n = Math.pow(2, z);
+    return {
+      x: Math.floor((lon + 180) / 360 * n),
+      y: Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n)
+    };
+  }
+
+  function tileToLonLat(x, y, z) {
+    const n = Math.pow(2, z);
+    const lon = x / n * 360 - 180;
+    const latRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n)));
+    const lat = latRad * 180 / Math.PI;
+    return { lat, lon };
+  }
+
+  function tileZoomForCity(city) {
+    if (city === "Santiago") return 12;
+    if (city === "Valparaíso / Viña del Mar") return 14;
+    if (city === "Antofagasta") return 14;
+    if (city === "La Serena") return 14;
+    if (city === "Concepción") return 14;
+    return 13;
+  }
+
+  function renderOsmTiles() {
+    const tileLayer = document.getElementById("osm-tiles");
+    if (!tileLayer) return;
+    tileLayer.innerHTML = "";
+    if (mapMode !== "city" || !zoomedCity) return;
+
+    const visible = displayCityBoundsFor(zoomedCity);
+    const z = tileZoomForCity(zoomedCity);
+    const nw = lonLatToTile(visible.minLon, visible.maxLat, z);
+    const se = lonLatToTile(visible.maxLon, visible.minLat, z);
+
+    const bg = createSvgEl("rect");
+    const vb = cityViewBox(zoomedCity).split(/\s+/).map(Number);
+    bg.setAttribute("class", "osm-tile-bg");
+    bg.setAttribute("x", vb[0]);
+    bg.setAttribute("y", vb[1]);
+    bg.setAttribute("width", vb[2]);
+    bg.setAttribute("height", vb[3]);
+    tileLayer.appendChild(bg);
+
+    const minX = Math.max(0, nw.x - 1);
+    const maxX = se.x + 1;
+    const minY = Math.max(0, nw.y - 1);
+    const maxY = se.y + 1;
+
+    for (let x = minX; x <= maxX; x++) {
+      for (let y = minY; y <= maxY; y++) {
+        const tileNW = tileToLonLat(x, y, z);
+        const tileSE = tileToLonLat(x + 1, y + 1, z);
+        const p1 = projectCityPoint(tileNW.lat, tileNW.lon, zoomedCity);
+        const p2 = projectCityPoint(tileSE.lat, tileSE.lon, zoomedCity);
+        const img = createSvgEl("image");
+        img.setAttribute("class", "osm-tile");
+        img.setAttribute("href", `https://tile.openstreetmap.org/${z}/${x}/${y}.png`);
+        img.setAttribute("x", Math.min(p1.x, p2.x).toFixed(2));
+        img.setAttribute("y", Math.min(p1.y, p2.y).toFixed(2));
+        img.setAttribute("width", Math.abs(p2.x - p1.x).toFixed(2));
+        img.setAttribute("height", Math.abs(p2.y - p1.y).toFixed(2));
+        img.setAttribute("preserveAspectRatio", "none");
+        tileLayer.appendChild(img);
+      }
+    }
+  }
+
+  function renderBaseMap() {
+    renderOsmTiles();
+    const outline = document.getElementById("chile-outline");
+    const coast = document.getElementById("coastline");
+    const andes = document.getElementById("andes-line");
+    const labels = document.getElementById("city-labels");
+
+    if (mapMode === "regional") {
+      // Regional overview: draw only the interregional-border layer.
+      // No coastline/country-outline fallback is drawn here, because those
+      // straight closing segments were the artificial lines crossing the map.
+      if (outline) outline.setAttribute("d", "");
+      if (coast) coast.setAttribute("d", "");
+      if (andes) andes.setAttribute("d", "");
+    } else {
+      // In city zooms, avoid the full-country outline. Keep the view minimal
+      // and use only local reference features such as rivers/coastlines.
+      if (outline) outline.setAttribute("d", "");
+      if (coast) coast.setAttribute("d", "");
+      if (andes) andes.setAttribute("d", "");
+    }
+
+    renderRegionalBorders();
+    renderComunaBorders();
+
+    if (labels) {
+      labels.innerHTML = "";
+      if (mapMode === "regional") {
+        Object.entries(cityCoords).forEach(([city, coords]) => {
+          if (city === "Valparaíso" || city === "Viña del Mar") return;
+          const p = projectPoint(coords.lat, coords.lon);
+          const text = createSvgEl("text");
+          text.setAttribute("x", (p.x + 12).toFixed(1));
+          text.setAttribute("y", (p.y - 10).toFixed(1));
+          text.setAttribute("class", "city-label");
+          text.textContent = city;
+          labels.appendChild(text);
+        });
+      }
+    }
+  }
+
+  function setMapLayerTransform(layerId, transformValue) {
+    const layer = document.getElementById(layerId);
+    if (!layer) return;
+    if (transformValue) layer.setAttribute("transform", transformValue);
+    else layer.removeAttribute("transform");
+  }
+
+  function applyRegionalRotation() {
+    // Keep the regional overview unrotated. City zooms are also unrotated.
+    const transformValue = "";
+    ["chile-outline", "coastline", "andes-line", "regional-borders", "city-labels", "map-markers"].forEach(id => setMapLayerTransform(id, transformValue));
+    // Comuna borders and OSM tiles are city-zoom context only; keep them unrotated.
+    setMapLayerTransform("communa-borders", "");
+    setMapLayerTransform("osm-tiles", "");
+  }
+
+  function regionalViewBox() {
+    return "0 0 420 620";
+  }
+
+  function cityViewBox(city) {
+    // All city zooms use a wide Web-Mercator canvas with an aspect ratio close to the map frame.
+    // The lat/lon bounds are handled by cityBoundsFor(city), not by the SVG viewBox.
+    return `0 0 ${cityMapSize.width} ${cityMapSize.height}`;
+  }
+
 
   const categories = { institute: "Institute", city: "City", careerStage: "Career stage", languages: "Language", skills: "Skills / tools" };
   const singleCategories = ["city", "institute", "careerStage"];
@@ -460,6 +886,12 @@
     });
     document.documentElement.lang = currentLang;
     document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.lang === currentLang));
+    const newsLink = document.getElementById("nav-news-link");
+    const linksLink = document.getElementById("nav-links-link");
+    const xoLink = document.getElementById("nav-xochile-link");
+    if (newsLink) newsLink.href = `index.html#intro`;
+    if (linksLink) linksLink.href = `index.html#links`;
+    if (xoLink) xoLink.href = `xo-chile.html?lang=${currentLang}`;
   }
 
   function valuesForCategory(category) {
@@ -659,21 +1091,63 @@
 
   clearButton.addEventListener("click", () => { clearSearch(); selectedInstitute = ""; render(); renderMap(); });
 
-  function groupInstitutesByCity() {
+  function regionalGroupForCity(city) {
+    return (city === "Valparaíso" || city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : city;
+  }
+
+  function groupInstitutesByCity({ regional = false } = {}) {
     const groups = {};
-    Object.keys(instituteCoords).forEach(inst => { const city = instituteCoords[inst].city; groups[city] = groups[city] || []; groups[city].push(inst); });
+    Object.keys(instituteCoords).forEach(inst => {
+      const city = instituteCoords[inst].city;
+      const key = regional ? regionalGroupForCity(city) : city;
+      groups[key] = groups[key] || [];
+      groups[key].push(inst);
+    });
     return groups;
+  }
+
+  function cityMatchesZoom(city, zoomCity) {
+    if (zoomCity === "Valparaíso / Viña del Mar") return city === "Valparaíso" || city === "Viña del Mar";
+    return city === zoomCity;
   }
 
   function createSvgEl(name) { return document.createElementNS("http://www.w3.org/2000/svg", name); }
   function showTooltip(evt, title, subtitle) { tooltip.innerHTML = `<strong>${title}</strong>${subtitle || ""}`; tooltip.style.left = `${evt.clientX}px`; tooltip.style.top = `${evt.clientY}px`; tooltip.style.opacity = 1; }
   function hideTooltip() { tooltip.style.opacity = 0; }
 
+
+  function currentViewBoxValues() {
+    return mapSvg.getAttribute("viewBox").split(/\s+/).map(Number);
+  }
+
+  function cityMarkerRadius() {
+    return 5.0;
+  }
+
+  function regionalMarkerRadiusForCity(city) {
+    // Regional overview marker sizes only. City zoom marker sizes are controlled by cityMarkerRadius().
+    // Reduced by a factor of 1.5 relative to the previous regional overview.
+    if (city === "Antofagasta" || city === "Valparaíso / Viña del Mar") return 7.47;
+    return 8.53;
+  }
+
+  function regionalClusterRadiusForCity(city) {
+    // Regional overview cluster sizes only. Zoomed-in city marker sizes are unchanged.
+    // Reduced by a factor of 1.5 relative to the previous regional overview.
+    if (city === "Antofagasta" || city === "Valparaíso / Viña del Mar") return 8.53;
+    return 17.07;
+  }
+
   function addMarker(inst, coords, offset = false) {
-    const g = createSvgEl("g"); g.classList.add("map-marker"); if (selectedInstitute === inst) g.classList.add("selected");
-    const x = coords.x + (offset ? coords.dx : 0); const y = coords.y + (offset ? coords.dy : 0);
-    g.setAttribute("transform", `translate(${x},${y})`);
-    const c = createSvgEl("circle"); c.setAttribute("class", "main"); c.setAttribute("r", "7");
+    const g = createSvgEl("g");
+    g.classList.add("map-marker");
+    if (mapMode === "city") g.classList.add("city-marker");
+    if (selectedInstitute === inst) g.classList.add("selected");
+    // Use the real stored latitude/longitude for both regional and zoomed views.
+    // No artificial x/y offsets are applied in city zooms, so marker positions remain geospatially faithful.
+    const p = projectCurrentPoint(coords.lat, coords.lon);
+    g.setAttribute("transform", `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
+    const c = createSvgEl("circle"); c.setAttribute("class", "main"); c.setAttribute("r", mapMode === "city" ? cityMarkerRadius().toFixed(3) : regionalMarkerRadiusForCity(coords.city).toString());
     g.appendChild(c);
     g.addEventListener("mousemove", evt => showTooltip(evt, inst, `${coords.city}, Chile`));
     g.addEventListener("mouseleave", hideTooltip);
@@ -683,10 +1157,27 @@
 
   function addCluster(city, institutes) {
     const coords = cityCoords[city];
-    const g = createSvgEl("g"); g.classList.add("map-cluster"); g.setAttribute("transform", `translate(${coords.x},${coords.y})`);
-    const c = createSvgEl("circle"); c.setAttribute("r", "14");
-    const txt = createSvgEl("text"); txt.textContent = institutes.length;
-    g.appendChild(c); g.appendChild(txt);
+    const p = projectPoint(coords.lat, coords.lon);
+    const g = createSvgEl("g"); g.classList.add("map-cluster"); g.setAttribute("transform", `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
+    const c = createSvgEl("circle");
+    const isCompactRegionalCluster = mapMode === "regional" && (city === "Antofagasta" || city === "Valparaíso / Viña del Mar");
+    const clusterRadius = regionalClusterRadiusForCity(city);
+    c.setAttribute("r", clusterRadius.toString());
+    const txt = createSvgEl("text");
+    txt.textContent = institutes.length;
+    if (mapMode === "regional") {
+      txt.setAttribute("font-size", isCompactRegionalCluster ? "20" : "32");
+      txt.setAttribute("font-weight", "900");
+    }
+    g.appendChild(c);
+    if (isCompactRegionalCluster) {
+      const hit = createSvgEl("circle");
+      hit.setAttribute("r", Math.max(clusterRadius * 1.8, 18).toFixed(1));
+      hit.setAttribute("fill", "transparent");
+      hit.setAttribute("stroke", "none");
+      g.appendChild(hit);
+    }
+    g.appendChild(txt);
     g.addEventListener("mousemove", evt => showTooltip(evt, city, `${institutes.length} institutes`));
     g.addEventListener("mouseleave", hideTooltip);
     g.addEventListener("click", () => zoomToCity(city));
@@ -694,21 +1185,26 @@
   }
 
   function renderMap() {
-    mapMarkers.innerHTML = "";
-    const groups = groupInstitutesByCity();
     if (mapMode === "regional") {
-      mapSvg.setAttribute("viewBox", "135 25 185 580");
+      mapSvg.setAttribute("viewBox", regionalViewBox());
+    } else {
+      mapSvg.setAttribute("viewBox", cityViewBox(zoomedCity));
+    }
+    renderBaseMap();
+    mapMarkers.innerHTML = "";
+    const groups = groupInstitutesByCity({ regional: mapMode === "regional" });
+    if (mapMode === "regional") {
       zoomLabel.textContent = t("regionalView");
       Object.entries(groups).forEach(([city, institutes]) => institutes.length > 1 ? addCluster(city, institutes) : addMarker(institutes[0], instituteCoords[institutes[0]], false));
     } else {
-      mapSvg.setAttribute("viewBox", cityCoords[zoomedCity].zoomBox);
       zoomLabel.textContent = t("zoomedTo")(zoomedCity);
       Object.entries(groups).forEach(([city, institutes]) => {
-        if (city === zoomedCity) {
+        if (cityMatchesZoom(city, zoomedCity)) {
           institutes.forEach(inst => addMarker(inst, instituteCoords[inst], true));
         }
       });
     }
+    applyRegionalRotation();
   }
 
   function zoomToCity(city) { mapMode = "city"; zoomedCity = city; hideTooltip(); renderMap(); }
@@ -767,6 +1263,448 @@
     setLanguage(btn.dataset.lang);
   }));
 
+  const initialParams = new URLSearchParams(window.location.search);
+  const initialLang = initialParams.get("lang");
+  if (initialLang === "en" || initialLang === "es") {
+    currentLang = initialLang;
+    try { localStorage.setItem("exoChileLanguage", currentLang); } catch (error) {}
+  } else {
+    try { currentLang = localStorage.getItem("exoChileLanguage") || "en"; } catch (error) { currentLang = "en"; }
+  }
+
+
+
+  /*
+    Real administrative boundaries
+    --------------------------------
+    The previous visual border lines were hand-drawn reference lines.  The
+    functions below replace them with real GeoJSON polygons loaded at runtime
+    from the public fcortes/Chile-GeoJSON repository, whose README references
+    Biblioteca del Congreso Nacional vector maps as the source material.
+
+    If the remote GeoJSON cannot be loaded, the map still works: markers and
+    clusters remain available, but the administrative-border layer is skipped.
+  */
+  const boundarySources = {
+    regional: "https://raw.githubusercontent.com/fcortes/Chile-GeoJSON/master/Regional.geojson",
+    comunas: "https://raw.githubusercontent.com/fcortes/Chile-GeoJSON/master/comunas.geojson"
+  };
+  let regionalGeoJSON = null;
+  let comunasGeoJSON = null;
+  let boundaryLoadStarted = false;
+
+  function inverseProjectPoint(x, y) {
+    const width = 420 - 2 * mapPadding.x;
+    const height = 620 - 2 * mapPadding.y;
+    const lon = mapBounds.minLon + ((x - mapPadding.x) / width) * (mapBounds.maxLon - mapBounds.minLon);
+    const lat = mapBounds.maxLat - ((y - mapPadding.y) / height) * (mapBounds.maxLat - mapBounds.minLat);
+    return { lat, lon };
+  }
+
+  function boundsForViewBox(viewBoxString) {
+    const values = viewBoxString.split(/\s+/).map(Number);
+    const [x, y, w, h] = values;
+    const nw = inverseProjectPoint(x, y);
+    const se = inverseProjectPoint(x + w, y + h);
+    const padLon = Math.max(0.03, Math.abs(se.lon - nw.lon) * 0.12);
+    const padLat = Math.max(0.03, Math.abs(nw.lat - se.lat) * 0.12);
+    return {
+      minLon: Math.min(nw.lon, se.lon) - padLon,
+      maxLon: Math.max(nw.lon, se.lon) + padLon,
+      minLat: Math.min(nw.lat, se.lat) - padLat,
+      maxLat: Math.max(nw.lat, se.lat) + padLat
+    };
+  }
+
+  function viewBoxFromLatLonBounds(bounds) {
+    const nw = projectPoint(bounds.maxLat, bounds.minLon);
+    const se = projectPoint(bounds.minLat, bounds.maxLon);
+    const x = Math.max(0, Math.min(nw.x, se.x));
+    const y = Math.max(0, Math.min(nw.y, se.y));
+    const w = Math.min(420 - x, Math.abs(se.x - nw.x));
+    const h = Math.min(620 - y, Math.abs(se.y - nw.y));
+    return `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`;
+  }
+
+  function ringsFromGeometry(geometry) {
+    if (!geometry) return [];
+    if (geometry.type === "Polygon") return geometry.coordinates || [];
+    if (geometry.type === "MultiPolygon") return geometry.coordinates.flatMap(poly => poly || []);
+    return [];
+  }
+
+  function coordKey(coord, decimals = 4) {
+    return `${Number(coord[0]).toFixed(decimals)},${Number(coord[1]).toFixed(decimals)}`;
+  }
+
+  function segmentKey(a, b, decimals = 4) {
+    const ka = coordKey(a, decimals);
+    const kb = coordKey(b, decimals);
+    return ka < kb ? `${ka}|${kb}` : `${kb}|${ka}`;
+  }
+
+  function visibleBoundarySegments(geojson, visible, decimals = 4) {
+    const segments = new Map();
+    if (!geojson || !geojson.features) return [];
+
+    geojson.features.forEach(feature => {
+      const bbox = coordsBBox(feature.geometry && feature.geometry.coordinates);
+      if (!bboxIntersects(bbox, visible)) return;
+      ringsFromGeometry(feature.geometry).forEach(ring => {
+        for (let i = 0; i < ring.length - 1; i++) {
+          const a = ring[i];
+          const b = ring[i + 1];
+          if (!a || !b) continue;
+          const key = segmentKey(a, b, decimals);
+          const item = segments.get(key) || { count: 0, a, b };
+          item.count += 1;
+          segments.set(key, item);
+        }
+      });
+    });
+
+    return Array.from(segments.values());
+  }
+
+  function visibleSharedSegments(geojson, visible, decimals = 4) {
+    return visibleBoundarySegments(geojson, visible, decimals).filter(item => item.count > 1);
+  }
+
+  function visibleCountrySegments(geojson, visible, decimals = 4) {
+    return visibleBoundarySegments(geojson, visible, decimals).filter(item => item.count === 1);
+  }
+
+  function segmentToPath(item) {
+    const a = projectPoint(item.a[1], item.a[0]);
+    const b = projectPoint(item.b[1], item.b[0]);
+    return `M${a.x.toFixed(1)} ${a.y.toFixed(1)} L${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+  }
+
+  function featureCentroid(feature) {
+    const bbox = coordsBBox(feature.geometry && feature.geometry.coordinates);
+    if (!Number.isFinite(bbox.minLat)) return null;
+    return { lat: (bbox.minLat + bbox.maxLat) / 2, lon: (bbox.minLon + bbox.maxLon) / 2 };
+  }
+
+  function coordsBBox(coords, bbox = { minLon: Infinity, maxLon: -Infinity, minLat: Infinity, maxLat: -Infinity }) {
+    if (!Array.isArray(coords)) return bbox;
+    if (typeof coords[0] === "number" && typeof coords[1] === "number") {
+      const lon = coords[0];
+      const lat = coords[1];
+      bbox.minLon = Math.min(bbox.minLon, lon);
+      bbox.maxLon = Math.max(bbox.maxLon, lon);
+      bbox.minLat = Math.min(bbox.minLat, lat);
+      bbox.maxLat = Math.max(bbox.maxLat, lat);
+      return bbox;
+    }
+    coords.forEach(item => coordsBBox(item, bbox));
+    return bbox;
+  }
+
+  function bboxIntersects(a, b) {
+    return a.minLon <= b.maxLon && a.maxLon >= b.minLon && a.minLat <= b.maxLat && a.maxLat >= b.minLat;
+  }
+
+  function featureName(feature) {
+    const p = feature.properties || {};
+    return p.NOM_REG || p.NOM_COM || p.REGION || p.COMUNA || p.Region || p.Comuna || p.name || p.NOMBRE || "Boundary";
+  }
+
+  function simplifyRing(ring, targetMaxPoints = 240) {
+    if (!Array.isArray(ring) || ring.length <= targetMaxPoints) return ring;
+    const step = Math.ceil(ring.length / targetMaxPoints);
+    const simplified = ring.filter((_, index) => index % step === 0);
+    if (simplified.length && ring.length && simplified[simplified.length - 1] !== ring[ring.length - 1]) simplified.push(ring[ring.length - 1]);
+    return simplified;
+  }
+
+  function ringToPath(ring, targetMaxPoints) {
+    const simplified = simplifyRing(ring, targetMaxPoints);
+    return simplified.map((coord, i) => {
+      const p = projectPoint(coord[1], coord[0]);
+      return `${i === 0 ? "M" : "L"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`;
+    }).join(" ") + " Z";
+  }
+
+  function geometryToPaths(geometry, targetMaxPoints = 240) {
+    if (!geometry) return [];
+    if (geometry.type === "Polygon") {
+      return geometry.coordinates.map(ring => ringToPath(ring, targetMaxPoints));
+    }
+    if (geometry.type === "MultiPolygon") {
+      return geometry.coordinates.flatMap(poly => poly.map(ring => ringToPath(ring, targetMaxPoints)));
+    }
+    return [];
+  }
+
+  function addBoundaryNote(layer, message) {
+    const text = createSvgEl("text");
+    const p = projectPoint(-30.7, -70.65);
+    text.setAttribute("x", p.x.toFixed(1));
+    text.setAttribute("y", p.y.toFixed(1));
+    text.setAttribute("class", "geo-load-note");
+    text.textContent = message;
+    layer.appendChild(text);
+  }
+
+  function loadAdministrativeBoundaries() {
+    if (boundaryLoadStarted) return;
+    boundaryLoadStarted = true;
+    Promise.all([
+      fetch(boundarySources.regional).then(r => r.ok ? r.json() : Promise.reject(new Error("Regional GeoJSON failed"))),
+      fetch(boundarySources.comunas).then(r => r.ok ? r.json() : Promise.reject(new Error("Comunas GeoJSON failed")))
+    ]).then(([regional, comunas]) => {
+      regionalGeoJSON = regional;
+      comunasGeoJSON = comunas;
+      renderMap();
+    }).catch(error => {
+      console.warn("Could not load Chile administrative boundaries:", error);
+      renderMap();
+    });
+  }
+
+  function gaussianSmoothProjectedPoints(points, sigma = 2.0, radius = 5, closed = false) {
+    // A small Gaussian convolution in screen coordinates. This keeps the
+    // boundaries recognisable but removes the overly detailed/jagged GeoJSON look.
+    // For closed polygon rings, wrap the kernel at the ends so the outline stays continuous.
+    if (!Array.isArray(points) || points.length < 3) return points || [];
+    const weights = [];
+    let wsum = 0;
+    for (let k = -radius; k <= radius; k++) {
+      const w = Math.exp(-(k * k) / (2 * sigma * sigma));
+      weights.push(w);
+      wsum += w;
+    }
+    const n = points.length;
+    return points.map((point, i) => {
+      let x = 0, y = 0, norm = 0;
+      for (let k = -radius; k <= radius; k++) {
+        let j;
+        if (closed) {
+          j = (i + k + n) % n;
+        } else {
+          j = Math.max(0, Math.min(n - 1, i + k));
+        }
+        const w = weights[k + radius];
+        x += points[j].x * w;
+        y += points[j].y * w;
+        norm += w;
+      }
+      return { x: x / norm, y: y / norm };
+    });
+  }
+
+  function simplifyProjectedPoints(points, minDistance = 3.0) {
+    if (!Array.isArray(points) || points.length <= 2) return points || [];
+    const simplified = [points[0]];
+    let last = points[0];
+    for (let i = 1; i < points.length - 1; i++) {
+      const dx = points[i].x - last.x;
+      const dy = points[i].y - last.y;
+      if (Math.hypot(dx, dy) >= minDistance) {
+        simplified.push(points[i]);
+        last = points[i];
+      }
+    }
+    simplified.push(points[points.length - 1]);
+    return simplified;
+  }
+
+  function projectedPointsToPath(points, closed = false) {
+    if (!points || points.length < 2) return "";
+    const smooth = simplifyProjectedPoints(gaussianSmoothProjectedPoints(points, 2.0, 5, closed), closed ? 2.0 : 2.8);
+    return smooth.map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ") + (closed ? " Z" : "");
+  }
+
+  function segmentsToChains(segments, decimals = 4) {
+    // Join the real shared GeoJSON boundary segments into continuous chains.
+    // This prevents the map from showing unrelated straight fallback lines while
+    // preserving the real interregional borders.
+    const nodes = new Map();
+    function getNode(coord) {
+      const key = coordKey(coord, decimals);
+      if (!nodes.has(key)) nodes.set(key, { key, coord, edges: [] });
+      return nodes.get(key);
+    }
+    segments.forEach((seg, idx) => {
+      const a = getNode(seg.a);
+      const b = getNode(seg.b);
+      a.edges.push({ idx, other: b.key });
+      b.edges.push({ idx, other: a.key });
+    });
+
+    const used = new Set();
+    const chains = [];
+
+    function trace(startKey, firstEdge) {
+      const chain = [nodes.get(startKey).coord];
+      let currentKey = startKey;
+      let edge = firstEdge;
+      while (edge && !used.has(edge.idx)) {
+        used.add(edge.idx);
+        const nextKey = edge.other;
+        chain.push(nodes.get(nextKey).coord);
+        currentKey = nextKey;
+        edge = nodes.get(currentKey).edges.find(e => !used.has(e.idx));
+      }
+      return chain;
+    }
+
+    // Start at endpoints/branch points first, then consume any closed loops.
+    nodes.forEach(node => {
+      if (node.edges.length !== 2) {
+        node.edges.forEach(edge => {
+          if (!used.has(edge.idx)) chains.push(trace(node.key, edge));
+        });
+      }
+    });
+    nodes.forEach(node => {
+      node.edges.forEach(edge => {
+        if (!used.has(edge.idx)) chains.push(trace(node.key, edge));
+      });
+    });
+    return chains.filter(chain => chain.length > 1);
+  }
+
+  function renderManualSmoothedRegionalBorders(borderLayer) {
+    // Fallback if the remote GeoJSON has not loaded: use the pre-existing
+    // regional reference curves, but smooth them with the same Gaussian kernel.
+    regionalBorders.forEach(border => {
+      const projected = border.points.map(p => projectPoint(p[0], p[1]));
+      const path = createSvgEl("path");
+      path.setAttribute("class", "regional-border");
+      path.setAttribute("d", projectedPointsToPath(projected));
+      const title = createSvgEl("title");
+      title.textContent = border.name;
+      path.appendChild(title);
+      borderLayer.appendChild(path);
+    });
+  }
+
+
+  function addContinuousRegionalFeatureOutlines(borderLayer, geojson, visible) {
+    // Draw each visible regional polygon ring as a continuous smoothed outline.
+    // This deliberately avoids reconstructing borders from tiny GeoJSON segments,
+    // which can leave small gaps at vertices after simplification/smoothing.
+    geojson.features.forEach(feature => {
+      const bbox = coordsBBox(feature.geometry && feature.geometry.coordinates);
+      if (!bboxIntersects(bbox, visible)) return;
+      ringsFromGeometry(feature.geometry).forEach((ring, ringIndex) => {
+        if (!Array.isArray(ring) || ring.length < 8) return;
+        const ringBBox = coordsBBox(ring);
+        if (!bboxIntersects(ringBBox, visible)) return;
+
+        // Mostly draw exterior rings. Tiny holes/islands are skipped to keep the overview readable.
+        if (ringIndex > 0 && ring.length < 80) return;
+
+        const projected = ring.map(coord => projectPoint(coord[1], coord[0]));
+        const d = projectedPointsToPath(projected, true);
+        if (!d) return;
+        const path = createSvgEl("path");
+        path.setAttribute("class", "regional-border real continuous");
+        path.setAttribute("d", d);
+        const title = createSvgEl("title");
+        title.textContent = featureName(feature);
+        path.appendChild(title);
+        borderLayer.appendChild(path);
+      });
+    });
+  }
+
+  function renderRegionalBorders() {
+    const borderLayer = document.getElementById("regional-borders");
+    if (!borderLayer) return;
+    borderLayer.innerHTML = "";
+    if (mapMode !== "regional") return;
+
+    if (regionalGeoJSON && regionalGeoJSON.features) {
+      const visible = boundsForViewBox(regionalViewBox());
+      addContinuousRegionalFeatureOutlines(borderLayer, regionalGeoJSON, visible);
+    } else {
+      // Offline fallback: show the smoothed manual interregional reference lines.
+      // The institute markers and search still work without the remote GeoJSON.
+      renderManualSmoothedRegionalBorders(borderLayer);
+    }
+
+    regionLabels.forEach(item => {
+      const p = projectPoint(item.lat, item.lon);
+      const text = createSvgEl("text");
+      text.setAttribute("x", p.x.toFixed(1));
+      text.setAttribute("y", p.y.toFixed(1));
+      text.setAttribute("class", "regional-border-label");
+      text.textContent = item.label;
+      borderLayer.appendChild(text);
+    });
+  }
+
+  const cityReferenceFeatures = {
+    "Santiago": {
+      // Approximate Mapocho River polyline through Greater Santiago.
+      river: [
+        [-33.402, -70.855], [-33.407, -70.815], [-33.412, -70.775],
+        [-33.421, -70.735], [-33.431, -70.700], [-33.437, -70.670],
+        [-33.431, -70.645], [-33.420, -70.615], [-33.407, -70.585],
+        [-33.394, -70.552], [-33.382, -70.510]
+      ]
+    },
+    "Valparaíso / Viña del Mar": {
+      coastline: [
+        [-32.930, -71.555], [-32.958, -71.558], [-32.985, -71.575],
+        [-33.006, -71.600], [-33.028, -71.624], [-33.052, -71.642],
+        [-33.082, -71.660], [-33.103, -71.671]
+      ],
+      bay: [
+        [-32.930, -71.555], [-32.970, -71.590], [-33.015, -71.615],
+        [-33.060, -71.650], [-33.103, -71.671], [-33.105, -71.440],
+        [-32.925, -71.440], [-32.930, -71.555]
+      ]
+    },
+    "Concepción": {
+      river: [
+        [-36.800, -73.120], [-36.820, -73.095], [-36.840, -73.060],
+        [-36.860, -73.020], [-36.880, -72.985]
+      ]
+    },
+    "La Serena": {
+      coastline: [
+        [-29.850, -71.305], [-29.900, -71.315], [-29.950, -71.335],
+        [-30.010, -71.360], [-30.055, -71.375]
+      ]
+    },
+    "Antofagasta": {
+      coastline: [
+        [-23.500, -70.430], [-23.560, -70.430], [-23.620, -70.420],
+        [-23.690, -70.410], [-23.780, -70.400]
+      ]
+    }
+  };
+
+  function addReferencePath(layer, points, className, closed = false) {
+    if (!points || points.length === 0) return;
+    const path = createSvgEl("path");
+    path.setAttribute("class", className);
+    path.setAttribute("d", pathFromLatLon(points) + (closed ? " Z" : ""));
+    layer.appendChild(path);
+  }
+
+  function renderCityReferenceMap(layer) {
+    const ref = cityReferenceFeatures[zoomedCity];
+    if (!ref) return;
+    if (ref.bay) addReferencePath(layer, ref.bay, "city-reference-bay", true);
+    if (ref.coastline) addReferencePath(layer, ref.coastline, "city-reference-coast");
+    if (ref.river) addReferencePath(layer, ref.river, "city-reference-river");
+  }
+
+  function renderComunaBorders() {
+    const layer = document.getElementById("communa-borders");
+    if (!layer) return;
+    layer.innerHTML = "";
+    // City zooms are intentionally clean: only the OSM background map and
+    // the clickable institute markers are shown. No extra hand-drawn rivers,
+    // coastlines, labels, or comuna overlays are added.
+  }
+
+  loadAdministrativeBoundaries();
   populateSingleSelects();
   addFocusSelector();
   multiCategories.forEach(category => addSimpleMultiSelector(category));
