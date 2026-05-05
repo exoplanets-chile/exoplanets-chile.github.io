@@ -27,6 +27,16 @@
 				display: block;
 				filter: drop-shadow(0 0 0.55rem rgba(129, 221, 255, 0.65));
 			}
+
+			.main-subtitle {
+				max-width: 42rem;
+				margin: 0.75rem auto 0 auto;
+				font-size: 0.85rem;
+				line-height: 1.8;
+				letter-spacing: 0.08rem;
+				text-transform: none;
+				color: rgba(255,255,255,0.82);
+			}
 			.home-button {
 				position: fixed;
 				top: 1rem;
@@ -155,6 +165,7 @@
 						<div class="content">
 							<div class="inner">
 								<h1 data-i18n="mainTitle">Exoplanetary Research in Chile</h1>
+								<p class="main-subtitle" data-i18n="mainSubtitle">Welcome to a growing entry point for exoplanetary research in Chile. This page connects community news, meetings, the ExoChile community database, useful links and common narratives for students and researchers.</p>
 								<!--<p>A fully responsive site template designed by <a href="https://html5up.net">HTML5 UP</a> and released<br />
 								for free under the <a href="https://html5up.net/license">Creative Commons</a> license.</p>-->
 							</div>
@@ -162,8 +173,9 @@
 						<nav>
 							<ul>
 								<li><a href="#intro" data-i18n="navNews">News</a></li>
-								<li><a href="https://exochile2026.github.io/" data-i18n="navExoChile">ExoChile2026</a></li>
 								<li><a id="xo-chile-link" href="xo-chile.html" data-i18n="navXOChile">XO-Chile</a></li>
+								<li><a href="demographics.html" data-i18n="navDemographics">ExoChile Demographics</a></li>
+								<li><a href="https://exochile2026.github.io/" data-i18n="navExoChile">ExoChile2026</a></li>
 								<li><a href="#links" data-i18n="navLinks">Links</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
@@ -177,7 +189,7 @@
 							<article id="intro">
 								<h2 class="major" data-i18n="newsTitle">News</h2>
 								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p data-i18n="newsParagraph1">Welcome to a growing entry point for exoplanetary research in Chile. This page connects community news, the ExoChile2026 meeting, the XO-Chile searchable community database, and useful links for students and researchers.</p>
+								<p data-i18n="newsParagraph1">Updates, announcements, and community news will appear here.</p>
 								<p data-i18n="newsParagraph2">The site is meant to remain simple and easy to update as the Chilean exoplanet community develops new meetings, tools, initiatives, and collaborations.</p>
 							</article>
 
@@ -471,12 +483,14 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						pageTitle: "Exoplanetary Research in Chile",
 						homeButton: "← Home",
 						mainTitle: "Exoplanetary Research in Chile",
+						mainSubtitle: "Welcome to a growing entry point for exoplanetary research in Chile. This page connects community news, meetings, the ExoChile community database, useful links and common narratives for students and researchers.",
 						navNews: "News",
+						navDemographics: "ExoChile Demographics",
 						navExoChile: "ExoChile2026",
 						navXOChile: "XO-Chile",
 						navLinks: "Links",
 						newsTitle: "News",
-						newsParagraph1: "Welcome to a growing entry point for exoplanetary research in Chile. This page connects community news, the ExoChile2026 meeting, the XO-Chile searchable community database, and useful links for students and researchers.",
+						newsParagraph1: "Updates, announcements, and community news will appear here.",
 						newsParagraph2: "The site is meant to remain simple and easy to update as the Chilean exoplanet community develops new meetings, tools, initiatives, and collaborations.",
 						linksTitle: "Links",
 						linksIntro: "Useful entry points for the Chilean exoplanet community.",
@@ -491,12 +505,14 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						pageTitle: "Investigación exoplanetaria en Chile",
 						homeButton: "← Inicio",
 						mainTitle: "Investigación exoplanetaria en Chile",
+						mainSubtitle: "Bienvenidos a un punto de entrada en desarrollo para la investigación exoplanetaria en Chile. Esta página conecta noticias de la comunidad, reuniones, la base de datos comunitaria ExoChile, enlaces útiles y narrativas comunes para estudiantes e investigadores.",
 						navNews: "Noticias",
+						navDemographics: "Demografía ExoChile",
 						navExoChile: "ExoChile2026",
 						navXOChile: "XO-Chile",
 						navLinks: "Enlaces",
 						newsTitle: "Noticias",
-						newsParagraph1: "Bienvenidos a un punto de entrada en desarrollo para la investigación exoplanetaria en Chile. Esta página conecta noticias de la comunidad, el encuentro ExoChile2026, la base de datos comunitaria XO-Chile y enlaces útiles para estudiantes e investigadores.",
+						newsParagraph1: "Aquí aparecerán actualizaciones, anuncios y noticias de la comunidad.",
 						newsParagraph2: "El sitio está pensado para mantenerse simple y fácil de actualizar a medida que la comunidad chilena de exoplanetas desarrolla nuevas reuniones, herramientas, iniciativas y colaboraciones.",
 						linksTitle: "Enlaces",
 						linksIntro: "Puntos de entrada útiles para la comunidad chilena de exoplanetas.",
