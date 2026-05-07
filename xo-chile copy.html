@@ -234,7 +234,150 @@
       justify-content: center;
       min-height: 24rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    .xo-card-front > * { position: relative; z-index: 2; }
+    .xo-card-front::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.18;
+      pointer-events: none;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      mix-blend-mode: screen;
+    }
+    .xo-card-front::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.05), rgba(5,8,20,0.12) 46%, rgba(5,8,20,0.34) 100%);
+    }
+    .xo-pattern-disc::before {
+      background-image:
+        radial-gradient(ellipse at center, transparent 0 9%, rgba(79,209,197,0.32) 10% 12%, transparent 13% 100%),
+        repeating-radial-gradient(ellipse at center, rgba(79,209,197,0.18) 0 2px, transparent 3px 18px),
+        radial-gradient(circle at center, rgba(255,230,150,0.72) 0 5%, transparent 6% 100%);
+      transform: rotate(-18deg) scale(1.15);
+    }
+    .xo-pattern-transit::before {
+      background-image:
+        linear-gradient(90deg, transparent 0 10%, rgba(255,255,255,0.10) 10.5% 11%, transparent 11.5% 100%),
+        linear-gradient(0deg, transparent 0 72%, rgba(79,209,197,0.35) 72.5% 73.5%, transparent 74% 100%),
+        radial-gradient(circle at 46% 70%, rgba(5,8,20,0.95) 0 7%, transparent 8% 100%);
+      clip-path: polygon(0 40%, 32% 40%, 39% 66%, 54% 66%, 61% 40%, 100% 40%, 100% 100%, 0 100%);
+      opacity: 0.26;
+    }
+    .xo-pattern-atmosphere::before {
+      background-image:
+        radial-gradient(circle at 52% 52%, rgba(79,209,197,0.08) 0 19%, transparent 20%),
+        radial-gradient(circle at 52% 52%, transparent 0 24%, rgba(126,231,255,0.34) 25% 31%, transparent 32%),
+        radial-gradient(circle at 52% 52%, rgba(110,167,255,0.26) 0 22%, transparent 23%);
+    }
+    .xo-pattern-system::before {
+      background-image:
+        radial-gradient(circle at center, rgba(255,224,130,0.82) 0 5%, transparent 6%),
+        repeating-radial-gradient(circle at center, transparent 0 22px, rgba(79,209,197,0.18) 23px 24px, transparent 25px 47px),
+        radial-gradient(circle at 68% 42%, rgba(79,209,197,0.55) 0 3%, transparent 4%),
+        radial-gradient(circle at 28% 61%, rgba(255,176,212,0.45) 0 2.5%, transparent 3.5%);
+    }
+    .xo-pattern-populations::before {
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,0.14) 1px, transparent 1px),
+        radial-gradient(circle at 24% 72%, rgba(255,231,122,0.55) 0 2%, transparent 2.5%),
+        radial-gradient(circle at 40% 58%, rgba(126,231,255,0.55) 0 1.7%, transparent 2.2%),
+        radial-gradient(circle at 62% 38%, rgba(255,176,212,0.55) 0 2.1%, transparent 2.6%),
+        radial-gradient(circle at 76% 28%, rgba(168,125,255,0.55) 0 2.4%, transparent 3%);
+      background-size: 42px 42px, 42px 42px, cover, cover, cover, cover;
+      opacity: 0.24;
+    }
+    .xo-pattern-interiors::before {
+      background-image:
+        conic-gradient(from 0deg at 52% 52%, transparent 0 82deg, rgba(255,213,88,0.65) 83deg 130deg, rgba(255,132,55,0.56) 131deg 178deg, transparent 179deg 360deg),
+        radial-gradient(circle at 52% 52%, rgba(255,240,180,0.55) 0 8%, rgba(255,130,40,0.38) 9% 18%, rgba(180,180,165,0.22) 19% 29%, transparent 30%);
+    }
+    .xo-pattern-outreach::before {
+      background-image:
+        linear-gradient(135deg, transparent 0 32%, rgba(255,120,80,0.32) 33% 43%, transparent 44%),
+        linear-gradient(0deg, transparent 0 41%, rgba(255,167,70,0.30) 42% 68%, transparent 69%),
+        repeating-linear-gradient(90deg, transparent 0 16px, rgba(126,231,255,0.22) 17px 26px, transparent 27px 44px);
+      opacity: 0.22;
+    }
+    .xo-pattern-instrumentation::before {
+      background-image:
+        linear-gradient(125deg, transparent 0 43%, rgba(255,255,255,0.30) 44% 48%, transparent 49%),
+        radial-gradient(ellipse at 62% 38%, rgba(126,231,255,0.35) 0 12%, transparent 13%),
+        linear-gradient(55deg, transparent 0 50%, rgba(79,209,197,0.26) 51% 54%, transparent 55%);
+      opacity: 0.26;
+    }
+    .xo-pattern-ai::before {
+      background-image:
+        radial-gradient(circle at 42% 45%, rgba(126,231,255,0.55) 0 4%, transparent 5%),
+        radial-gradient(circle at 58% 45%, rgba(126,231,255,0.55) 0 4%, transparent 5%),
+        linear-gradient(90deg, transparent 0 30%, rgba(255,255,255,0.18) 31% 69%, transparent 70%),
+        linear-gradient(0deg, transparent 0 34%, rgba(79,209,197,0.18) 35% 69%, transparent 70%);
+      opacity: 0.27;
+    }
+    .xo-pattern-habitability::before {
+      background-image:
+        radial-gradient(ellipse at 50% 54%, rgba(122,255,160,0.24) 0 19%, transparent 20%),
+        radial-gradient(circle at 43% 49%, rgba(10,20,30,0.9) 0 3%, transparent 4%),
+        radial-gradient(circle at 57% 49%, rgba(10,20,30,0.9) 0 3%, transparent 4%),
+        radial-gradient(ellipse at 50% 66%, rgba(79,209,197,0.35) 0 12%, transparent 13%);
+      opacity: 0.26;
+    }
+    .xo-pattern-evolution::before {
+      background-image:
+        repeating-radial-gradient(ellipse at center, transparent 0 20px, rgba(255,255,255,0.16) 21px 22px, transparent 23px 46px),
+        radial-gradient(circle at 30% 52%, rgba(255,255,255,0.45) 0 1.6%, transparent 2.2%),
+        radial-gradient(circle at 68% 45%, rgba(255,255,255,0.35) 0 1.4%, transparent 2%),
+        radial-gradient(circle at center, rgba(255,224,130,0.48) 0 5%, transparent 6%);
+      transform: rotate(-12deg) scale(1.1);
+      opacity: 0.24;
+    }
+
+    .xo-front-icon-pattern {
+      position: absolute;
+      inset: 0.65rem;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.13;
+      filter: drop-shadow(0 0 0.45rem rgba(79,209,197,0.18));
+    }
+    .xo-front-icon-pattern .xo-front-mini-icon {
+      position: absolute;
+      width: 3.15rem;
+      height: 3.15rem;
+      display: block;
+    }
+    .xo-front-icon-pattern .xo-front-mini-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(1) { left: 6%; top: 8%; transform: rotate(-12deg); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(2) { right: 8%; top: 10%; transform: rotate(8deg) scale(0.92); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(3) { left: 12%; top: 42%; transform: rotate(10deg) scale(0.86); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(4) { right: 12%; top: 44%; transform: rotate(-8deg) scale(0.86); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(5) { left: 8%; bottom: 10%; transform: rotate(7deg) scale(0.94); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(6) { right: 9%; bottom: 9%; transform: rotate(-10deg); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(7) { left: 41%; top: 6%; transform: rotate(4deg) scale(0.78); }
+    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(8) { left: 42%; bottom: 8%; transform: rotate(-5deg) scale(0.78); }
+    .xo-card-front h4,
+    .xo-card-front .xo-front-stage,
+    .xo-card-front .xo-front-institute,
+    .xo-card-front .xo-flip-hint {
+      position: relative;
+      z-index: 3;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.72);
+    }
+
     .xo-card-front h4 {
       font-size: 1.35rem;
       margin-bottom: 0.45rem;
@@ -527,16 +670,16 @@
   };
 
   const people = [
-    { name: "Camila Rojas", institute: "Universidad de Chile", city: "Santiago", careerStage: "PhD student", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Machine Learning and Artificial Intelligence"}], languages: ["Spanish", "English"], skills: ["RADMC-3D", "FARGO3D", "ALMA", "Python"] },
-    { name: "Diego Fuentes", institute: "Universidad de Concepción", city: "Concepción", careerStage: "Postdoc", focus: [{category:"Exoplanet Atmospheres"}, {category:"Habitability and Biosignatures"}], languages: ["Spanish", "English", "Portuguese"], skills: ["JWST", "petitRADTRANS", "Python", "MCMC"] },
-    { name: "Valentina Morales", institute: "Pontificia Universidad Católica de Chile", city: "Santiago", careerStage: "Assistant professor", focus: [{category:"Exoplanet Atmospheres"}, {category:"Instrumentation"}], languages: ["Spanish", "English", "French"], skills: ["VLT/SPHERE", "ERIS", "ADI/PCA", "IRAF"] },
-    { name: "Tomás Araya", institute: "Universidad de Valparaíso", city: "Valparaíso", careerStage: "Master student", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Planetary System Architecture and Dynamics"}], languages: ["Spanish", "English"], skills: ["HARPS", "ESPRESSO", "Gaussian processes", "Python"] },
-    { name: "Antonia Vega", institute: "Universidad de Antofagasta", city: "Antofagasta", careerStage: "Research scientist", focus: [{category:"Planetary System Evolution"}, {category:"Planet Formation and Protoplanetary Discs"}], languages: ["Spanish", "English", "German"], skills: ["ALMA", "CASA", "RADMC-3D", "DustPy"] },
-    { name: "Benjamín Salinas", institute: "Universidad Diego Portales", city: "Santiago", careerStage: "Postdoc", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Machine Learning and Artificial Intelligence"}], languages: ["Spanish", "English"], skills: ["TESS", "Lightkurve", "scikit-learn", "SQL"] },
-    { name: "Lucía Contreras", institute: "Universidad de La Serena", city: "La Serena", careerStage: "PhD student", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Planetary Interiors, Composition, and Evolution"}], languages: ["Spanish", "English", "Italian"], skills: ["RADMC-3D", "PLUTO", "CASA", "Python"] },
-    { name: "Matías Herrera", institute: "Universidad Católica del Norte", city: "Antofagasta", careerStage: "Assistant professor", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Exoplanet Populations and Demographics"}], languages: ["Spanish", "English"], skills: ["OGLE", "MOA", "Bayesian modelling", "Julia"] },
-    { name: "Isidora Paredes", institute: "Universidad Andrés Bello", city: "Viña del Mar", careerStage: "Master student", focus: [{category:"Planetary Interiors, Composition, and Evolution"}, {category:"Exoplanet Populations and Demographics"}], languages: ["Spanish", "English"], skills: ["ExoPlex", "Python", "MCMC", "Data visualization"] },
-    { name: "Nicolás Sepúlveda", institute: "Universidad de Santiago de Chile", city: "Santiago", careerStage: "Research scientist", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Outreach, Education, and Public Engagement"}], languages: ["Spanish", "English", "German"], skills: ["FARGO3D", "RADMC-3D", "ALMA", "CASA"] }
+    { name: "Camila Rojas", institute: "Universidad de Chile", city: "Santiago", careerStage: "PhD student", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Machine Learning and Artificial Intelligence"}], languages: ["Spanish", "English"], skills: [{name:"RADMC-3D", level:2}, {name:"FARGO3D", level:3}, {name:"ALMA", level:2}, {name:"Python", level:3}] },
+    { name: "Diego Fuentes", institute: "Universidad de Concepción", city: "Concepción", careerStage: "Postdoc", focus: [{category:"Exoplanet Atmospheres"}, {category:"Habitability and Biosignatures"}], languages: ["Spanish", "English", "Portuguese"], skills: [{name:"JWST", level:2}, {name:"petitRADTRANS", level:3}, {name:"Python", level:2}, {name:"MCMC", level:3}] },
+    { name: "Valentina Morales", institute: "Pontificia Universidad Católica de Chile", city: "Santiago", careerStage: "Assistant professor", focus: [{category:"Exoplanet Atmospheres"}, {category:"Instrumentation"}], languages: ["Spanish", "English", "French"], skills: [{name:"VLT/SPHERE", level:3}, {name:"ERIS", level:2}, {name:"ADI/PCA", level:3}, {name:"IRAF", level:1}] },
+    { name: "Tomás Araya", institute: "Universidad de Valparaíso", city: "Valparaíso", careerStage: "Master student", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Planetary System Architecture and Dynamics"}], languages: ["Spanish", "English"], skills: [{name:"HARPS", level:2}, {name:"ESPRESSO", level:1}, {name:"Gaussian processes", level:2}, {name:"Python", level:2}] },
+    { name: "Antonia Vega", institute: "Universidad de Antofagasta", city: "Antofagasta", careerStage: "Research scientist", focus: [{category:"Planetary System Evolution"}, {category:"Planet Formation and Protoplanetary Discs"}], languages: ["Spanish", "English", "German"], skills: [{name:"ALMA", level:3}, {name:"CASA", level:3}, {name:"RADMC-3D", level:2}, {name:"DustPy", level:1}] },
+    { name: "Benjamín Salinas", institute: "Universidad Diego Portales", city: "Santiago", careerStage: "Postdoc", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Machine Learning and Artificial Intelligence"}], languages: ["Spanish", "English"], skills: [{name:"TESS", level:3}, {name:"Lightkurve", level:2}, {name:"scikit-learn", level:2}, {name:"SQL", level:1}] },
+    { name: "Lucía Contreras", institute: "Universidad de La Serena", city: "La Serena", careerStage: "PhD student", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Planetary Interiors, Composition, and Evolution"}], languages: ["Spanish", "English", "Italian"], skills: [{name:"RADMC-3D", level:2}, {name:"PLUTO", level:1}, {name:"CASA", level:2}, {name:"Python", level:3}] },
+    { name: "Matías Herrera", institute: "Universidad Católica del Norte", city: "Antofagasta", careerStage: "Assistant professor", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Exoplanet Populations and Demographics"}], languages: ["Spanish", "English"], skills: [{name:"OGLE", level:3}, {name:"MOA", level:2}, {name:"Bayesian modelling", level:3}, {name:"Julia", level:1}] },
+    { name: "Isidora Paredes", institute: "Universidad Andrés Bello", city: "Viña del Mar", careerStage: "Master student", focus: [{category:"Planetary Interiors, Composition, and Evolution"}, {category:"Exoplanet Populations and Demographics"}], languages: ["Spanish", "English"], skills: [{name:"ExoPlex", level:2}, {name:"Python", level:2}, {name:"MCMC", level:1}, {name:"Data visualization", level:3}] },
+    { name: "Nicolás Sepúlveda", institute: "Universidad de Santiago de Chile", city: "Santiago", careerStage: "Research scientist", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Outreach, Education, and Public Engagement"}], languages: ["Spanish", "English", "German"], skills: [{name:"FARGO3D", level:3}, {name:"RADMC-3D", level:3}, {name:"ALMA", level:2}, {name:"CASA", level:2}] }
   ];
 
   const instituteCoords = {
@@ -1305,12 +1448,40 @@
     }
   }
 
+  function focusPatternClass(focusItems) {
+    const primary = (focusItems || [])[0]?.category || "";
+    const classMap = {
+      "Planet Formation and Protoplanetary Discs": "xo-pattern-disc",
+      "Exoplanet Detection and Discovery": "xo-pattern-transit",
+      "Exoplanet Atmospheres": "xo-pattern-atmosphere",
+      "Planetary System Architecture and Dynamics": "xo-pattern-system",
+      "Exoplanet Populations and Demographics": "xo-pattern-populations",
+      "Planetary Interiors, Composition, and Evolution": "xo-pattern-interiors",
+      "Outreach, Education, and Public Engagement": "xo-pattern-outreach",
+      "Instrumentation": "xo-pattern-instrumentation",
+      "Machine Learning and Artificial Intelligence": "xo-pattern-ai",
+      "Habitability and Biosignatures": "xo-pattern-habitability",
+      "Planetary System Evolution": "xo-pattern-evolution"
+    };
+    return classMap[primary] || "xo-pattern-system";
+  }
+
+
+  function primaryFocusIcon(items) {
+    const primary = (items || [])[0]?.category || "";
+    const icon = focusIconSvg[primary] || "";
+    if (!icon) return "";
+    const icons = Array.from({ length: 8 }, () => `<span class="xo-front-mini-icon">${icon}</span>`).join("");
+    return `<div class="xo-front-icon-pattern" aria-hidden="true">${icons}</div>`;
+  }
+
   function renderCards(personList, selectedCount, totalSelected) {
     if (personList.length === 0) return `<p class="xo-muted">${t("noPeople")}</p>`;
     return `<div class="xo-grid">${personList.map(person => `
       <article class="xo-card" tabindex="0" role="button" aria-label="${person.name}: ${t("flipHint")}" onclick="flipCard(this)" onkeydown="cardKeyFlip(event, this)">
         <div class="xo-card-inner">
-          <div class="xo-card-face xo-card-front">
+          <div class="xo-card-face xo-card-front ${focusPatternClass(person.focus)}">
+            ${primaryFocusIcon(person.focus)}
             <h4>${person.name}</h4>
             <p class="xo-front-stage">${person.careerStage}</p>
             <p class="xo-front-institute">${person.institute}<br>${person.city}, Chile</p>
