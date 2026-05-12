@@ -238,6 +238,8 @@
     @media (max-width: 720px) {
       .site-home-button { top: 0.65rem; left: 0.65rem; padding: 0.36rem 0.68rem; font-size: 0.72rem; }
       .nav-inner { padding-left: 5.8rem; }
+      .logo { font-size: 0; }
+      .logo::after { content: "XO-CHILE"; font-size: 0.95rem; letter-spacing: 0.08em; }
     }
 
   
@@ -427,6 +429,7 @@
           <li><a id="nav-news-link" href="index.html#intro" data-i18n="navNews">News</a></li>
           <li><a href="https://exochile2026.github.io/" data-i18n="navExoChile">ExoChile2026</a></li>
           <li><a id="nav-xochile-link" href="xo-chile.html" data-i18n="navXOChile">XO-Chile</a></li>
+          <li><a id="nav-demographics-link" href="demographics.html" data-i18n="navDemographics">ExoChile Demographics</a></li>
           <li><a id="nav-links-link" href="index.html#links" data-i18n="navLinks">Links</a></li>
           <li>
             <div class="language-toggle" aria-label="Language switcher">
@@ -553,7 +556,7 @@
 <script>
   const i18n = {
     en: {
-      homeButton: "← Home", navNews: "News", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navLinks: "Links", navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
+      homeButton: "← Home", navNews: "News", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navDemographics: "ExoChile Demographics", navLinks: "Links", navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
       heroText: "A searchable prototype database for the Chilean exoplanet community. Select tags for institute, city, career stage, scientific focus, language, and technical skills to identify potential collaborators.",
       chipPrototype: "Prototype with fictional entries", chipMatching: "Exact + near-match search", chipStatic: "Static GitHub Pages compatible",
       searchDatabase: "Search database", backMain: "Back to main site", mapTitle: "Institutes map", mapNote: "Click a cluster to zoom. Click an institute to search.", regionalView: "Regional view",
@@ -568,7 +571,7 @@
       zoomedTo: city => `Zoomed to ${city}`
     },
     es: {
-      homeButton: "← Inicio", navNews: "Noticias", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navLinks: "Enlaces", navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
+      homeButton: "← Inicio", navNews: "Noticias", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navDemographics: "Demografía ExoChile", navLinks: "Enlaces", navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
       heroText: "Un prototipo de base de datos searchable para la comunidad chilena de exoplanetas. Selecciona etiquetas de instituto, ciudad, etapa profesional, foco científico, idioma y habilidades técnicas para identificar posibles colaboradores.",
       chipPrototype: "Prototipo con entradas ficticias", chipMatching: "Búsqueda exacta + aproximada", chipStatic: "Compatible con GitHub Pages estático",
       searchDatabase: "Buscar en la base de datos", backMain: "Volver al sitio principal", mapTitle: "Mapa de institutos", mapNote: "Haz clic en un grupo para acercar. Haz clic en un instituto para buscar.", regionalView: "Vista regional",
@@ -2598,6 +2601,64 @@
             {
                 "name": "Public talks",
                 "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Grace Angela Batalla Falcon",
+        "institute": "Universidad Diego Portales",
+        "affiliations": [
+            "Universidad Diego Portales"
+        ],
+        "city": "Santiago",
+        "careerStage": "Postdoc",
+        "focus": [
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Core composition"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Dust evolution and coagulation"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Chemical evolution of planet-forming material"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "FUor/EXor outbursts and planet formation"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "MIR observations"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "MIR measurements of dust"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "Portuguese"
+        ],
+        "skills": [
+            {
+                "name": "Infrared laboratory measurements",
+                "level": 3
+            },
+            {
+                "name": "Dust evolution",
+                "level": 2
+            },
+            {
+                "name": "MIR observations",
+                "level": 2
+            },
+            {
+                "name": "Core composition",
+                "level": 1
             }
         ]
     }

@@ -1,27 +1,697 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>ExoChile Demographics</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="assets/css/main.css" />
-  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Demographic overview of the ExoChile community database." />
   <style>
-    body { background: #1b1f22 url("images/exoplanet_1.jpg") center center / cover fixed no-repeat; }
+    :root {
+      --bg: #0b1020;
+      --bg-alt: #141a2a;
+      --accent: #4fd1c5;
+      --accent-soft: rgba(79, 209, 197, 0.15);
+      --text: #f5f7ff;
+      --muted: #9aa4c6;
+      --card-bg: #1a2135;
+      --border-subtle: #232b44;
+      --shadow-soft: 0 18px 35px rgba(0, 0, 0, 0.6);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --transition: 0.25s ease;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      /* Demographics dashboard aliases */
+      --panel: rgba(27,31,34,.82);
+      --panel-soft: rgba(255,255,255,.07);
+      --line: rgba(255,255,255,.18);
+      --shadow: var(--shadow-soft);
+      --radius: var(--radius-lg);
+      --font: var(--font-sans);
+      --accent2: #8fd4ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: #1b1f22 url("images/eso0603a.jpg") center center / cover fixed no-repeat;
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
     body::before { content:""; position:fixed; inset:0; background:rgba(0,0,0,.58); z-index:-1; }
-    .simple-page { min-height: 100vh; display:flex; align-items:center; justify-content:center; padding: 3rem 1.5rem; }
-    .simple-card { width: min(42rem, 100%); background: rgba(27,31,34,.88); border: 1px solid rgba(255,255,255,.25); border-radius: 4px; padding: 2.5rem; }
-    .home-link { border-bottom: 0; display:inline-block; margin-bottom: 1.5rem; }
+
+    a { color: var(--accent); text-decoration: none; border-bottom: 0; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(27,31,34,.82);
+      border-bottom: 1px solid rgba(255,255,255,.18);
+    }
+
+    .nav-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0.8rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    }
+
+    .logo { font-weight: 700; letter-spacing: 0.08em; font-size: 0.95rem; text-transform: uppercase; color: var(--muted); white-space: normal; }
+
+    nav ul { list-style: none; display: flex; gap: 1.25rem; font-size: 0.9rem; align-items: center; margin: 0; padding: 0; }
+    nav a { position: relative; padding: 0.25rem 0; color: var(--muted); font-weight: 500; border-bottom: 0; }
+    nav a::after { content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 2px; background: var(--accent); transition: width var(--transition); }
+    nav a:hover { color: var(--text); text-decoration: none; }
+    nav a:hover::after, nav a.active::after { width: 100%; }
+    nav a.active { color: var(--accent); }
+
+    .nav-toggle {
+      display: none; background: none; border: 1px solid var(--border-subtle); color: var(--muted);
+      padding: 0.4rem 0.7rem; border-radius: var(--radius-pill); font-size: 0.8rem; cursor: pointer;
+    }
+
+    .site-home-button {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 10000;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 0.42rem 0.82rem;
+      background: rgba(5, 8, 20, 0.82);
+      color: var(--muted);
+      backdrop-filter: blur(10px);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: var(--shadow-soft);
+    }
+    .site-home-button:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      text-decoration: none;
+      background: rgba(6, 14, 36, 0.92);
+    }
+
+    @media (max-width: 720px) {
+      nav ul { display: none; position: absolute; top: 54px; right: 1.5rem; flex-direction: column; background: #050814; padding: 0.75rem 1rem; border-radius: 14px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-soft); align-items: flex-start; }
+      nav ul.open { display: flex; }
+      .nav-toggle { display: inline-flex; align-items: center; gap: 0.25rem; }
+      .site-home-button { top: 0.65rem; left: 0.65rem; padding: 0.36rem 0.68rem; font-size: 0.72rem; }
+      .nav-inner { padding-left: 5.8rem; }
+      .logo { font-size: 0; }
+      .logo::after { content: "DEMOGRAPHICS"; font-size: 0.95rem; letter-spacing: 0.08em; }
+    }
+    .page-intro {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2.4rem 1.5rem 1.2rem;
+      text-align: center;
+    }
+    .kicker { text-transform: uppercase; letter-spacing: .22rem; color: var(--muted); font-size: .78rem; margin-bottom: .6rem; }
+    h1, h2, h3 { text-transform: uppercase; letter-spacing: .18rem; margin: 0; font-weight: 600; }
+    h1 { font-size: clamp(1.7rem, 4vw, 2.8rem); line-height: 1.15; }
+    .subtitle { max-width: 820px; margin: 1rem auto 0; color: var(--muted); font-size: 1rem; }
+    @media (max-width: 820px) {
+      .nav-inner { align-items: flex-start; }
+      .logo { white-space: normal; }
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 56px;
+        right: 1.3rem;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(5, 8, 20, 0.96);
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+      nav ul.open { display: flex; }
+      .nav-toggle { display: inline-flex; align-items: center; gap: 0.25rem; }
+    }
+    main { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+    section { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.2rem; margin: 1.1rem 0; box-shadow: var(--shadow); backdrop-filter: blur(8px); }
+    .section-head { display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:1rem; }
+    .section-head p { color: var(--muted); margin: .3rem 0 0; max-width: 740px; }
+    .cards { display:grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap:.85rem; }
+    .stat { background: var(--panel-soft); border:1px solid var(--line); border-radius:14px; padding:1rem; min-height:105px; }
+    .stat .num { font-size:2.1rem; line-height:1; font-weight:700; color:#fff; }
+    .stat .label { color:var(--muted); margin-top:.45rem; font-size:.88rem; }
+    .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:1.1rem; }
+    .geo-grid { display:grid; grid-template-columns: minmax(260px, 0.75fr) minmax(420px, 1.55fr); gap:1.1rem; align-items:stretch; }
+    .geo-grid .institute-card { min-width:0; }
+    .grid.three { grid-template-columns: 1.2fr .8fr; }
+    .chart-card { background: var(--panel-soft); border:1px solid var(--line); border-radius:14px; padding:1rem; min-height:330px; overflow:hidden; }
+    .chart-title { font-weight:600; letter-spacing:.12rem; text-transform:uppercase; font-size:.92rem; margin-bottom:.8rem; }
+    svg.chart { width:100%; height:auto; display:block; overflow:visible; }
+    .axis, .tick { stroke: rgba(255,255,255,.35); stroke-width:1; }
+    .bar { fill: rgba(79,209,197,.82); }
+    .bar2 { fill: rgba(143,212,255,.72); }
+    .bar3 { fill: rgba(255,255,255,.82); }
+    .label, .axis-label { fill: rgba(255,255,255,.78); font-size: 11px; }
+    .small-label { fill: rgba(255,255,255,.62); font-size: 9px; }
+    .legend { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:.65rem; color:var(--muted); font-size:.83rem; }
+    .legend span::before { content:""; display:inline-block; width:.7rem; height:.7rem; border-radius:2px; margin-right:.35rem; vertical-align:-.05rem; background:var(--c); }
+    .heatmap-wrap { overflow-x:auto; padding-bottom:.4rem; }
+    .heatmap { min-width:760px; }
+    .note { color:var(--muted); font-size:.85rem; margin-top:.8rem; }
+    .chart-card-wide { grid-column: 1 / -1; }
+    .matrix-help { color: var(--muted); font-size: .86rem; margin: -0.25rem 0 0.9rem; }
+    .cooccurrence-card { min-height: 0; }
+    .cooccurrence-heatmap { min-width: 860px; }
+    .matrix-code { fill: rgba(255,255,255,.88); font-size: 12px; font-weight: 700; }
+    .matrix-value { fill: #071018; font-size: 12px; font-weight: 800; text-anchor: middle; dominant-baseline: central; }
+    .matrix-value.light { fill: rgba(255,255,255,.86); }
+    .matrix-label { fill: rgba(255,255,255,.78); font-size: 11px; }
+    .matrix-muted { fill: rgba(255,255,255,.48); font-size: 10px; }
+    .matrix-code, .matrix-cell { cursor: pointer; }
+
+    .custom-tooltip {
+      position: fixed;
+      z-index: 100000;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(12px, 12px);
+      max-width: 320px;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid rgba(79,209,197,.75);
+      border-radius: 10px;
+      background: rgba(5, 8, 20, 0.96);
+      color: #f5f7ff;
+      box-shadow: 0 14px 28px rgba(0,0,0,.55);
+      font-size: 0.82rem;
+      line-height: 1.35;
+      white-space: normal;
+    }
+    .custom-tooltip.visible { opacity: 1; }
+    .custom-tooltip strong { color: var(--accent); font-weight: 700; }
+
+    .toggle-group { display: inline-flex; flex-wrap: wrap; gap: .45rem; margin: .65rem 0 1rem; padding: .2rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); background: rgba(5,8,20,.55); }
+    .toggle-btn { border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--muted); cursor: pointer; font-size: .78rem; font-weight: 700; padding: .45rem .85rem; letter-spacing: .05em; text-transform: uppercase; }
+    .toggle-btn.active { background: rgba(79,209,197,.92); color: #050814; }
+    .needs-caption { color: var(--muted); font-size: .84rem; margin-top: -.2rem; margin-bottom: .6rem; }
+    .compact-note { margin-top: .35rem; font-size: .78rem; }
+
+    footer { border-top: 1px solid var(--border-subtle); padding: 1.4rem 1.5rem 1.8rem; font-size: 0.8rem; color: var(--muted); background: rgba(27,31,34,.82); text-align: center; }
+
+    .city-card { min-height: 360px; }
+    .city-card #city-chart { width: 100%; }
+    .city-card svg.chart { width: 100%; max-width: 520px; margin: 0 auto; display: block; }
+    @media (max-width: 950px) { .city-card { min-height: 430px; } .city-card svg.chart { max-width: 560px; } }
+    @media (max-width: 950px) { .cards { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid, .grid.three, .geo-grid { grid-template-columns:1fr; } }
+    @media (max-width: 560px) { .page-intro { padding-top:1.6rem; } .cards { grid-template-columns:1fr; } section { padding:.9rem; } }
+  
+    /* Compact dashboard cards: reduce unused vertical space */
+    .dashboard-section,
+    .chart-section {
+      margin-bottom: 1.15rem;
+    }
+
+    .chart-card,
+    .dashboard-card,
+    .stat-card {
+      padding-top: 1.05rem;
+      padding-bottom: 1.05rem;
+    }
+
+    .geo-institute-layout .chart-card,
+    .geo-institute-layout .dashboard-card,
+    .city-pie-card {
+      min-height: 0 !important;
+      align-self: start;
+    }
+
+    .geo-institute-layout {
+      align-items: start !important;
+    }
+
+    .city-pie-card .donut-layout,
+    .city-pie-card .pie-layout {
+      margin-top: 0.35rem;
+      margin-bottom: 0;
+    }
+
+    .city-pie-card .donut-legend,
+    .city-pie-card .pie-legend,
+    .city-pie-card .chart-legend {
+      margin-bottom: 0;
+    }
+
+    .horizontal-bars,
+    .coverage-bars,
+    .bar-list {
+      gap: 0.42rem;
+    }
+
+    .bar-row,
+    .coverage-row {
+      margin-bottom: 0.42rem;
+    }
+
+    .bar-row:last-child,
+    .coverage-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-content,
+    .chart-content {
+      padding-bottom: 0;
+    }
+
   </style>
 </head>
 <body>
-  <div class="simple-page">
-    <main class="simple-card">
-      <a class="home-link" href="index.html">← Home</a>
-      <h1 class="major">ExoChile Demographics</h1>
-      <p>This page is a placeholder for future demographic summaries, plots, and community statistics.</p>
-      <p>You can later replace this file with the full demographics page.</p>
-    </main>
+<div id="custom-tooltip" class="custom-tooltip" role="tooltip"></div>
+<a class="site-home-button" href="index.html" aria-label="Return to opening page">← Home</a>
+<header>
+  <div class="nav-inner">
+    <div class="logo">EXOPLANETARY RESEARCH IN CHILE · DEMOGRAPHICS</div>
+    <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('nav ul').classList.toggle('open')">Menu ▾</button>
+    <nav aria-label="Main links">
+      <ul>
+        <li><a href="index.html#intro">News</a></li>
+        <li><a href="xo-chile.html">XO-Chile</a></li>
+        <li><a class="active" href="demographics.html">ExoChile Demographics</a></li>
+        <li><a href="https://exochile2026.github.io/">ExoChile2026</a></li>
+        <li><a href="index.html#links">Links</a></li>
+      </ul>
+    </nav>
   </div>
+</header>
+<div class="page-intro compact">
+  <p class="subtitle">A living overview of the people, institutes, expertise areas, tools, and languages represented in the Chilean exoplanet community.</p>
+</div>
+<main>
+  <section>
+    <div class="section-head"><div><h2>Community snapshot</h2><p>Headline numbers from the current XO-Chile database.</p></div></div>
+    <div class="cards" id="summary-cards"></div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Geography and institutes</h2><p>Where people and affiliations are concentrated across the current database.</p></div></div>
+    <div class="geo-grid">
+      <div class="chart-card city-card"><div class="chart-title">People per city</div><div id="city-chart"></div></div>
+      <div class="chart-card institute-card"><div class="chart-title">Affiliations per institute</div><div id="institute-chart"></div><p class="note compact-note"></p></div>
+    </div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Career stages</h2><p>Community composition by career stage.</p></div></div>
+    <div class="grid">
+      <div class="chart-card"><div class="chart-title">Career stage distribution</div><div id="career-chart"></div></div>
+    </div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Scientific expertise</h2><p>Main expertise areas selected by community members. People may contribute to more than one area.</p></div></div>
+    <div class="grid">
+      <div class="chart-card chart-card-wide"><div class="chart-title">People per expertise area</div><div id="expertise-chart"></div></div>
+    </div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Tools, skills, and languages</h2><p>Skill/tool coverage and self-classified expertise levels, together with spoken languages.</p></div></div>
+    <div class="grid">
+      <div class="chart-card"><div class="chart-title">Most common skills/tools by level</div><div id="skills-chart"></div><div class="legend"><span style="--c:rgba(255,255,255,.36)">1 star</span><span style="--c:rgba(143,212,255,.72)">2 stars</span><span style="--c:rgba(79,209,197,.88)">3 stars</span></div></div>
+      <div class="chart-card"><div class="chart-title">Languages spoken</div><div id="language-chart"></div><p class="note compact-note"></p></div>
+    </div>
+    <p class="note">Skill levels follow the XO-Chile convention: 1 star = new, 2 stars = intermediate, 3 stars = expert.</p>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Researcher needs</h2><p>Support, resources, and opportunities requested by the current community respondents.</p></div></div>
+    <div class="chart-card chart-card-wide">
+      <div class="chart-title">Most requested support</div>
+      <div class="toggle-group" role="group" aria-label="Select researcher group for needs chart">
+        <button class="toggle-btn active" type="button" data-needs-group="all">All researchers</button>
+        <button class="toggle-btn" type="button" data-needs-group="students">Students</button>
+        <button class="toggle-btn" type="button" data-needs-group="postdocs">Postdocs</button>
+        <button class="toggle-btn" type="button" data-needs-group="faculty">Faculty</button>
+      </div>
+      <p id="needs-caption" class="needs-caption"></p>
+      <div id="needs-chart"></div>
+      <p class="note compact-note">Multi-select style: people could select several needs, so totals can exceed the number of people in the selected group.</p>
+    </div>
+  </section>
+  <section>
+    <div class="section-head"><div><h2>Collaboration overlap</h2><p>Co-occurrence between expertise areas: brighter cells indicate areas that are selected together more often.</p></div></div>
+    <div class="chart-card cooccurrence-card"><div class="chart-title">Expertise co-occurrence matrix</div><p class="matrix-help">Each cell shows how many people selected both expertise areas. Hover over a code or cell to see the full names.</p><div class="heatmap-wrap"><div id="cooccurrence-heatmap" class="heatmap cooccurrence-heatmap"></div></div></div>
+  </section>
+</main>
+<footer>© Exoplanetary Research in Chile. Dashboard generated from the XO-Chile database.</footer>
+<script>
+  const people = [{"name": "Sebastián Pérez", "institute": "Universidad de Santiago de Chile", "affiliations": ["Universidad de Santiago de Chile", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "Associate Professor", "focus": [{"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "School visits"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Teacher training"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Planetarium and museum activities"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Educational resources"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"}, {"category": "Planetary System Evolution", "subcategory": "Debris discs"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Anomaly detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Machine-learning-assisted planet detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Simulation emulators"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Computer vision for imaging data"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Radiative Transfer"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Planet-Disc Interaction"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "FUor/EXor outbursts and planet formation"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Hydrodynamics"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Circumplanetary discs"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Interferometry"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "NIR observations"}], "languages": ["Spanish", "English"], "skills": [{"name": "ALMA", "level": 3}, {"name": "VLT/SPHERE", "level": 2}, {"name": "VLT/ERIS", "level": 2}, {"name": "VLT/ESPRESSO", "level": 3}, {"name": "VLT/CRIRES+", "level": 3}, {"name": "FARGO3D", "level": 3}, {"name": "RADMC-3D", "level": 3}, {"name": "CASA", "level": 2}, {"name": "Machine learning", "level": 2}, {"name": "Public talks", "level": 3}]}, {"name": "Lenin Andrés Valeria Rivas", "institute": "Universidad de Concepción", "affiliations": ["Universidad de Concepción", "Núcleo Milenio YEMS"], "city": "Concepción", "careerStage": "PhD Student", "focus": [{"category": "Machine Learning and Artificial Intelligence", "subcategory": "Machine-learning-assisted candidate detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Machine-learning-assisted planet detection"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Machine-learning-assisted candidate detection"}], "languages": ["Spanish", "English"], "skills": [{"name": "Machine learning", "level": 2}, {"name": "Candidate classification", "level": 2}, {"name": "Python", "level": 2}, {"name": "Light curves", "level": 1}]}, {"name": "Fernando Matías Castillo Morales", "institute": "Universidad de Santiago de Chile", "affiliations": ["Universidad de Santiago de Chile", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "Student (Magíster)", "focus": [{"category": "Planet Formation and Protoplanetary Discs", "subcategory": "N-Body Simulations"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Radiative Transfer"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Circumplanetary discs"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Planet-Disc Interaction"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Hydrodynamics"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Gravitational instability"}, {"category": "Planetary System Evolution", "subcategory": "Debris discs"}], "languages": ["Spanish", "English"], "skills": [{"name": "FARGO-ADSG", "level": 2}, {"name": "CARTA", "level": 1}, {"name": "RADMC-3D", "level": 1}, {"name": "N-body simulations", "level": 2}]}, {"name": "Philipp Weber", "institute": "Universidad de Santiago de Chile", "affiliations": ["Universidad de Santiago de Chile", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "Postdoc", "focus": [{"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Hydrodynamics"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Interferometry"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Planet-Disc Interaction"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "NIR observations"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Circumplanetary discs"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "FUor/EXor outbursts and planet formation"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Radiative Transfer"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Gravitational instability"}, {"category": "Planetary System Evolution", "subcategory": "Planetary system evolution after disc dispersal"}, {"category": "Planetary System Evolution", "subcategory": "Debris discs"}], "languages": ["Spanish", "English", "German"], "skills": [{"name": "FARGO3D", "level": 3}, {"name": "RADMC-3D", "level": 3}, {"name": "ALMA", "level": 2}, {"name": "VLT/SPHERE", "level": 2}, {"name": "CASA", "level": 2}, {"name": "Python", "level": 3}]}, {"name": "Gijs D. Mulders", "institute": "Pontificia Universidad Católica de Chile", "affiliations": ["Pontificia Universidad Católica de Chile", "Centro de Astrofísica y Tecnologías Afines (CATA)"], "city": "Santiago", "careerStage": "Assistant Professor", "focus": [{"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Mass–radius relations"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Water worlds"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Sub-Neptune envelopes"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Atmospheric loss"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Occurrence rates"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Planet radius distribution"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Planet mass distribution"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Radius valley"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Super-Earths"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Sub-Neptunes"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Cold giant planets"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Dependence on stellar mass"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Dependence on stellar metallicity"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Population synthesis"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Demographic comparisons between surveys"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Population synthesis of forming planets"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Pebble accretion"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "N-Body Simulations"}], "languages": ["Spanish", "English"], "skills": [{"name": "Population synthesis", "level": 3}, {"name": "N-body simulations", "level": 2}, {"name": "Python", "level": 2}, {"name": "ALMA", "level": 2}]}, {"name": "Patricio Rojo", "institute": "Universidad de Chile", "affiliations": ["Universidad de Chile"], "city": "Santiago", "careerStage": "Associate Professor", "focus": [{"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "School visits"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Undergraduate teaching"}, {"category": "Instrumentation", "subcategory": "High-contrast imaging instruments"}, {"category": "Instrumentation", "subcategory": "Adaptive optics"}, {"category": "Instrumentation", "subcategory": "Ground-based surveys"}, {"category": "Instrumentation", "subcategory": "Pipeline development for instruments"}, {"category": "Instrumentation", "subcategory": "Observing strategy and performance forecasts"}, {"category": "Habitability and Biosignatures", "subcategory": "Climate stability"}, {"category": "Habitability and Biosignatures", "subcategory": "Atmospheric biosignatures"}, {"category": "Habitability and Biosignatures", "subcategory": "Solar System analogues"}, {"category": "Exoplanet Atmospheres", "subcategory": "Transmission spectroscopy"}, {"category": "Exoplanet Atmospheres", "subcategory": "Emission spectroscopy"}, {"category": "Exoplanet Atmospheres", "subcategory": "High-resolution spectroscopy"}, {"category": "Exoplanet Atmospheres", "subcategory": "Atmospheric retrievals"}, {"category": "Exoplanet Atmospheres", "subcategory": "Atmospheric chemistry"}, {"category": "Exoplanet Atmospheres", "subcategory": "Clouds and hazes"}, {"category": "Exoplanet Atmospheres", "subcategory": "Disequilibrium chemistry"}, {"category": "Exoplanet Atmospheres", "subcategory": "Atmospheric escape"}, {"category": "Exoplanet Atmospheres", "subcategory": "Phase curves"}, {"category": "Exoplanet Atmospheres", "subcategory": "Climate modelling"}, {"category": "Exoplanet Atmospheres", "subcategory": "3D general circulation models"}, {"category": "Exoplanet Atmospheres", "subcategory": "Stellar contamination in atmospheric spectra"}], "languages": ["Spanish", "English"], "skills": [{"name": "VLT/ESPRESSO", "level": 3}, {"name": "VLT/CRIRES+", "level": 3}, {"name": "HARPS", "level": 3}, {"name": "VLT/SPHERE", "level": 2}, {"name": "ALMA", "level": 2}, {"name": "Atmospheric retrievals", "level": 3}, {"name": "Public talks", "level": 3}]}, {"name": "Sidharth Aroli-Veettil", "institute": "Pontificia Universidad Católica de Chile", "affiliations": ["Pontificia Universidad Católica de Chile", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "PhD Student", "focus": [{"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Chemical evolution of planet-forming material"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Interferometry"}], "languages": ["English", "Hindi", "Malayalam"], "skills": [{"name": "ALMA", "level": 3}, {"name": "RADMC-3D", "level": 2}, {"name": "Interferometry", "level": 2}, {"name": "Python", "level": 2}]}, {"name": "Marcelo Tala", "institute": "The Ohio State University", "affiliations": ["The Ohio State University"], "city": "Columbus, OH, USA", "careerStage": "Postdoc", "focus": [{"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit photometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Survey design and target selection"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "False-positive vetting and validation"}, {"category": "Instrumentation", "subcategory": "Spectrograph development"}, {"category": "Instrumentation", "subcategory": "Ground-based surveys"}, {"category": "Instrumentation", "subcategory": "Telescope operations"}, {"category": "Instrumentation", "subcategory": "Instrument calibration"}, {"category": "Instrumentation", "subcategory": "Pipeline development for instruments"}, {"category": "Instrumentation", "subcategory": "Observing strategy and performance forecasts"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Mass–radius relations"}], "languages": ["Spanish", "English", "German"], "skills": [{"name": "HARPS", "level": 3}, {"name": "VLT/ESPRESSO", "level": 3}, {"name": "Radial velocities", "level": 3}, {"name": "Transit photometry", "level": 2}]}, {"name": "Matthias R. Schreiber", "institute": "Universidad Técnica Federico Santa María", "affiliations": ["Universidad Técnica Federico Santa María (Viña del Mar)"], "city": "Valparaíso", "careerStage": "Full Professor", "focus": [{"category": "Planetary System Evolution", "subcategory": "White dwarf planetary systems"}, {"category": "Planetary System Evolution", "subcategory": "Debris discs around white dwarfs"}, {"category": "Planetary System Evolution", "subcategory": "White dwarf pollution / contamination"}, {"category": "Planetary System Evolution", "subcategory": "Tidal disruption of planetesimals"}, {"category": "Planetary System Evolution", "subcategory": "Post-main-sequence planetary system evolution"}, {"category": "Planetary System Evolution", "subcategory": "Debris discs"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Pebble accretion"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Migration and resonances"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Hydrodynamics"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Direct imaging"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Astrometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Timing methods"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Dependence on stellar mass"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Dependence on stellar metallicity"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Population synthesis"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Demographic comparisons between surveys"}], "languages": ["Spanish", "English", "German", "French"], "skills": [{"name": "VLT/SPHERE", "level": 3}, {"name": "Direct imaging", "level": 3}, {"name": "Astrometry", "level": 3}, {"name": "N-body simulations", "level": 3}]}, {"name": "Alice Zurlo", "institute": "Universidad Diego Portales", "affiliations": ["Universidad Diego Portales", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "Full Professor", "focus": [{"category": "Exoplanet Detection and Discovery", "subcategory": "Direct imaging"}, {"category": "Instrumentation", "subcategory": "High-contrast imaging instruments"}, {"category": "Instrumentation", "subcategory": "Adaptive optics"}, {"category": "Instrumentation", "subcategory": "Coronagraphy"}, {"category": "Instrumentation", "subcategory": "Space missions"}, {"category": "Instrumentation", "subcategory": "Pipeline development for instruments"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "School visits"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Planetarium and museum activities"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Gravitational instability"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "FUor/EXor outbursts and planet formation"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "NIR observations"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "N-Body Simulations"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Planet-Disc Interaction"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Circumplanetary discs"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Deep Learning for planet detection"}, {"category": "Planetary System Evolution", "subcategory": "Dynamical stability"}, {"category": "Planetary System Evolution", "subcategory": "Long-term N-body simulations"}], "languages": ["Spanish", "English", "French", "Italian"], "skills": [{"name": "VLT/SPHERE", "level": 3}, {"name": "VLT/ERIS", "level": 3}, {"name": "Direct imaging", "level": 3}, {"name": "ADI/PCA", "level": 3}, {"name": "Python", "level": 2}]}, {"name": "Daniela González Vargas", "institute": "Universidad de Chile", "affiliations": ["Universidad de Chile"], "city": "Santiago", "careerStage": "PhD Student", "focus": [{"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Astrometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "False-positive vetting and validation"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Optical Interferometry"}], "languages": ["Spanish", "English"], "skills": [{"name": "VLTI/GRAVITY", "level": 1}, {"name": "Pyaneti", "level": 2}, {"name": "Octofitter", "level": 1}, {"name": "Radial velocities", "level": 2}]}, {"name": "Florian Rodler", "institute": "European Southern Observatory Chile", "affiliations": ["European Southern Observatory Chile"], "city": "Santiago", "careerStage": "Associate Faculty Astronomer", "focus": [{"category": "Instrumentation", "subcategory": "Spectrograph development"}, {"category": "Instrumentation", "subcategory": "Ground-based surveys"}, {"category": "Instrumentation", "subcategory": "Telescope operations"}, {"category": "Instrumentation", "subcategory": "Instrument calibration"}, {"category": "Instrumentation", "subcategory": "Observing strategy and performance forecasts"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public observing events"}, {"category": "Exoplanet Atmospheres", "subcategory": "Emission spectroscopy"}, {"category": "Exoplanet Atmospheres", "subcategory": "High-resolution spectroscopy"}], "languages": ["Spanish", "English", "German"], "skills": [{"name": "VLT/ESPRESSO", "level": 3}, {"name": "VLT/CRIRES+", "level": 3}, {"name": "HARPS", "level": 3}, {"name": "High-resolution spectroscopy", "level": 3}, {"name": "Public observing events", "level": 2}]}, {"name": "Ilaria Giovannini", "institute": "Universidad Diego Portales", "affiliations": ["Universidad Diego Portales", "Núcleo Milenio YEMS", "INAF (Italy)"], "city": "Padova, Italy", "careerStage": "PhD Student", "focus": [{"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit photometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Direct imaging"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit timing variations"}], "languages": ["Spanish", "English", "Italian"], "skills": [{"name": "pyorbit", "level": 2}, {"name": "Radial velocities", "level": 2}, {"name": "Transit photometry", "level": 2}, {"name": "Direct imaging", "level": 1}]}, {"name": "Felipe Ignacio Burgos Rubilar", "institute": "Universidad de Concepción", "affiliations": ["Universidad de Concepción"], "city": "Concepción", "careerStage": "PhD Student", "focus": [{"category": "Machine Learning and Artificial Intelligence", "subcategory": "Candidate classification"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Anomaly detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Machine-learning-assisted planet detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Time-domain alert brokers"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Large survey data mining"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Interpretable AI for astrophysics"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Deep Learning for planet detection"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Machine-learning-assisted candidate detection"}], "languages": ["Spanish", "English"], "skills": [{"name": "Machine learning", "level": 3}, {"name": "Candidate classification", "level": 3}, {"name": "Python", "level": 2}, {"name": "Radial velocities", "level": 1}]}, {"name": "Matias Jones", "institute": "European Southern Observatory Chile", "affiliations": ["European Southern Observatory Chile"], "city": "Santiago", "careerStage": "Staff astronomer", "focus": [{"category": "Exoplanet Populations and Demographics", "subcategory": "Occurrence rates"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Cold giant planets"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Dependence on stellar mass"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Dependence on stellar metallicity"}, {"category": "Planetary System Evolution", "subcategory": "Post-main-sequence planetary system evolution"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Orbital dynamics"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Dynamical stability"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit photometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Direct imaging"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Astrometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit timing variations"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Mass–radius relations"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Interior structure models"}, {"category": "Instrumentation", "subcategory": "High-contrast imaging instruments"}, {"category": "Instrumentation", "subcategory": "Adaptive optics"}, {"category": "Instrumentation", "subcategory": "Coronagraphy"}, {"category": "Instrumentation", "subcategory": "Spectrograph development"}, {"category": "Instrumentation", "subcategory": "Space missions"}, {"category": "Instrumentation", "subcategory": "Ground-based surveys"}, {"category": "Instrumentation", "subcategory": "Telescope operations"}, {"category": "Instrumentation", "subcategory": "Instrument calibration"}, {"category": "Instrumentation", "subcategory": "Pipeline development for instruments"}, {"category": "Instrumentation", "subcategory": "Observing strategy and performance forecasts"}], "languages": ["Spanish", "English"], "skills": [{"name": "VLT/SPHERE", "level": 3}, {"name": "Radial velocities", "level": 3}, {"name": "Direct imaging", "level": 3}, {"name": "Astrometry", "level": 3}, {"name": "High-resolution spectroscopy", "level": 2}]}, {"name": "Jose Vines", "institute": "Universidad Católica del Norte", "affiliations": ["Universidad Católica del Norte"], "city": "Santiago", "careerStage": "Postdoc", "focus": [{"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit photometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Astrometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Machine-learning-assisted candidate detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Candidate classification"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Anomaly detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Machine-learning-assisted planet detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Bayesian inference and probabilistic ML"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Deep Learning for planet detection"}], "languages": ["Spanish", "English"], "skills": [{"name": "FEROS", "level": 3}, {"name": "ARIADNE", "level": 3}, {"name": "Isochrones", "level": 3}, {"name": "CORALIE", "level": 2}, {"name": "Machine learning", "level": 3}, {"name": "Radial velocities", "level": 3}]}, {"name": "Danyla Ignacia Santiago Carrasco", "institute": "Universidad de Atacama", "affiliations": ["Universidad de Atacama"], "city": "Copiapó", "careerStage": "PhD Student", "focus": [{"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Habitability and Biosignatures", "subcategory": "Habitable zone theory"}, {"category": "Habitability and Biosignatures", "subcategory": "M-dwarf habitability"}, {"category": "Habitability and Biosignatures", "subcategory": "Solar System analogues"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Orbital dynamics"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Mean-motion resonances"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Secular dynamics"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Planet–planet scattering"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Dynamical stability"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Compact multi-planet systems"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Eccentric and inclined systems"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Planetary obliquity"}, {"category": "Planetary System Architecture and Dynamics", "subcategory": "Long-term N-body simulations"}], "languages": ["Spanish", "English"], "skills": [{"name": "REBOUND", "level": 2}, {"name": "N-body simulations", "level": 2}, {"name": "Public talks", "level": 2}]}, {"name": "Carla Hernández Silva", "institute": "Universidad de Santiago de Chile", "affiliations": ["Universidad de Santiago de Chile"], "city": "Santiago", "careerStage": "Associate Professor", "focus": [{"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Teacher training"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Educational resources"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Undergraduate teaching"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public observing events"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"}], "languages": ["Spanish"], "skills": [{"name": "Public talks", "level": 3}, {"name": "Teacher training", "level": 3}, {"name": "Educational resources", "level": 3}, {"name": "Public observing events", "level": 3}, {"name": "Data visualisation", "level": 2}]}, {"name": "Vicente Salazar Ortega", "institute": "Universidad de Concepción", "affiliations": ["Universidad de Concepción"], "city": "Concepción", "careerStage": "Student (Licenciatura)", "focus": [{"category": "Instrumentation", "subcategory": "Telescope operations"}, {"category": "Instrumentation", "subcategory": "Instrument calibration"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Citizen science"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public observing events"}], "languages": ["Spanish", "English", "German", "Italian", "Portuguese"], "skills": [{"name": "Telescope operations", "level": 1}, {"name": "Instrument calibration", "level": 1}, {"name": "Public observing events", "level": 2}]}, {"name": "Jorge Luis Guzmán Lazo", "institute": "Universidad de Santiago de Chile", "affiliations": ["Universidad de Santiago de Chile", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "Student (Licenciatura)", "focus": [{"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "School visits"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Planetarium and museum activities"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Citizen science"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Media communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Social media and digital outreach"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Educational resources"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Public observing events"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Radiative Transfer"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Hydrodynamics"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Planet-Disc Interaction"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Circumplanetary discs"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Interferometry"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "NIR observations"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "N-Body Simulations"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Radial velocities"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit photometry"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Direct imaging"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Transit timing variations"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Machine-learning-assisted candidate detection"}, {"category": "Exoplanet Detection and Discovery", "subcategory": "Survey design and target selection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Candidate classification"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Anomaly detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Machine-learning-assisted planet detection"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Simulation emulators"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Bayesian inference and probabilistic ML"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Computer vision for imaging data"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Large survey data mining"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Interpretable AI for astrophysics"}, {"category": "Machine Learning and Artificial Intelligence", "subcategory": "Deep Learning for planet detection"}], "languages": ["Spanish", "English"], "skills": [{"name": "Machine learning", "level": 2}, {"name": "RADMC-3D", "level": 1}, {"name": "Python", "level": 2}, {"name": "Public talks", "level": 2}]}, {"name": "Bhavya Ambalapatta Kannancheri", "institute": "Pontificia Universidad Católica de Chile", "affiliations": ["Pontificia Universidad Católica de Chile"], "city": "Santiago", "careerStage": "PhD Student", "focus": [{"category": "Exoplanet Populations and Demographics", "subcategory": "Occurrence rates"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Planet radius distribution"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Planet mass distribution"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Demographic comparisons between surveys"}, {"category": "Exoplanet Populations and Demographics", "subcategory": "Hot Neptunes"}], "languages": ["English", "Malayalam"], "skills": [{"name": "Demographics", "level": 2}, {"name": "Population statistics", "level": 2}, {"name": "Python", "level": 2}]}, {"name": "Neda Hejazi", "institute": "Universidad de Tarapacá", "affiliations": ["Universidad de Tarapacá"], "city": "Santiago", "careerStage": "Postdoc", "focus": [{"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Star-planet chemical connections"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Mass–radius relations"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Interior structure models"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Core composition"}, {"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Super-Earth interiors"}], "languages": ["Spanish", "English"], "skills": [{"name": "ARCES/APO", "level": 1}, {"name": "iSHELL/IRTF", "level": 1}, {"name": "Mass-radius modelling", "level": 3}]}, {"name": "Camilo González Ruilova", "institute": "Universidad de Santiago de Chile", "affiliations": ["Universidad de Santiago de Chile", "Núcleo Milenio YEMS"], "city": "Santiago", "careerStage": "Postdoc", "focus": [{"category": "Outreach, Education, and Public Engagement", "subcategory": "Public talks and science communication"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "School visits"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Teacher training"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Educational resources"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Undergraduate teaching"}, {"category": "Outreach, Education, and Public Engagement", "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Interferometry"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Circumplanetary discs"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Protoplanetary disc evolution"}], "languages": ["Spanish", "English"], "skills": [{"name": "ALMA", "level": 3}, {"name": "Interferometry", "level": 3}, {"name": "CASA", "level": 2}, {"name": "Public talks", "level": 2}]}, {"name": "Grace Angela Batalla Falcon", "institute": "Universidad Diego Portales", "affiliations": ["Universidad Diego Portales"], "city": "Santiago", "careerStage": "Postdoc", "focus": [{"category": "Planetary Interiors, Composition, and Evolution", "subcategory": "Core composition"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Dust evolution and coagulation"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "Chemical evolution of planet-forming material"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "FUor/EXor outbursts and planet formation"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "MIR observations"}, {"category": "Planet Formation and Protoplanetary Discs", "subcategory": "MIR measurements of dust"}], "languages": ["Spanish", "English", "Portuguese"], "skills": [{"name": "Infrared laboratory measurements", "level": 3}, {"name": "Dust evolution", "level": 2}, {"name": "MIR observations", "level": 2}, {"name": "Core composition", "level": 1}]}];
+
+const expertiseOrder = [
+  "Planet Formation and Protoplanetary Discs",
+  "Exoplanet Detection and Discovery",
+  "Exoplanet Atmospheres",
+  "Planetary System Architecture and Dynamics",
+  "Exoplanet Populations and Demographics",
+  "Planetary Interiors, Composition, and Evolution",
+  "Outreach, Education, and Public Engagement",
+  "Instrumentation",
+  "Machine Learning and Artificial Intelligence",
+  "Habitability and Biosignatures",
+  "Planetary System Evolution"
+];
+
+function unique(arr) { return Array.from(new Set(arr.filter(Boolean))); }
+
+const needsByName = {
+  "Sebastián Pérez": ["Academic Guidance", "Help finding collaborators", "Machine learning / AI support", "Networking with national / international researchers", "Support with diversity, equity, inclusion, and accessibility", "Support for women and underrepresented groups"],
+  "Lenin Andrés Valeria Rivas": ["Academic Guidance", "Financial Support", "Machine learning / AI support", "Networking with national / international researchers"],
+  "Fernando Matías Castillo Morales": ["Academic Guidance", "Workshops or Schools", "Support with English"],
+  "Philipp Weber": ["Academic Guidance", "Financial Support", "Help finding collaborators", "Machine learning / AI support", "Support with teaching material", "Support with diversity, equity, inclusion, and accessibility", "Support for women and underrepresented groups", "Support with administrative processes"],
+  "Gijs D. Mulders": ["Help finding collaborators", "Networking with national / international researchers"],
+  "Patricio Rojo": ["Financial Support", "Information about conferences and workshops"],
+  "Sidharth Aroli-Veettil": ["Academic Guidance", "Financial Support", "Help finding collaborators", "Support with academic writing (articles/proposals/grant applications)", "Machine learning / AI support", "Workshops or Schools", "Networking with national / international researchers", "Information about conferences and workshops", "Information about job / funding opportunities", "Support with Spanish", "Support with administrative processes"],
+  "Marcelo Tala": ["Financial Support"],
+  "Matthias R. Schreiber": ["Networking with national / international researchers"],
+  "Daniela González Vargas": ["Academic Guidance", "Financial Support", "Support with academic writing (articles/proposals/grant applications)", "Workshops or Schools"],
+  "Ilaria Giovannini": ["Academic Guidance", "Support with academic writing (articles/proposals/grant applications)", "Workshops or Schools", "Information about job / funding opportunities", "Support with Spanish"],
+  "Felipe Ignacio Burgos Rubilar": ["Help finding collaborators", "Access to computing resources", "Information about conferences and workshops", "Information about job / funding opportunities"],
+  "Jose Vines": ["Financial Support", "Support with academic writing (articles/proposals/grant applications)", "Access to computing resources", "Networking with national / international researchers", "Information about conferences and workshops", "Information about job / funding opportunities"],
+  "Danyla Ignacia Santiago Carrasco": ["Financial Support", "Help finding collaborators", "Support with academic writing (articles/proposals/grant applications)", "Access to computing resources", "Workshops or Schools", "Networking with national / international researchers", "Information about conferences and workshops", "Information about job / funding opportunities"],
+  "Carla Hernández Silva": ["Access to computing resources", "Support with English", "Access to data visualization tools"],
+  "Vicente Salazar Ortega": ["Academic Guidance", "Financial Support", "Workshops or Schools", "Information about conferences and workshops", "Information about job / funding opportunities"],
+  "Jorge Luis Guzmán Lazo": ["Academic Guidance", "Financial Support", "Help finding collaborators", "Support with academic writing (articles/proposals/grant applications)", "Machine learning / AI support", "Access to computing resources", "Workshops or Schools", "Networking with national / international researchers", "Information about conferences and workshops", "Information about job / funding opportunities"],
+  "Bhavya Ambalapatta Kannancheri": ["Academic Guidance", "Financial Support", "Help finding collaborators", "Support with academic writing (articles/proposals/grant applications)", "Machine learning / AI support", "Workshops or Schools", "Networking with national / international researchers", "Information about conferences and workshops", "Support with Spanish", "Support with diversity, equity, inclusion, and accessibility", "Psychological Support", "Support for women and underrepresented groups", "Support with administrative processes"],
+  "Neda Hejazi": ["Access to computing resources", "Networking with national / international researchers", "Information about job / funding opportunities"],
+  "Camilo González Ruilova": ["Financial Support", "Help finding collaborators", "Workshops or Schools", "Information about job / funding opportunities", "Support with teaching material"]
+};
+
+function needsForPerson(person) {
+  return person.needs || needsByName[person.name] || [];
+}
+
+function isStudent(person) {
+  const s = (person.careerStage || '').toLowerCase();
+  return s.includes('student') || s.includes('phd') || s.includes('magíster') || s.includes('magister') || s.includes('licenciatura');
+}
+
+function isFaculty(person) {
+  const s = (person.careerStage || '').toLowerCase();
+  return s.includes('professor') || s.includes('faculty') || s.includes('staff astronomer');
+}
+
+function isPostdoc(person) {
+  const s = (person.careerStage || '').toLowerCase();
+  return s.includes('postdoc') || s.includes('postdoctoral');
+}
+
+function needsGroupPeople(group) {
+  if (group === 'students') return people.filter(isStudent);
+  if (group === 'postdocs') return people.filter(isPostdoc);
+  if (group === 'faculty') return people.filter(isFaculty);
+  return people;
+}
+
+function renderNeedsChart(group = 'all') {
+  const selectedPeople = needsGroupPeople(group);
+  const withNeeds = selectedPeople.filter(p => needsForPerson(p).length > 0);
+  const data = countBy(withNeeds.flatMap(needsForPerson)).slice(0, 14);
+  const labels = { all: 'all researchers', students: 'students', postdocs: 'postdocs', faculty: 'faculty' };
+  const caption = document.getElementById('needs-caption');
+  if (caption) caption.textContent = `Showing ${withNeeds.length} of ${selectedPeople.length} ${labels[group]} with recorded needs information.`;
+  const target = document.getElementById('needs-chart');
+  if (!target) return;
+  if (!data.length) {
+    target.innerHTML = '<p class="note">No needs information is currently available for this group.</p>';
+    return;
+  }
+  multiSelectBar('needs-chart', data, {left:330, labelLen:48, denominator: Math.max(1, withNeeds.length), rowH:28});
+}
+
+function initNeedsToggle() {
+  document.querySelectorAll('[data-needs-group]').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('[data-needs-group]').forEach(b => b.classList.toggle('active', b === button));
+      renderNeedsChart(button.dataset.needsGroup || 'all');
+    });
+  });
+}
+
+function countBy(items) { const m = new Map(); items.forEach(x => m.set(x, (m.get(x)||0)+1)); return Array.from(m, ([key,value]) => ({key,value})).sort((a,b)=>b.value-a.value||a.key.localeCompare(b.key)); }
+function categoriesForPerson(p) { return unique((p.focus||[]).map(f => f.category)); }
+function allCities() { return unique(people.map(p => p.city)).sort(); }
+function allExpertise() { return expertiseOrder.filter(e => people.some(p => categoriesForPerson(p).includes(e))).concat(unique(people.flatMap(p => categoriesForPerson(p))).filter(e => !expertiseOrder.includes(e)).sort()); }
+function short(s, n=24) { return s.length > n ? s.slice(0,n-1)+"…" : s; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function renderSummary() {
+  const institutes = unique(people.flatMap(p => p.affiliations && p.affiliations.length ? p.affiliations : [p.institute]));
+  const cities = unique(people.map(p => p.city));
+  const expertise = allExpertise();
+  const languages = unique(people.flatMap(p => p.languages || []));
+  const cards = [
+    [people.length, "Researchers"],
+    [institutes.length, "Institutes / affiliations"],
+    [cities.length, "Cities"],
+    [expertise.length, "Expertise areas"],
+    [languages.length, "Languages"]
+  ];
+  document.getElementById('summary-cards').innerHTML = cards.map(([n,l])=>`<div class="stat"><div class="num">${n}</div><div class="label">${l}</div></div>`).join('');
+}
+
+function horizontalBar(el, data, opts={}) {
+  const w = opts.w || 720, rowH = opts.rowH || 28, left = opts.left || 190, right = 30, top = 16;
+  const h = top*2 + data.length*rowH;
+  const max = Math.max(1, ...data.map(d=>d.value));
+  const bw = w-left-right;
+  const bars = data.map((d,i)=>{
+    const y = top+i*rowH;
+    const width = d.value/max*bw;
+    return `<text class="label" x="0" y="${y+15}">${esc(short(d.key, opts.labelLen||28))}</text><rect class="bar" x="${left}" y="${y+3}" width="${width.toFixed(1)}" height="16" rx="3"/><text class="small-label" x="${left+width+6}" y="${y+15}">${d.value}</text>`;
+  }).join('');
+  document.getElementById(el).innerHTML = `<svg class="chart" viewBox="0 0 ${w} ${h}">${bars}</svg>`;
+}
+
+function multiSelectBar(el, data, opts={}) {
+  const w = opts.w || 720, rowH = opts.rowH || 30, left = opts.left || 220, right = 80, top = 16;
+  const h = top*2 + data.length*rowH + 8;
+  const denominator = opts.denominator || people.length || 1;
+  const scaleMax = opts.scaleToMax ? Math.max(1, ...data.map(d => d.value)) : denominator;
+  const bw = w-left-right;
+  const rows = data.map((d,i)=>{
+    const y = top+i*rowH;
+    const frac = Math.min(1, d.value / scaleMax);
+    const width = frac*bw;
+    const percent = Math.round(100*d.value/denominator);
+    return `<text class="label" x="0" y="${y+16}">${esc(short(d.key, opts.labelLen||32))}</text>` +
+      `<rect x="${left}" y="${y+4}" width="${bw}" height="16" rx="8" fill="rgba(255,255,255,.07)"/>` +
+      `<rect class="bar" x="${left}" y="${y+4}" width="${width.toFixed(1)}" height="16" rx="8"><title>${esc(d.key)}: ${d.value} people (${percent}%)</title></rect>` +
+      `<text class="small-label" x="${left+bw+10}" y="${y+16}">${d.value} (${percent}%)</text>`;
+  }).join('');
+  document.getElementById(el).innerHTML = `<svg class="chart" viewBox="0 0 ${w} ${h}">${rows}</svg>`;
+}
+
+function stackedSkillBar(el, data) {
+  const w=760, rowH=30, left=180, right=40, top=18, h=top*2+data.length*rowH, bw=w-left-right;
+  const max=Math.max(1, ...data.map(d=>d.total));
+  const rows=data.map((d,i)=>{
+    const y=top+i*rowH; let x=left;
+    const parts=[{v:d.l1,c:'rgba(255,255,255,.36)'},{v:d.l2,c:'rgba(143,212,255,.72)'},{v:d.l3,c:'rgba(79,209,197,.88)'}];
+    const rects=parts.map(p=>{const ww=p.v/max*bw; const r=`<rect x="${x.toFixed(1)}" y="${y+4}" width="${ww.toFixed(1)}" height="16" rx="3" fill="${p.c}"/>`; x+=ww; return r;}).join('');
+    return `<text class="label" x="0" y="${y+16}">${esc(short(d.key,24))}</text>${rects}<text class="small-label" x="${left + d.total/max*bw + 6}" y="${y+16}">${d.total}</text>`;
+  }).join('');
+  document.getElementById(el).innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}">${rows}</svg>`;
+}
+
+function donut(el, data, opts = {}) {
+  const bottomLegend = opts.legendPosition === 'bottom';
+  const fillBox = opts.fillBox === true;
+  const w = fillBox ? 430 : 560;
+  const cx = fillBox ? 215 : (bottomLegend ? 280 : 150);
+  const cy = fillBox ? 165 : (bottomLegend ? 142 : 145);
+  const r = fillBox ? 145 : (bottomLegend ? 118 : 92);
+  const innerR = fillBox ? 62 : (bottomLegend ? 58 : 48);
+  const legendStep = fillBox ? 24 : (bottomLegend ? 24 : 28);
+  const legendCols = fillBox ? 2 : (bottomLegend ? 2 : 1);
+  const legendStartX = fillBox ? 34 : (bottomLegend ? 58 : 285);
+  const legendStartY = fillBox ? 340 : (bottomLegend ? 300 : 35);
+  const legendColW = fillBox ? 200 : (bottomLegend ? 245 : 0);
+  const legendLen = fillBox ? 24 : (bottomLegend ? 26 : 30);
+  const h = fillBox
+    ? Math.max(410, legendStartY + Math.ceil(data.length / legendCols) * legendStep + 24)
+    : (bottomLegend
+      ? Math.max(360, legendStartY + Math.ceil(data.length / legendCols) * legendStep + 20)
+      : Math.max(300, 55 + data.length * legendStep));
+  const total = data.reduce((sum,d)=>sum+d.value,0)||1;
+  let a = -Math.PI/2;
+  const colors=['rgba(79,209,197,.88)','rgba(143,212,255,.82)','rgba(255,255,255,.78)','rgba(185,158,255,.78)','rgba(255,205,120,.78)','rgba(255,140,170,.72)','rgba(140,255,190,.65)','rgba(120,180,255,.68)','rgba(230,230,255,.62)','rgba(160,255,230,.62)'];
+  function arc(a0,a1) {
+    const x0=cx+r*Math.cos(a0), y0=cy+r*Math.sin(a0), x1=cx+r*Math.cos(a1), y1=cy+r*Math.sin(a1);
+    const large=(a1-a0)>Math.PI?1:0;
+    return `M ${cx} ${cy} L ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1} ${y1} Z`;
+  }
+  const segs=data.map((d,i)=>{
+    const a1=a + d.value/total*2*Math.PI;
+    const p=`<path d="${arc(a,a1)}" fill="${colors[i%colors.length]}" opacity=".88"><title>${esc(d.key)}: ${d.value}</title></path>`;
+    a=a1;
+    return p;
+  }).join('');
+  const legend=data.map((d,i)=>{
+    const col = (bottomLegend || fillBox) ? i % legendCols : 0;
+    const row = (bottomLegend || fillBox) ? Math.floor(i / legendCols) : i;
+    const x = legendStartX + col * legendColW;
+    const y = legendStartY + row * legendStep;
+    return `<g transform="translate(${x},${y})"><rect width="13" height="13" rx="2" fill="${colors[i%colors.length]}"/><text class="label" x="22" y="11">${esc(short(d.key,legendLen))} (${d.value})</text></g>`;
+  }).join('');
+  document.getElementById(el).innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}">${segs}<circle cx="${cx}" cy="${cy}" r="${innerR}" fill="rgba(27,31,34,.9)"/><text class="label" x="${cx}" y="${cy+5}" text-anchor="middle">${total}</text>${legend}</svg>`;
+}
+
+function heatmap(el, rows, cols, values, opts={}) {
+  const cellW=opts.cellW||58, cellH=26, left=260, top=88, w=left+cols.length*cellW+20, h=top+rows.length*cellH+40;
+  const max=Math.max(1, ...Object.values(values));
+  const colLabels=cols.map((c,i)=>`<text class="small-label" x="${left+i*cellW+cellW/2}" y="${top-8}" text-anchor="middle" transform="rotate(-45 ${left+i*cellW+cellW/2} ${top-8})">${esc(short(c,14))}</text>`).join('');
+  const rowLabels=rows.map((r,i)=>`<text class="label" x="0" y="${top+i*cellH+17}">${esc(short(r,38))}</text>`).join('');
+  const cells=[];
+  rows.forEach((r,i)=>cols.forEach((c,j)=>{
+    const v=values[`${r}|||${c}`]||0; const alpha=0.07 + 0.86*(v/max);
+    cells.push(`<rect x="${left+j*cellW}" y="${top+i*cellH}" width="${cellW-2}" height="${cellH-2}" rx="3" fill="rgba(79,209,197,${v?alpha:0.05})"><title>${esc(r)} × ${esc(c)}: ${v}</title></rect><text class="small-label" x="${left+j*cellW+cellW/2}" y="${top+i*cellH+16}" text-anchor="middle">${v||''}</text>`);
+  }));
+  document.getElementById(el).innerHTML=`<svg class="chart" viewBox="0 0 ${w} ${h}">${colLabels}${rowLabels}${cells.join('')}</svg>`;
+}
+
+
+function expertiseCode(name) {
+  const codes = {
+    "Planet Formation and Protoplanetary Discs": "PF",
+    "Exoplanet Detection and Discovery": "DET",
+    "Exoplanet Atmospheres": "ATM",
+    "Planetary System Architecture and Dynamics": "DYN",
+    "Exoplanet Populations and Demographics": "POP",
+    "Planetary Interiors, Composition, and Evolution": "INT",
+    "Outreach, Education, and Public Engagement": "OUT",
+    "Instrumentation": "INST",
+    "Machine Learning and Artificial Intelligence": "AI",
+    "Habitability and Biosignatures": "HAB",
+    "Planetary System Evolution": "EVO"
+  };
+  return codes[name] || name.split(/\s+/).map(w => w[0]).join('').slice(0,4).toUpperCase();
+}
+
+function cooccurrenceMatrix(el, rows, values) {
+  const cell = 46;
+  const gap = 5;
+  const left = 82;
+  const top = 56;
+  const n = rows.length;
+  const matrixW = n * (cell + gap) - gap;
+  const h = top + matrixW + 56;
+  const w = Math.max(860, left + matrixW + 40);
+  const max = Math.max(1, ...Object.values(values));
+  const codes = rows.map(expertiseCode);
+  const colors = v => {
+    if (!v) return 'rgba(255,255,255,.045)';
+    const frac = Math.max(0, Math.min(1, v / max));
+    // Crayon-like palette: darker for low overlap, lighter for high collaboration.
+    const stops = [
+      {t:0.00, c:[69, 55, 132]},   // purple crayon
+      {t:0.25, c:[82, 132, 190]},  // blue crayon
+      {t:0.50, c:[90, 190, 164]},  // green/teal crayon
+      {t:0.75, c:[246, 178, 101]}, // orange crayon
+      {t:1.00, c:[255, 236, 170]}  // pale yellow crayon = strongest overlap
+    ];
+    let a = stops[0], b = stops[stops.length-1];
+    for (let k=0; k<stops.length-1; k++) {
+      if (frac >= stops[k].t && frac <= stops[k+1].t) { a = stops[k]; b = stops[k+1]; break; }
+    }
+    const f = (frac - a.t) / Math.max(0.0001, b.t - a.t);
+    const rgb = a.c.map((x, idx) => Math.round(x + (b.c[idx] - x) * f));
+    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+  };
+  const headers = codes.map((code, i) => {
+    const x = left + i * (cell + gap) + cell / 2;
+    const y = top - 16;
+    return `<text class="matrix-code" x="${x}" y="${y}" text-anchor="middle" data-tooltip="${esc(rows[i])}">${esc(code)}</text>`;
+  }).join('');
+  const rowHeaders = codes.map((code, i) => {
+    const x = left - 16;
+    const y = top + i * (cell + gap) + cell / 2 + 4;
+    return `<text class="matrix-code" x="${x}" y="${y}" text-anchor="end" data-tooltip="${esc(rows[i])}">${esc(code)}</text>`;
+  }).join('');
+  const cells = [];
+  rows.forEach((rowName, i) => rows.forEach((colName, j) => {
+    const v = values[`${rowName}|||${colName}`] || 0;
+    const x = left + j * (cell + gap);
+    const y = top + i * (cell + gap);
+    const isDiag = i === j;
+    const valueClass = v > max * 0.55 ? 'matrix-value' : 'matrix-value light';
+    cells.push(`<rect class="matrix-cell" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="10" fill="${colors(v)}" stroke="${isDiag ? 'rgba(255,255,255,.62)' : 'rgba(255,255,255,.10)'}" stroke-width="${isDiag ? 1.4 : 0.8}" data-tooltip="<strong>Row:</strong> ${esc(rowName)}<br><strong>Column:</strong> ${esc(colName)}<br><strong>People:</strong> ${v}"></rect><text class="${valueClass}" x="${x + cell/2}" y="${y + cell/2}">${v || ''}</text>`);
+  }));
+  const caption = `<text class="matrix-muted" x="${left}" y="${top + matrixW + 24}">Diagonal cells show how many people selected each individual area; off-diagonal cells show overlaps. Hover over codes or cells for full names.</text>`;
+  document.getElementById(el).innerHTML = `<svg class="chart" viewBox="0 0 ${w} ${h}">${headers}${rowHeaders}${cells.join('')}${caption}</svg>`;
+}
+
+
+function initCustomTooltips() {
+  const tooltip = document.getElementById('custom-tooltip');
+  if (!tooltip) return;
+
+  function showTip(event, html) {
+    tooltip.innerHTML = html;
+    tooltip.classList.add('visible');
+    moveTip(event);
+  }
+
+  function moveTip(event) {
+    const pad = 16;
+    let x = event.clientX + 14;
+    let y = event.clientY + 14;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+
+    const rect = tooltip.getBoundingClientRect();
+    if (rect.right > window.innerWidth - pad) x = event.clientX - rect.width - 14;
+    if (rect.bottom > window.innerHeight - pad) y = event.clientY - rect.height - 14;
+    tooltip.style.left = Math.max(pad, x) + 'px';
+    tooltip.style.top = Math.max(pad, y) + 'px';
+  }
+
+  document.addEventListener('mouseover', event => {
+    const target = event.target.closest('[data-tooltip]');
+    if (!target) return;
+    showTip(event, target.getAttribute('data-tooltip'));
+  });
+
+  document.addEventListener('mousemove', event => {
+    if (!event.target.closest('[data-tooltip]')) return;
+    moveTip(event);
+  });
+
+  document.addEventListener('mouseout', event => {
+    if (!event.target.closest('[data-tooltip]')) return;
+    tooltip.classList.remove('visible');
+  });
+}
+
+function renderAll() {
+  renderSummary();
+  donut('city-chart', countBy(people.map(p=>p.city)), {legendPosition:'bottom', fillBox:true});
+  multiSelectBar('institute-chart', countBy(people.flatMap(p=>p.affiliations&&p.affiliations.length?p.affiliations:[p.institute])).slice(0,14), {left:300,labelLen:42,scaleToMax:true,w:820});
+  donut('career-chart', countBy(people.map(p=>p.careerStage)));
+  const expertiseCounts = allExpertise().map(e => ({key:e, value:people.filter(p=>categoriesForPerson(p).includes(e)).length})).filter(d=>d.value>0).sort((a,b)=>b.value-a.value);
+  horizontalBar('expertise-chart', expertiseCounts, {left:310,labelLen:46,rowH:25});
+  const exps=expertiseCounts.map(d=>d.key);
+  const skillAgg = new Map();
+  people.forEach(p => (p.skills||[]).forEach(s => {
+    const name=s.name; if(!skillAgg.has(name)) skillAgg.set(name, {key:name,l1:0,l2:0,l3:0,total:0});
+    const o=skillAgg.get(name); const lvl=Math.max(1,Math.min(3,Number(s.level)||1)); o[`l${lvl}`]++; o.total++;
+  }));
+  stackedSkillBar('skills-chart', Array.from(skillAgg.values()).sort((a,b)=>b.total-a.total||a.key.localeCompare(b.key)).slice(0,16));
+  multiSelectBar('language-chart', countBy(people.flatMap(p=>p.languages||[])), {left:145,labelLen:20});
+  renderNeedsChart('all');
+  const coVals={}, coRows=exps;
+  coRows.forEach(a=>coRows.forEach(b=>{ coVals[`${a}|||${b}`]=people.filter(p=>{const cats=categoriesForPerson(p); return cats.includes(a)&&cats.includes(b);}).length; }));
+  cooccurrenceMatrix('cooccurrence-heatmap', coRows, coVals);
+}
+initCustomTooltips();
+initNeedsToggle();
+renderAll();
+</script>
 </body>
 </html>
