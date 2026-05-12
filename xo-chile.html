@@ -2603,6 +2603,17 @@
     }
 ];
 
+  function shuffledCopy(array) {
+    const copy = array.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  const randomizedPeople = shuffledCopy(people);
+
   const instituteCoords = {
     "Universidad de Antofagasta": {
         "city": "Antofagasta",
@@ -3454,9 +3465,9 @@
   }
 
   function renderResults(selectedCriteria) {
-    if (selectedCriteria.length === 0) { summary.textContent = t("showingAll")(people.length); results.innerHTML = renderCards(people); return; }
-    const exactMatches = people.filter(person => matchCount(person, selectedCriteria) === selectedCriteria.length);
-    const nearMatches = selectedCriteria.length > 2 ? people.filter(person => matchCount(person, selectedCriteria) === selectedCriteria.length - 1) : [];
+    if (selectedCriteria.length === 0) { summary.textContent = t("showingAll")(randomizedPeople.length); results.innerHTML = renderCards(randomizedPeople); return; }
+    const exactMatches = randomizedPeople.filter(person => matchCount(person, selectedCriteria) === selectedCriteria.length);
+    const nearMatches = selectedCriteria.length > 2 ? randomizedPeople.filter(person => matchCount(person, selectedCriteria) === selectedCriteria.length - 1) : [];
     summary.textContent = selectedCriteria.length > 2 ? t("exactNear")(exactMatches.length, nearMatches.length) : t("exactOnly")(exactMatches.length);
     let html = `<h3 class="xo-result-section-title">${t("exactMatches")}</h3>${renderCards(exactMatches, selectedCriteria.length, selectedCriteria.length)}`;
     if (selectedCriteria.length > 2) html += `<h3 class="xo-result-section-title">${t("nearMatches")}</h3>${renderCards(nearMatches, selectedCriteria.length - 1, selectedCriteria.length)}`;
