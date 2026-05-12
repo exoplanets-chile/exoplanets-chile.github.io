@@ -189,260 +189,14 @@
     .xo-results-summary { margin: 1.4rem 0 1rem; }
     .xo-result-section-title { font-size: 1.15rem; margin: 1.8rem 0 1rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--border-subtle); }
     .xo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1rem; }
-    .xo-card {
-      position: relative;
-      min-height: 24rem;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      box-shadow: none;
-      cursor: pointer;
-      perspective: 1200px;
-      outline: none;
-    }
-    .xo-card-inner {
-      position: relative;
-      width: 100%;
-      min-height: 24rem;
-      transform-style: preserve-3d;
-      transition: transform 0.55s ease;
-    }
-    .xo-card.flipped .xo-card-inner { transform: rotateY(180deg); }
-    .xo-card-face {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      border-radius: var(--radius-lg);
-      padding: 1.1rem;
-      border: 1px solid var(--border-subtle);
-      background: var(--card-bg);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      overflow: auto;
-      transition: box-shadow var(--transition), border-color var(--transition), background var(--transition);
-    }
-    .xo-card:hover .xo-card-face,
-    .xo-card:focus-visible .xo-card-face {
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
-      border-color: rgba(79, 209, 197, 0.7);
-      background: #1e2740;
-    }
-    .xo-card-back { transform: rotateY(180deg); }
-    .xo-card-front {
-      justify-content: center;
-      min-height: 24rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .xo-card-front > * { position: relative; z-index: 2; }
-    .xo-card-front::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      opacity: 0.18;
-      pointer-events: none;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      mix-blend-mode: screen;
-    }
-    .xo-card-front::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.05), rgba(5,8,20,0.12) 46%, rgba(5,8,20,0.34) 100%);
-    }
-    .xo-pattern-disc::before {
-      background-image:
-        radial-gradient(ellipse at center, transparent 0 9%, rgba(79,209,197,0.32) 10% 12%, transparent 13% 100%),
-        repeating-radial-gradient(ellipse at center, rgba(79,209,197,0.18) 0 2px, transparent 3px 18px),
-        radial-gradient(circle at center, rgba(255,230,150,0.72) 0 5%, transparent 6% 100%);
-      transform: rotate(-18deg) scale(1.15);
-    }
-    .xo-pattern-transit::before {
-      background-image:
-        linear-gradient(90deg, transparent 0 10%, rgba(255,255,255,0.10) 10.5% 11%, transparent 11.5% 100%),
-        linear-gradient(0deg, transparent 0 72%, rgba(79,209,197,0.35) 72.5% 73.5%, transparent 74% 100%),
-        radial-gradient(circle at 46% 70%, rgba(5,8,20,0.95) 0 7%, transparent 8% 100%);
-      clip-path: polygon(0 40%, 32% 40%, 39% 66%, 54% 66%, 61% 40%, 100% 40%, 100% 100%, 0 100%);
-      opacity: 0.26;
-    }
-    .xo-pattern-atmosphere::before {
-      background-image:
-        radial-gradient(circle at 52% 52%, rgba(79,209,197,0.08) 0 19%, transparent 20%),
-        radial-gradient(circle at 52% 52%, transparent 0 24%, rgba(126,231,255,0.34) 25% 31%, transparent 32%),
-        radial-gradient(circle at 52% 52%, rgba(110,167,255,0.26) 0 22%, transparent 23%);
-    }
-    .xo-pattern-system::before {
-      background-image:
-        radial-gradient(circle at center, rgba(255,224,130,0.82) 0 5%, transparent 6%),
-        repeating-radial-gradient(circle at center, transparent 0 22px, rgba(79,209,197,0.18) 23px 24px, transparent 25px 47px),
-        radial-gradient(circle at 68% 42%, rgba(79,209,197,0.55) 0 3%, transparent 4%),
-        radial-gradient(circle at 28% 61%, rgba(255,176,212,0.45) 0 2.5%, transparent 3.5%);
-    }
-    .xo-pattern-populations::before {
-      background-image:
-        linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(255,255,255,0.14) 1px, transparent 1px),
-        radial-gradient(circle at 24% 72%, rgba(255,231,122,0.55) 0 2%, transparent 2.5%),
-        radial-gradient(circle at 40% 58%, rgba(126,231,255,0.55) 0 1.7%, transparent 2.2%),
-        radial-gradient(circle at 62% 38%, rgba(255,176,212,0.55) 0 2.1%, transparent 2.6%),
-        radial-gradient(circle at 76% 28%, rgba(168,125,255,0.55) 0 2.4%, transparent 3%);
-      background-size: 42px 42px, 42px 42px, cover, cover, cover, cover;
-      opacity: 0.24;
-    }
-    .xo-pattern-interiors::before {
-      background-image:
-        conic-gradient(from 0deg at 52% 52%, transparent 0 82deg, rgba(255,213,88,0.65) 83deg 130deg, rgba(255,132,55,0.56) 131deg 178deg, transparent 179deg 360deg),
-        radial-gradient(circle at 52% 52%, rgba(255,240,180,0.55) 0 8%, rgba(255,130,40,0.38) 9% 18%, rgba(180,180,165,0.22) 19% 29%, transparent 30%);
-    }
-    .xo-pattern-outreach::before {
-      background-image:
-        linear-gradient(135deg, transparent 0 32%, rgba(255,120,80,0.32) 33% 43%, transparent 44%),
-        linear-gradient(0deg, transparent 0 41%, rgba(255,167,70,0.30) 42% 68%, transparent 69%),
-        repeating-linear-gradient(90deg, transparent 0 16px, rgba(126,231,255,0.22) 17px 26px, transparent 27px 44px);
-      opacity: 0.22;
-    }
-    .xo-pattern-instrumentation::before {
-      background-image:
-        linear-gradient(125deg, transparent 0 43%, rgba(255,255,255,0.30) 44% 48%, transparent 49%),
-        radial-gradient(ellipse at 62% 38%, rgba(126,231,255,0.35) 0 12%, transparent 13%),
-        linear-gradient(55deg, transparent 0 50%, rgba(79,209,197,0.26) 51% 54%, transparent 55%);
-      opacity: 0.26;
-    }
-    .xo-pattern-ai::before {
-      background-image:
-        radial-gradient(circle at 42% 45%, rgba(126,231,255,0.55) 0 4%, transparent 5%),
-        radial-gradient(circle at 58% 45%, rgba(126,231,255,0.55) 0 4%, transparent 5%),
-        linear-gradient(90deg, transparent 0 30%, rgba(255,255,255,0.18) 31% 69%, transparent 70%),
-        linear-gradient(0deg, transparent 0 34%, rgba(79,209,197,0.18) 35% 69%, transparent 70%);
-      opacity: 0.27;
-    }
-    .xo-pattern-habitability::before {
-      background-image:
-        radial-gradient(ellipse at 50% 54%, rgba(122,255,160,0.24) 0 19%, transparent 20%),
-        radial-gradient(circle at 43% 49%, rgba(10,20,30,0.9) 0 3%, transparent 4%),
-        radial-gradient(circle at 57% 49%, rgba(10,20,30,0.9) 0 3%, transparent 4%),
-        radial-gradient(ellipse at 50% 66%, rgba(79,209,197,0.35) 0 12%, transparent 13%);
-      opacity: 0.26;
-    }
-    .xo-pattern-evolution::before {
-      background-image:
-        repeating-radial-gradient(ellipse at center, transparent 0 20px, rgba(255,255,255,0.16) 21px 22px, transparent 23px 46px),
-        radial-gradient(circle at 30% 52%, rgba(255,255,255,0.45) 0 1.6%, transparent 2.2%),
-        radial-gradient(circle at 68% 45%, rgba(255,255,255,0.35) 0 1.4%, transparent 2%),
-        radial-gradient(circle at center, rgba(255,224,130,0.48) 0 5%, transparent 6%);
-      transform: rotate(-12deg) scale(1.1);
-      opacity: 0.24;
-    }
-
-    .xo-front-icon-pattern {
-      position: absolute;
-      inset: 0.65rem;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.13;
-      filter: drop-shadow(0 0 0.45rem rgba(79,209,197,0.18));
-    }
-    .xo-front-icon-pattern .xo-front-mini-icon {
-      position: absolute;
-      width: 3.15rem;
-      height: 3.15rem;
-      display: block;
-    }
-    .xo-front-icon-pattern .xo-front-mini-icon svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(1) { left: 6%; top: 8%; transform: rotate(-12deg); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(2) { right: 8%; top: 10%; transform: rotate(8deg) scale(0.92); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(3) { left: 12%; top: 42%; transform: rotate(10deg) scale(0.86); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(4) { right: 12%; top: 44%; transform: rotate(-8deg) scale(0.86); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(5) { left: 8%; bottom: 10%; transform: rotate(7deg) scale(0.94); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(6) { right: 9%; bottom: 9%; transform: rotate(-10deg); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(7) { left: 41%; top: 6%; transform: rotate(4deg) scale(0.78); }
-    .xo-front-icon-pattern .xo-front-mini-icon:nth-child(8) { left: 42%; bottom: 8%; transform: rotate(-5deg) scale(0.78); }
-    .xo-card-front h4,
-    .xo-card-front .xo-front-stage,
-    .xo-card-front .xo-front-institute,
-    .xo-card-front .xo-flip-hint {
-      position: relative;
-      z-index: 3;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.72);
-    }
-
-    .xo-card-front h4 {
-      font-size: 1.35rem;
-      margin-bottom: 0.45rem;
-      padding-right: 0;
-    }
-    .xo-card-front .xo-front-stage { color: var(--text); font-weight: 700; margin-bottom: 0.4rem; }
-    .xo-card-front .xo-front-institute { color: var(--muted); font-size: 0.95rem; }
-    .xo-flip-hint {
-      margin-top: 1.4rem;
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .xo-focus-icons {
-      position: absolute;
-      top: 0.85rem;
-      right: 0.9rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 0.35rem;
-      max-width: 45%;
-      pointer-events: none;
-    }
-    .xo-focus-icon {
-      width: 2.05rem;
-      height: 2.05rem;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(79, 209, 197, 0.12);
-      border: 1px solid rgba(79, 209, 197, 0.55);
-      box-shadow: 0 0 12px rgba(79, 209, 197, 0.20);
-    }
-    .xo-focus-icon svg {
-      width: 1.35rem;
-      height: 1.35rem;
-      display: block;
-    }
-    .xo-card-back h4 { padding-right: 5.2rem; }
-    @media (max-width: 520px) {
-      .xo-focus-icons { position: static; justify-content: flex-start; max-width: 100%; margin-bottom: 0.55rem; }
-      .xo-card-back h4 { padding-right: 0; }
-    }
-
+    .xo-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 1.1rem; border: 1px solid var(--border-subtle); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45); transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition); }
+    .xo-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7); border-color: rgba(79, 209, 197, 0.7); background: #1e2740; }
     .xo-card h4 { font-size: 1.05rem; margin-bottom: 0.15rem; }
     .xo-card p { color: var(--muted); font-size: 0.88rem; margin: 0.35rem 0; }
     .xo-chip-list { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.35rem 0 0.75rem; }
     .xo-chip { padding: 0.12rem 0.58rem; font-size: 0.76rem; }
-    .xo-skill-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      background: rgba(10, 15, 32, 0.9);
-      color: var(--muted);
-      padding: 0.12rem 0.58rem;
-      font-size: 0.76rem;
-    }
-    .xo-stars { letter-spacing: 0.04em; white-space: nowrap; }
-    .xo-star-filled { color: var(--accent); }
-    .xo-star-empty { color: rgba(255,255,255,0.25); }
+
+    .skill-stars { color: var(--accent); letter-spacing: 0.04em; margin-left: 0.25rem; font-size: 0.78rem; white-space: nowrap; }
 
     footer { border-top: 1px solid var(--border-subtle); padding: 1.4rem 1.5rem 1.8rem; font-size: 0.8rem; color: var(--muted); background: #050814; }
     .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.8rem; align-items: center; }
@@ -485,6 +239,179 @@
       .site-home-button { top: 0.65rem; left: 0.65rem; padding: 0.36rem 0.68rem; font-size: 0.72rem; }
       .nav-inner { padding-left: 5.8rem; }
     }
+
+  
+
+    /* Flip-card entries and focus-detail popup */
+    .xo-grid { align-items: stretch; }
+    .xo-card {
+      position: relative;
+      min-height: 21rem;
+      padding: 0;
+      border: 0;
+      background: transparent !important;
+      box-shadow: none !important;
+      cursor: pointer;
+      perspective: 1200px;
+      outline: none;
+    }
+    .xo-card:hover { transform: none; box-shadow: none; background: transparent; border-color: transparent; }
+    .xo-card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 21rem;
+      transform-style: preserve-3d;
+      transition: transform 0.55s ease;
+    }
+    .xo-card.flipped .xo-card-inner { transform: rotateY(180deg); }
+    .xo-card-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-lg);
+      padding: 1.1rem;
+      border: 1px solid var(--border-subtle);
+      background: var(--card-bg);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: auto;
+      transition: box-shadow var(--transition), border-color var(--transition), background var(--transition);
+    }
+    .xo-card:hover .xo-card-face,
+    .xo-card:focus-visible .xo-card-face {
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+      border-color: rgba(79, 209, 197, 0.7);
+      background: #1e2740;
+    }
+    .xo-card-back { transform: rotateY(180deg); }
+    .xo-card-front {
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      min-height: 21rem;
+    }
+    .xo-card-front > * { position: relative; z-index: 2; }
+    .xo-card-front::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.04), rgba(5,8,20,0.20) 58%, rgba(5,8,20,0.38) 100%);
+      z-index: 1;
+    }
+    .xo-front-icons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.18;
+    }
+    .xo-front-icons .xo-front-icon {
+      position: absolute;
+      width: 3.2rem;
+      height: 3.2rem;
+      color: var(--accent);
+      filter: drop-shadow(0 0 0.4rem rgba(79,209,197,0.35));
+    }
+    .xo-front-icons .xo-front-icon:nth-child(1) { top: 0.9rem; left: 1rem; transform: rotate(-12deg); }
+    .xo-front-icons .xo-front-icon:nth-child(2) { top: 1.3rem; right: 1.2rem; transform: rotate(15deg) scale(0.82); }
+    .xo-front-icons .xo-front-icon:nth-child(3) { bottom: 1.1rem; left: 1.3rem; transform: rotate(9deg) scale(0.75); }
+    .xo-front-icons .xo-front-icon:nth-child(4) { bottom: 1.4rem; right: 1.1rem; transform: rotate(-10deg) scale(0.95); }
+    .xo-front-icons .xo-front-icon:nth-child(5) { top: 46%; right: 0.8rem; transform: rotate(20deg) scale(0.66); }
+    .xo-card-front h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .xo-front-stage { color: var(--text); font-weight: 700; margin-bottom: 0.35rem; }
+    .xo-front-institute { color: var(--muted); font-size: 0.95rem; }
+    .xo-flip-hint { margin-top: 1.1rem; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .xo-focus-icons {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.3rem;
+      max-width: 55%;
+      z-index: 3;
+    }
+    .xo-focus-icon {
+      width: 2rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      background: rgba(5,8,20,0.72);
+      color: var(--accent);
+      overflow: hidden;
+    }
+    .xo-focus-icon svg { width: 1.55rem; height: 1.55rem; display: block; }
+    .xo-card-back h4 { padding-right: 55%; }
+    .xo-skill-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: rgba(10, 15, 32, 0.9);
+      color: var(--muted);
+      padding: 0.14rem 0.58rem;
+      font-size: 0.76rem;
+    }
+    .skill-stars, .xo-stars { letter-spacing: 0.03em; white-space: nowrap; color: #ffd15c; }
+    .xo-star-empty { opacity: 0.28; }
+    .xo-focus-details-btn {
+      align-self: flex-start;
+      margin-top: -0.25rem;
+      margin-bottom: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.76rem;
+    }
+    .xo-modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background: rgba(0,0,0,0.68);
+      z-index: 20000;
+    }
+    .xo-modal-overlay.open { display: flex; }
+    .xo-modal {
+      width: min(620px, 100%);
+      max-height: min(80vh, 720px);
+      overflow: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(27,31,34,0.96);
+      box-shadow: var(--shadow-soft);
+      padding: 1.2rem;
+    }
+    .xo-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+    }
+    .xo-modal-title { font-size: 1.15rem; font-weight: 800; }
+    .xo-modal-close {
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border-radius: 999px;
+      width: 2rem;
+      height: 2rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    .xo-focus-detail-group { margin: 0.8rem 0 1rem; }
+    .xo-focus-detail-group strong { color: var(--text); display: block; margin-bottom: 0.35rem; }
+    .xo-focus-detail-group ul { margin: 0; padding-left: 1.1rem; color: var(--muted); }
 
   </style>
 </head>
@@ -589,7 +516,7 @@
 
           <div class="xo-search-actions">
             <button id="xo-clear" class="btn btn-outline" type="button" data-i18n="clearSearch">Clear search</button>
-            <span class="xo-small-note" data-i18n="fakeNote">The current entries are fake placeholders and can later be replaced with real community data.</span>
+            <span class="xo-small-note" data-i18n="fakeNote">Entries are based on the first ExoChile community spreadsheet responses.</span>
           </div>
           <div id="xo-selected-tags" class="xo-selected-tags" aria-live="polite"></div>
         </div>
@@ -602,12 +529,26 @@
 
   <footer>
     <div class="footer-inner">
-      <div>© <span id="year"></span> XO-Chile. <span data-i18n="footerPrototype">Prototype with fictional entries.</span></div>
+      <div>© <span id="year"></span> XO-Chile. <span data-i18n="footerPrototype">Database entries from community spreadsheet.</span></div>
       <div class="footer-links"><a href="#top" data-i18n="backTop">Back to top ↑</a><span class="muted">·</span><a href="index.html" data-i18n="mainSite">Main site</a></div>
     </div>
   </footer>
 </div>
 <div class="tooltip" id="tooltip"></div>
+
+<div class="xo-modal-overlay" id="xo-focus-modal" aria-hidden="true">
+  <div class="xo-modal" role="dialog" aria-modal="true" aria-labelledby="xo-focus-modal-title">
+    <div class="xo-modal-header">
+      <div>
+        <div class="xo-modal-title" id="xo-focus-modal-title">Scientific focus details</div>
+        <div class="muted" id="xo-focus-modal-person"></div>
+      </div>
+      <button class="xo-modal-close" type="button" id="xo-focus-modal-close" aria-label="Close">×</button>
+    </div>
+    <div id="xo-focus-modal-body"></div>
+  </div>
+</div>
+
 
 <script>
   const i18n = {
@@ -617,13 +558,13 @@
       chipPrototype: "Prototype with fictional entries", chipMatching: "Exact + near-match search", chipStatic: "Static GitHub Pages compatible",
       searchDatabase: "Search database", backMain: "Back to main site", mapTitle: "Institutes map", mapNote: "Click a cluster to zoom. Click an institute to search.", regionalView: "Regional view",
       searchEngine: "Search Engine", findTitle: "Find collaborators by tags", findSubtitle: "Choose only the fields you need. Exact matches are listed first. If you select more than two criteria, XO-Chile also lists people matching all but one criterion.",
-      institute: "Institute", city: "City", cityInstitute: "City / institute", cityInstituteHelp: "Choose a city first; the institute list is then limited to institutes in that city.", careerStage: "Career stage", singleFilter: "Optional single-choice filter.", scientificFocus: "Scientific focus", focusHelp: "Choose one or more areas of expertise.",
+      institute: "Institute", city: "City", cityInstitute: "City / institute", cityInstituteHelp: "Choose a city first; the institute list is then limited to institutes in that city.", careerStage: "Career stage", singleFilter: "Optional single-choice filter.", scientificFocus: "Scientific focus", focusHelp: "Choose a main category and, optionally, a more specific sub-category.",
       language: "Language", languageHelp: "Optional multi-choice filter. For example: Spanish + English.", skills: "Skills / tools", skillsHelp: "Optional multi-choice filter. For example: RADMC-3D + CASA.",
-      addFocus: "+ Add another focus", addLanguage: "+ Add another language", addSkill: "+ Add another skill", clearSearch: "Clear search", fakeNote: "The current entries are fake placeholders and can later be replaced with real community data.",
-      footerPrototype: "Prototype with fictional entries.", backTop: "Back to top ↑", mainSite: "Main site", flipHint: "Click to flip", any: "Any", noFilters: "No filters selected. Choose any category above or click an institute on the map.",
+      addFocus: "+ Add another focus", addLanguage: "+ Add another language", addSkill: "+ Add another skill", clearSearch: "Clear search", fakeNote: "Entries are based on the first ExoChile community spreadsheet responses.",
+      footerPrototype: "Database entries from community spreadsheet.", backTop: "Back to top ↑", mainSite: "Main site", any: "Any", noFilters: "No filters selected. Choose any category above or click an institute on the map.",
       showingAll: n => `Showing all ${n} fictional XO-Chile entries.`, exactNear: (e,n) => `${e} exact match${e === 1 ? "" : "es"} and ${n} near match${n === 1 ? "" : "es"}.`, exactOnly: e => `${e} exact match${e === 1 ? "" : "es"}.`,
       exactMatches: "Exact matches", nearMatches: "Near matches: all but one criterion", noPeople: "No people in this category.", matches: (a,b) => `Matches ${a} of ${b} selected criteria.`,
-      focusCategory: "Area of expertise", focusSubcategory: "Focus sub-category", anySubcategory: "Any sub-category", removeFilter: "Remove filter", languagesLabel: "Languages", focusLabel: "Scientific focus", skillsLabel: "Skills", selectedSearch: "Selected search", peopleAtInstitute: name => `People affiliated with ${name}`,
+      focusCategory: "Focus category", focusSubcategory: "Focus sub-category", anySubcategory: "Any sub-category", removeFilter: "Remove filter", languagesLabel: "Languages", focusLabel: "Scientific focus", skillsLabel: "Skills", selectedSearch: "Selected search", peopleAtInstitute: name => `People affiliated with ${name}`,
       zoomedTo: city => `Zoomed to ${city}`
     },
     es: {
@@ -632,13 +573,13 @@
       chipPrototype: "Prototipo con entradas ficticias", chipMatching: "Búsqueda exacta + aproximada", chipStatic: "Compatible con GitHub Pages estático",
       searchDatabase: "Buscar en la base de datos", backMain: "Volver al sitio principal", mapTitle: "Mapa de institutos", mapNote: "Haz clic en un grupo para acercar. Haz clic en un instituto para buscar.", regionalView: "Vista regional",
       searchEngine: "Buscador", findTitle: "Encuentra colaboradores por etiquetas", findSubtitle: "Elige solo los campos que necesites. Las coincidencias exactas aparecen primero. Si seleccionas más de dos criterios, XO-Chile también muestra personas que cumplen todos menos uno.",
-      institute: "Instituto", city: "Ciudad", cityInstitute: "Ciudad / instituto", cityInstituteHelp: "Elige primero una ciudad; la lista de institutos se limita a esa ciudad.", careerStage: "Etapa profesional", singleFilter: "Filtro opcional de selección única.", scientificFocus: "Foco científico", focusHelp: "Elige una o más áreas de especialidad.",
+      institute: "Instituto", city: "Ciudad", cityInstitute: "Ciudad / instituto", cityInstituteHelp: "Elige primero una ciudad; la lista de institutos se limita a esa ciudad.", careerStage: "Etapa profesional", singleFilter: "Filtro opcional de selección única.", scientificFocus: "Foco científico", focusHelp: "Elige una categoría principal y, opcionalmente, una sub-categoría más específica.",
       language: "Idioma", languageHelp: "Filtro opcional de selección múltiple. Por ejemplo: español + inglés.", skills: "Habilidades / herramientas", skillsHelp: "Filtro opcional de selección múltiple. Por ejemplo: RADMC-3D + CASA.",
-      addFocus: "+ Añadir otro foco", addLanguage: "+ Añadir otro idioma", addSkill: "+ Añadir otra habilidad", clearSearch: "Limpiar búsqueda", fakeNote: "Las entradas actuales son ficticias y luego pueden reemplazarse por datos reales de la comunidad.",
-      footerPrototype: "Prototipo con entradas ficticias.", backTop: "Volver arriba ↑", mainSite: "Sitio principal", flipHint: "Haz clic para girar", any: "Cualquier", noFilters: "No hay filtros seleccionados. Elige una categoría o haz clic en un instituto del mapa.",
+      addFocus: "+ Añadir otro foco", addLanguage: "+ Añadir otro idioma", addSkill: "+ Añadir otra habilidad", clearSearch: "Limpiar búsqueda", fakeNote: "Las entradas se basan en las primeras respuestas de la planilla comunitaria de ExoChile.",
+      footerPrototype: "Entradas desde la planilla comunitaria.", backTop: "Volver arriba ↑", mainSite: "Sitio principal", any: "Cualquier", noFilters: "No hay filtros seleccionados. Elige una categoría o haz clic en un instituto del mapa.",
       showingAll: n => `Mostrando las ${n} entradas ficticias de XO-Chile.`, exactNear: (e,n) => `${e} coincidencia${e === 1 ? " exacta" : "s exactas"} y ${n} coincidencia${n === 1 ? " aproximada" : "s aproximadas"}.`, exactOnly: e => `${e} coincidencia${e === 1 ? " exacta" : "s exactas"}.`,
       exactMatches: "Coincidencias exactas", nearMatches: "Coincidencias aproximadas: todos menos un criterio", noPeople: "No hay personas en esta categoría.", matches: (a,b) => `Cumple ${a} de ${b} criterios seleccionados.`,
-      focusCategory: "Área de especialidad", focusSubcategory: "Sub-categoría de foco", anySubcategory: "Cualquier sub-categoría", removeFilter: "Eliminar filtro", languagesLabel: "Idiomas", focusLabel: "Foco científico", skillsLabel: "Habilidades", selectedSearch: "Búsqueda seleccionada", peopleAtInstitute: name => `Personas afiliadas a ${name}`,
+      focusCategory: "Categoría de foco", focusSubcategory: "Sub-categoría de foco", anySubcategory: "Cualquier sub-categoría", removeFilter: "Eliminar filtro", languagesLabel: "Idiomas", focusLabel: "Foco científico", skillsLabel: "Habilidades", selectedSearch: "Búsqueda seleccionada", peopleAtInstitute: name => `Personas afiliadas a ${name}`,
       zoomedTo: city => `Acercado a ${city}`
     }
   };
@@ -656,45 +597,2119 @@
   const t = key => i18n[currentLang][key];
 
   const focusTaxonomy = {
-    "Planet Formation and Protoplanetary Discs": [],
-    "Exoplanet Detection and Discovery": [],
-    "Exoplanet Atmospheres": [],
-    "Planetary System Architecture and Dynamics": [],
-    "Exoplanet Populations and Demographics": [],
-    "Planetary Interiors, Composition, and Evolution": [],
-    "Outreach, Education, and Public Engagement": [],
-    "Instrumentation": [],
-    "Machine Learning and Artificial Intelligence": [],
-    "Habitability and Biosignatures": [],
-    "Planetary System Evolution": []
-  };
+    "Planet Formation and Protoplanetary Discs": [
+        "Hydrodynamics",
+        "Radiative Transfer",
+        "Planet-Disc Interaction",
+        "Circumplanetary discs",
+        "Interferometry",
+        "NIR observations",
+        "Gravitational instability",
+        "Pebble accretion",
+        "Chemical evolution",
+        "Protoplanetary disc evolution",
+        "Population synthesis of forming planets"
+    ],
+    "Exoplanet Detection and Discovery": [
+        "Radial velocities",
+        "Transit photometry",
+        "Direct imaging",
+        "Astrometry",
+        "Microlensing",
+        "Transit timing variations",
+        "High-resolution spectroscopy",
+        "False-positive vetting and validation",
+        "Survey design and target selection",
+        "Machine-learning-assisted candidate detection"
+    ],
+    "Exoplanet Atmospheres": [
+        "Transmission spectroscopy",
+        "Emission spectroscopy",
+        "High-resolution spectroscopy",
+        "Atmospheric retrievals",
+        "Atmospheric chemistry",
+        "Clouds and hazes",
+        "Disequilibrium chemistry",
+        "Atmospheric escape",
+        "Phase curves",
+        "Climate modelling",
+        "3D general circulation models"
+    ],
+    "Planetary System Architecture and Dynamics": [
+        "Orbital dynamics",
+        "Mean-motion resonances",
+        "Secular dynamics",
+        "Planet–planet scattering",
+        "Dynamical stability",
+        "Compact multi-planet systems",
+        "Eccentric and inclined systems",
+        "Planetary obliquity",
+        "Long-term N-body simulations"
+    ],
+    "Exoplanet Populations and Demographics": [
+        "Occurrence rates",
+        "Planet radius distribution",
+        "Planet mass distribution",
+        "Radius valley",
+        "Super-Earths",
+        "Sub-Neptunes",
+        "Cold giant planets",
+        "Hot Neptunes",
+        "Hot Jupiters",
+        "Demographic comparisons between surveys",
+        "Dependence on stellar mass",
+        "Dependence on stellar metallicity",
+        "Population synthesis"
+    ],
+    "Planetary Interiors, Composition, and Evolution": [
+        "Mass–radius relations",
+        "Water worlds",
+        "Sub-Neptune envelopes",
+        "Atmospheric loss",
+        "Interior structure models",
+        "Core composition",
+        "Super-Earth interiors",
+        "Rocky planet composition from polluted white dwarfs"
+    ],
+    "Outreach, Education, and Public Engagement": [
+        "Public talks and science communication",
+        "School visits",
+        "Teacher training",
+        "Planetarium and museum activities",
+        "Educational resources",
+        "Undergraduate teaching",
+        "Public observing events",
+        "Diversity, equity, inclusion, and accessibility in astronomy",
+        "Media communication",
+        "Social media and digital outreach",
+        "Citizen science"
+    ],
+    "Instrumentation": [
+        "High-contrast imaging instruments",
+        "Adaptive optics",
+        "Coronagraphy",
+        "Spectrograph development",
+        "Ground-based surveys",
+        "Space missions",
+        "Telescope operations",
+        "Instrument calibration",
+        "Pipeline development for instruments",
+        "Observing strategy and performance forecasts"
+    ],
+    "Machine Learning and Artificial Intelligence": [
+        "Candidate classification",
+        "Anomaly detection",
+        "Machine-learning-assisted planet detection",
+        "Simulation emulators",
+        "Bayesian inference and probabilistic ML",
+        "Computer vision for imaging data",
+        "Large survey data mining",
+        "Interpretable AI for astrophysics",
+        "Deep Learning for planet detection",
+        "Automated light-curve analysis"
+    ],
+    "Habitability and Biosignatures": [
+        "Climate stability",
+        "Atmospheric biosignatures",
+        "Habitable zone theory",
+        "M-dwarf habitability",
+        "Solar System analogues"
+    ],
+    "Planetary System Evolution": [
+        "Debris discs",
+        "White dwarf planetary systems",
+        "Debris discs around white dwarfs",
+        "White dwarf pollution / contamination",
+        "Tidal disruption of planetesimals",
+        "Post-main-sequence planetary system evolution",
+        "Planetary system evolution after disc dispersal",
+        "Tidal evolution"
+    ]
+};
 
   const people = [
-    { name: "Camila Rojas", institute: "Universidad de Chile", city: "Santiago", careerStage: "PhD student", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Machine Learning and Artificial Intelligence"}], languages: ["Spanish", "English"], skills: [{name:"RADMC-3D", level:2}, {name:"FARGO3D", level:3}, {name:"ALMA", level:2}, {name:"Python", level:3}] },
-    { name: "Diego Fuentes", institute: "Universidad de Concepción", city: "Concepción", careerStage: "Postdoc", focus: [{category:"Exoplanet Atmospheres"}, {category:"Habitability and Biosignatures"}], languages: ["Spanish", "English", "Portuguese"], skills: [{name:"JWST", level:2}, {name:"petitRADTRANS", level:3}, {name:"Python", level:2}, {name:"MCMC", level:3}] },
-    { name: "Valentina Morales", institute: "Pontificia Universidad Católica de Chile", city: "Santiago", careerStage: "Assistant professor", focus: [{category:"Exoplanet Atmospheres"}, {category:"Instrumentation"}], languages: ["Spanish", "English", "French"], skills: [{name:"VLT/SPHERE", level:3}, {name:"ERIS", level:2}, {name:"ADI/PCA", level:3}, {name:"IRAF", level:1}] },
-    { name: "Tomás Araya", institute: "Universidad de Valparaíso", city: "Valparaíso", careerStage: "Master student", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Planetary System Architecture and Dynamics"}], languages: ["Spanish", "English"], skills: [{name:"HARPS", level:2}, {name:"ESPRESSO", level:1}, {name:"Gaussian processes", level:2}, {name:"Python", level:2}] },
-    { name: "Antonia Vega", institute: "Universidad de Antofagasta", city: "Antofagasta", careerStage: "Research scientist", focus: [{category:"Planetary System Evolution"}, {category:"Planet Formation and Protoplanetary Discs"}], languages: ["Spanish", "English", "German"], skills: [{name:"ALMA", level:3}, {name:"CASA", level:3}, {name:"RADMC-3D", level:2}, {name:"DustPy", level:1}] },
-    { name: "Benjamín Salinas", institute: "Universidad Diego Portales", city: "Santiago", careerStage: "Postdoc", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Machine Learning and Artificial Intelligence"}], languages: ["Spanish", "English"], skills: [{name:"TESS", level:3}, {name:"Lightkurve", level:2}, {name:"scikit-learn", level:2}, {name:"SQL", level:1}] },
-    { name: "Lucía Contreras", institute: "Universidad de La Serena", city: "La Serena", careerStage: "PhD student", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Planetary Interiors, Composition, and Evolution"}], languages: ["Spanish", "English", "Italian"], skills: [{name:"RADMC-3D", level:2}, {name:"PLUTO", level:1}, {name:"CASA", level:2}, {name:"Python", level:3}] },
-    { name: "Matías Herrera", institute: "Universidad Católica del Norte", city: "Antofagasta", careerStage: "Assistant professor", focus: [{category:"Exoplanet Detection and Discovery"}, {category:"Exoplanet Populations and Demographics"}], languages: ["Spanish", "English"], skills: [{name:"OGLE", level:3}, {name:"MOA", level:2}, {name:"Bayesian modelling", level:3}, {name:"Julia", level:1}] },
-    { name: "Isidora Paredes", institute: "Universidad Andrés Bello", city: "Viña del Mar", careerStage: "Master student", focus: [{category:"Planetary Interiors, Composition, and Evolution"}, {category:"Exoplanet Populations and Demographics"}], languages: ["Spanish", "English"], skills: [{name:"ExoPlex", level:2}, {name:"Python", level:2}, {name:"MCMC", level:1}, {name:"Data visualization", level:3}] },
-    { name: "Nicolás Sepúlveda", institute: "Universidad de Santiago de Chile", city: "Santiago", careerStage: "Research scientist", focus: [{category:"Planet Formation and Protoplanetary Discs"}, {category:"Outreach, Education, and Public Engagement"}], languages: ["Spanish", "English", "German"], skills: [{name:"FARGO3D", level:3}, {name:"RADMC-3D", level:3}, {name:"ALMA", level:2}, {name:"CASA", level:2}] }
-  ];
+    {
+        "name": "Sebastián Pérez",
+        "institute": "Universidad de Santiago de Chile",
+        "affiliations": [
+            "Universidad de Santiago de Chile",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "Associate Professor",
+        "focus": [
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "School visits"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Teacher training"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Planetarium and museum activities"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Educational resources"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Debris discs"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Anomaly detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Machine-learning-assisted planet detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Simulation emulators"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Computer vision for imaging data"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Radiative Transfer"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Planet-Disc Interaction"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "FUor/EXor outbursts and planet formation"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Hydrodynamics"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Circumplanetary discs"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Interferometry"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "NIR observations"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "ALMA",
+                "level": 3
+            },
+            {
+                "name": "VLT/SPHERE",
+                "level": 2
+            },
+            {
+                "name": "VLT/ERIS",
+                "level": 2
+            },
+            {
+                "name": "VLT/ESPRESSO",
+                "level": 3
+            },
+            {
+                "name": "VLT/CRIRES+",
+                "level": 3
+            },
+            {
+                "name": "FARGO3D",
+                "level": 3
+            },
+            {
+                "name": "RADMC-3D",
+                "level": 3
+            },
+            {
+                "name": "CASA",
+                "level": 2
+            },
+            {
+                "name": "Machine learning",
+                "level": 2
+            },
+            {
+                "name": "Public talks",
+                "level": 3
+            }
+        ]
+    },
+    {
+        "name": "Lenin Andrés Valeria Rivas",
+        "institute": "Universidad de Concepción",
+        "affiliations": [
+            "Universidad de Concepción",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Concepción",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Machine-learning-assisted candidate detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Machine-learning-assisted planet detection"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Machine-learning-assisted candidate detection"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "Machine learning",
+                "level": 2
+            },
+            {
+                "name": "Candidate classification",
+                "level": 2
+            },
+            {
+                "name": "Python",
+                "level": 2
+            },
+            {
+                "name": "Light curves",
+                "level": 1
+            }
+        ]
+    },
+    {
+        "name": "Fernando Matías Castillo Morales",
+        "institute": "Universidad de Santiago de Chile",
+        "affiliations": [
+            "Universidad de Santiago de Chile",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "Student (Magíster)",
+        "focus": [
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "N-Body Simulations"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Radiative Transfer"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Circumplanetary discs"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Planet-Disc Interaction"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Hydrodynamics"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Gravitational instability"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Debris discs"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "FARGO-ADSG",
+                "level": 2
+            },
+            {
+                "name": "CARTA",
+                "level": 1
+            },
+            {
+                "name": "RADMC-3D",
+                "level": 1
+            },
+            {
+                "name": "N-body simulations",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Philipp Weber",
+        "institute": "Universidad de Santiago de Chile",
+        "affiliations": [
+            "Universidad de Santiago de Chile",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "Postdoc",
+        "focus": [
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Hydrodynamics"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Interferometry"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Planet-Disc Interaction"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "NIR observations"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Circumplanetary discs"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "FUor/EXor outbursts and planet formation"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Radiative Transfer"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Gravitational instability"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Planetary system evolution after disc dispersal"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Debris discs"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "German"
+        ],
+        "skills": [
+            {
+                "name": "FARGO3D",
+                "level": 3
+            },
+            {
+                "name": "RADMC-3D",
+                "level": 3
+            },
+            {
+                "name": "ALMA",
+                "level": 2
+            },
+            {
+                "name": "VLT/SPHERE",
+                "level": 2
+            },
+            {
+                "name": "CASA",
+                "level": 2
+            },
+            {
+                "name": "Python",
+                "level": 3
+            }
+        ]
+    },
+    {
+        "name": "Gijs D. Mulders",
+        "institute": "Pontificia Universidad Católica de Chile",
+        "affiliations": [
+            "Pontificia Universidad Católica de Chile",
+            "Centro de Astrofísica y Tecnologías Afines (CATA)"
+        ],
+        "city": "Santiago",
+        "careerStage": "Assistant Professor",
+        "focus": [
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Mass–radius relations"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Water worlds"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Sub-Neptune envelopes"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Atmospheric loss"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Occurrence rates"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Planet radius distribution"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Planet mass distribution"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Radius valley"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Super-Earths"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Sub-Neptunes"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Cold giant planets"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Dependence on stellar mass"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Dependence on stellar metallicity"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Population synthesis"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Demographic comparisons between surveys"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Population synthesis of forming planets"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Pebble accretion"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "N-Body Simulations"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "Population synthesis",
+                "level": 3
+            },
+            {
+                "name": "N-body simulations",
+                "level": 2
+            },
+            {
+                "name": "Python",
+                "level": 2
+            },
+            {
+                "name": "ALMA",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Patricio Rojo",
+        "institute": "Universidad de Chile",
+        "affiliations": [
+            "Universidad de Chile"
+        ],
+        "city": "Santiago",
+        "careerStage": "Associate Professor",
+        "focus": [
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "School visits"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Undergraduate teaching"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "High-contrast imaging instruments"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Adaptive optics"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Ground-based surveys"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Pipeline development for instruments"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Observing strategy and performance forecasts"
+            },
+            {
+                "category": "Habitability and Biosignatures",
+                "subcategory": "Climate stability"
+            },
+            {
+                "category": "Habitability and Biosignatures",
+                "subcategory": "Atmospheric biosignatures"
+            },
+            {
+                "category": "Habitability and Biosignatures",
+                "subcategory": "Solar System analogues"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Transmission spectroscopy"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Emission spectroscopy"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "High-resolution spectroscopy"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Atmospheric retrievals"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Atmospheric chemistry"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Clouds and hazes"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Disequilibrium chemistry"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Atmospheric escape"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Phase curves"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Climate modelling"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "3D general circulation models"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Stellar contamination in atmospheric spectra"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "VLT/ESPRESSO",
+                "level": 3
+            },
+            {
+                "name": "VLT/CRIRES+",
+                "level": 3
+            },
+            {
+                "name": "HARPS",
+                "level": 3
+            },
+            {
+                "name": "VLT/SPHERE",
+                "level": 2
+            },
+            {
+                "name": "ALMA",
+                "level": 2
+            },
+            {
+                "name": "Atmospheric retrievals",
+                "level": 3
+            },
+            {
+                "name": "Public talks",
+                "level": 3
+            }
+        ]
+    },
+    {
+        "name": "Sidharth Aroli-Veettil",
+        "institute": "Pontificia Universidad Católica de Chile",
+        "affiliations": [
+            "Pontificia Universidad Católica de Chile",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Chemical evolution of planet-forming material"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Interferometry"
+            }
+        ],
+        "languages": [
+            "English",
+            "Hindi",
+            "Malayalam"
+        ],
+        "skills": [
+            {
+                "name": "ALMA",
+                "level": 3
+            },
+            {
+                "name": "RADMC-3D",
+                "level": 2
+            },
+            {
+                "name": "Interferometry",
+                "level": 2
+            },
+            {
+                "name": "Python",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Marcelo Tala",
+        "institute": "The Ohio State University",
+        "affiliations": [
+            "The Ohio State University"
+        ],
+        "city": "Columbus, OH, USA",
+        "careerStage": "Postdoc",
+        "focus": [
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit photometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Survey design and target selection"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "False-positive vetting and validation"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Spectrograph development"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Ground-based surveys"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Telescope operations"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Instrument calibration"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Pipeline development for instruments"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Observing strategy and performance forecasts"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Mass–radius relations"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "German"
+        ],
+        "skills": [
+            {
+                "name": "HARPS",
+                "level": 3
+            },
+            {
+                "name": "VLT/ESPRESSO",
+                "level": 3
+            },
+            {
+                "name": "Radial velocities",
+                "level": 3
+            },
+            {
+                "name": "Transit photometry",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Matthias R. Schreiber",
+        "institute": "Universidad Técnica Federico Santa María",
+        "affiliations": [
+            "Universidad Técnica Federico Santa María (Viña del Mar)"
+        ],
+        "city": "Valparaíso",
+        "careerStage": "Full Professor",
+        "focus": [
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "White dwarf planetary systems"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Debris discs around white dwarfs"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "White dwarf pollution / contamination"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Tidal disruption of planetesimals"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Post-main-sequence planetary system evolution"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Debris discs"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Pebble accretion"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Migration and resonances"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Hydrodynamics"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Direct imaging"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Astrometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Timing methods"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Dependence on stellar mass"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Dependence on stellar metallicity"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Population synthesis"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Demographic comparisons between surveys"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "German",
+            "French"
+        ],
+        "skills": [
+            {
+                "name": "VLT/SPHERE",
+                "level": 3
+            },
+            {
+                "name": "Direct imaging",
+                "level": 3
+            },
+            {
+                "name": "Astrometry",
+                "level": 3
+            },
+            {
+                "name": "N-body simulations",
+                "level": 3
+            }
+        ]
+    },
+    {
+        "name": "Alice Zurlo",
+        "institute": "Universidad Diego Portales",
+        "affiliations": [
+            "Universidad Diego Portales",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "Full Professor",
+        "focus": [
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Direct imaging"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "High-contrast imaging instruments"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Adaptive optics"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Coronagraphy"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Space missions"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Pipeline development for instruments"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "School visits"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Planetarium and museum activities"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Gravitational instability"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "FUor/EXor outbursts and planet formation"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "NIR observations"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "N-Body Simulations"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Planet-Disc Interaction"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Circumplanetary discs"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Deep Learning for planet detection"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Dynamical stability"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Long-term N-body simulations"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "French",
+            "Italian"
+        ],
+        "skills": [
+            {
+                "name": "VLT/SPHERE",
+                "level": 3
+            },
+            {
+                "name": "VLT/ERIS",
+                "level": 3
+            },
+            {
+                "name": "Direct imaging",
+                "level": 3
+            },
+            {
+                "name": "ADI/PCA",
+                "level": 3
+            },
+            {
+                "name": "Python",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Daniela González Vargas",
+        "institute": "Universidad de Chile",
+        "affiliations": [
+            "Universidad de Chile"
+        ],
+        "city": "Santiago",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Astrometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "False-positive vetting and validation"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Optical Interferometry"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "VLTI/GRAVITY",
+                "level": 1
+            },
+            {
+                "name": "Pyaneti",
+                "level": 2
+            },
+            {
+                "name": "Octofitter",
+                "level": 1
+            },
+            {
+                "name": "Radial velocities",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Florian Rodler",
+        "institute": "European Southern Observatory Chile",
+        "affiliations": [
+            "European Southern Observatory Chile"
+        ],
+        "city": "Santiago",
+        "careerStage": "Associate Faculty Astronomer",
+        "focus": [
+            {
+                "category": "Instrumentation",
+                "subcategory": "Spectrograph development"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Ground-based surveys"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Telescope operations"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Instrument calibration"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Observing strategy and performance forecasts"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public observing events"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "Emission spectroscopy"
+            },
+            {
+                "category": "Exoplanet Atmospheres",
+                "subcategory": "High-resolution spectroscopy"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "German"
+        ],
+        "skills": [
+            {
+                "name": "VLT/ESPRESSO",
+                "level": 3
+            },
+            {
+                "name": "VLT/CRIRES+",
+                "level": 3
+            },
+            {
+                "name": "HARPS",
+                "level": 3
+            },
+            {
+                "name": "High-resolution spectroscopy",
+                "level": 3
+            },
+            {
+                "name": "Public observing events",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Ilaria Giovannini",
+        "institute": "Universidad Diego Portales",
+        "affiliations": [
+            "Universidad Diego Portales",
+            "Núcleo Milenio YEMS",
+            "INAF (Italy)"
+        ],
+        "city": "Padova + Italy, and Santiago",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit photometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Direct imaging"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit timing variations"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "Italian"
+        ],
+        "skills": [
+            {
+                "name": "pyorbit",
+                "level": 2
+            },
+            {
+                "name": "Radial velocities",
+                "level": 2
+            },
+            {
+                "name": "Transit photometry",
+                "level": 2
+            },
+            {
+                "name": "Direct imaging",
+                "level": 1
+            }
+        ]
+    },
+    {
+        "name": "Felipe Ignacio Burgos Rubilar",
+        "institute": "Universidad de Concepción",
+        "affiliations": [
+            "Universidad de Concepción"
+        ],
+        "city": "Concepción",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Candidate classification"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Anomaly detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Machine-learning-assisted planet detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Time-domain alert brokers"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Large survey data mining"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Interpretable AI for astrophysics"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Deep Learning for planet detection"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Machine-learning-assisted candidate detection"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "Machine learning",
+                "level": 3
+            },
+            {
+                "name": "Candidate classification",
+                "level": 3
+            },
+            {
+                "name": "Python",
+                "level": 2
+            },
+            {
+                "name": "Radial velocities",
+                "level": 1
+            }
+        ]
+    },
+    {
+        "name": "Matias Jones",
+        "institute": "European Southern Observatory Chile",
+        "affiliations": [
+            "European Southern Observatory Chile"
+        ],
+        "city": "Santiago",
+        "careerStage": "Staff astronomer",
+        "focus": [
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Occurrence rates"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Cold giant planets"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Dependence on stellar mass"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Dependence on stellar metallicity"
+            },
+            {
+                "category": "Planetary System Evolution",
+                "subcategory": "Post-main-sequence planetary system evolution"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Orbital dynamics"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Dynamical stability"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit photometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Direct imaging"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Astrometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit timing variations"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Mass–radius relations"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Interior structure models"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "High-contrast imaging instruments"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Adaptive optics"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Coronagraphy"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Spectrograph development"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Space missions"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Ground-based surveys"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Telescope operations"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Instrument calibration"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Pipeline development for instruments"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Observing strategy and performance forecasts"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "VLT/SPHERE",
+                "level": 3
+            },
+            {
+                "name": "Radial velocities",
+                "level": 3
+            },
+            {
+                "name": "Direct imaging",
+                "level": 3
+            },
+            {
+                "name": "Astrometry",
+                "level": 3
+            },
+            {
+                "name": "High-resolution spectroscopy",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Jose Vines",
+        "institute": "Universidad Católica del Norte",
+        "affiliations": [
+            "Universidad Católica del Norte"
+        ],
+        "city": "Santiago",
+        "careerStage": "Postdoc",
+        "focus": [
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit photometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Astrometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Machine-learning-assisted candidate detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Candidate classification"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Anomaly detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Machine-learning-assisted planet detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Bayesian inference and probabilistic ML"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Deep Learning for planet detection"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "FEROS",
+                "level": 3
+            },
+            {
+                "name": "ARIADNE",
+                "level": 3
+            },
+            {
+                "name": "Isochrones",
+                "level": 3
+            },
+            {
+                "name": "CORALIE",
+                "level": 2
+            },
+            {
+                "name": "Machine learning",
+                "level": 3
+            },
+            {
+                "name": "Radial velocities",
+                "level": 3
+            }
+        ]
+    },
+    {
+        "name": "Danyla Ignacia Santiago Carrasco",
+        "institute": "Universidad de Atacama",
+        "affiliations": [
+            "Universidad de Atacama"
+        ],
+        "city": "Copiapó",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Habitability and Biosignatures",
+                "subcategory": "Habitable zone theory"
+            },
+            {
+                "category": "Habitability and Biosignatures",
+                "subcategory": "M-dwarf habitability"
+            },
+            {
+                "category": "Habitability and Biosignatures",
+                "subcategory": "Solar System analogues"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Orbital dynamics"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Mean-motion resonances"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Secular dynamics"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Planet–planet scattering"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Dynamical stability"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Compact multi-planet systems"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Eccentric and inclined systems"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Planetary obliquity"
+            },
+            {
+                "category": "Planetary System Architecture and Dynamics",
+                "subcategory": "Long-term N-body simulations"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "REBOUND",
+                "level": 2
+            },
+            {
+                "name": "N-body simulations",
+                "level": 2
+            },
+            {
+                "name": "Public talks",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Carla Hernández Silva",
+        "institute": "Universidad de Santiago de Chile",
+        "affiliations": [
+            "Universidad de Santiago de Chile"
+        ],
+        "city": "Santiago",
+        "careerStage": "Associate Professor",
+        "focus": [
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Teacher training"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Educational resources"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Undergraduate teaching"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public observing events"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+            }
+        ],
+        "languages": [
+            "Spanish"
+        ],
+        "skills": [
+            {
+                "name": "Public talks",
+                "level": 3
+            },
+            {
+                "name": "Teacher training",
+                "level": 3
+            },
+            {
+                "name": "Educational resources",
+                "level": 3
+            },
+            {
+                "name": "Public observing events",
+                "level": 3
+            },
+            {
+                "name": "Data visualisation",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Vicente Salazar Ortega",
+        "institute": "Universidad de Concepción",
+        "affiliations": [
+            "Universidad de Concepción"
+        ],
+        "city": "Concepción",
+        "careerStage": "Student (Licenciatura)",
+        "focus": [
+            {
+                "category": "Instrumentation",
+                "subcategory": "Telescope operations"
+            },
+            {
+                "category": "Instrumentation",
+                "subcategory": "Instrument calibration"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Citizen science"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public observing events"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English",
+            "German",
+            "Italian",
+            "Portuguese"
+        ],
+        "skills": [
+            {
+                "name": "Telescope operations",
+                "level": 1
+            },
+            {
+                "name": "Instrument calibration",
+                "level": 1
+            },
+            {
+                "name": "Public observing events",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Jorge Luis Guzmán Lazo",
+        "institute": "Universidad de Santiago de Chile",
+        "affiliations": [
+            "Universidad de Santiago de Chile",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "Student (Licenciatura)",
+        "focus": [
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "School visits"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Planetarium and museum activities"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Citizen science"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Media communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Social media and digital outreach"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Educational resources"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public observing events"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Radiative Transfer"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Hydrodynamics"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Planet-Disc Interaction"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Circumplanetary discs"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Interferometry"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "NIR observations"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "N-Body Simulations"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Radial velocities"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit photometry"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Direct imaging"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Transit timing variations"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Machine-learning-assisted candidate detection"
+            },
+            {
+                "category": "Exoplanet Detection and Discovery",
+                "subcategory": "Survey design and target selection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Candidate classification"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Anomaly detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Machine-learning-assisted planet detection"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Simulation emulators"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Bayesian inference and probabilistic ML"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Computer vision for imaging data"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Large survey data mining"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Interpretable AI for astrophysics"
+            },
+            {
+                "category": "Machine Learning and Artificial Intelligence",
+                "subcategory": "Deep Learning for planet detection"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "Machine learning",
+                "level": 2
+            },
+            {
+                "name": "RADMC-3D",
+                "level": 1
+            },
+            {
+                "name": "Python",
+                "level": 2
+            },
+            {
+                "name": "Public talks",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Bhavya Ambalapatta Kannancheri",
+        "institute": "Pontificia Universidad Católica de Chile",
+        "affiliations": [
+            "Pontificia Universidad Católica de Chile"
+        ],
+        "city": "Santiago",
+        "careerStage": "PhD Student",
+        "focus": [
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Occurrence rates"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Planet radius distribution"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Planet mass distribution"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Demographic comparisons between surveys"
+            },
+            {
+                "category": "Exoplanet Populations and Demographics",
+                "subcategory": "Hot Neptunes"
+            }
+        ],
+        "languages": [
+            "English",
+            "Malayalam"
+        ],
+        "skills": [
+            {
+                "name": "Demographics",
+                "level": 2
+            },
+            {
+                "name": "Population statistics",
+                "level": 2
+            },
+            {
+                "name": "Python",
+                "level": 2
+            }
+        ]
+    },
+    {
+        "name": "Neda Hejazi",
+        "institute": "Universidad de Tarapacá",
+        "affiliations": [
+            "Universidad de Tarapacá"
+        ],
+        "city": "Santiago",
+        "careerStage": "Postdoc",
+        "focus": [
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Star-planet chemical connections"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Mass–radius relations"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Interior structure models"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Core composition"
+            },
+            {
+                "category": "Planetary Interiors, Composition, and Evolution",
+                "subcategory": "Super-Earth interiors"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "ARCES/APO",
+                "level": 1
+            },
+            {
+                "name": "iSHELL/IRTF",
+                "level": 1
+            },
+            {
+                "name": "Mass-radius modelling",
+                "level": 3
+            }
+        ]
+    },
+    {
+        "name": "Camilo González Ruilova",
+        "institute": "Universidad de Santiago de Chile",
+        "affiliations": [
+            "Universidad de Santiago de Chile",
+            "Núcleo Milenio YEMS"
+        ],
+        "city": "Santiago",
+        "careerStage": "Postdoc",
+        "focus": [
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Public talks and science communication"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "School visits"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Teacher training"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Educational resources"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Undergraduate teaching"
+            },
+            {
+                "category": "Outreach, Education, and Public Engagement",
+                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Interferometry"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Circumplanetary discs"
+            },
+            {
+                "category": "Planet Formation and Protoplanetary Discs",
+                "subcategory": "Protoplanetary disc evolution"
+            }
+        ],
+        "languages": [
+            "Spanish",
+            "English"
+        ],
+        "skills": [
+            {
+                "name": "ALMA",
+                "level": 3
+            },
+            {
+                "name": "Interferometry",
+                "level": 3
+            },
+            {
+                "name": "CASA",
+                "level": 2
+            },
+            {
+                "name": "Public talks",
+                "level": 2
+            }
+        ]
+    }
+];
 
   const instituteCoords = {
-    // Real latitude/longitude values or close campus/address geocodes. The SVG projection converts these into map positions. Universidad de Chile is placed at Cerro Calán / OAN.
-    "Universidad de Antofagasta": { city: "Antofagasta", lat: -23.70300, lon: -70.41950, dx: 0.000, dy: 0.000 },
-    "Universidad Católica del Norte": { city: "Antofagasta", lat: -23.68130, lon: -70.41130, dx: 0.000, dy: 0.000 },
-    "Universidad de La Serena": { city: "La Serena", lat: -29.96128, lon: -71.33761, dx: 0.000, dy: 0.000 },
-    "Universidad de Valparaíso": { city: "Valparaíso", lat: -33.03060, lon: -71.63520, dx: 0.000, dy: 0.000 },
-    "Universidad Andrés Bello": { city: "Viña del Mar", lat: -33.02440, lon: -71.55040, dx: 0.000, dy: 0.000 },
-    "Universidad de Chile": { city: "Santiago", lat: -33.39605137006949, lon: -70.53511347137565, dx: 0.000, dy: 0.000 },
-    "Pontificia Universidad Católica de Chile": { city: "Santiago", lat: -33.50008507727742, lon: -70.61196766999073, dx: 0.000, dy: 0.000 },
-    "Universidad Diego Portales": { city: "Santiago", lat: -33.45246877308848, lon: -70.66061652263141, dx: 0.000, dy: 0.000 },
-    "Universidad de Santiago de Chile": { city: "Santiago", lat: -33.45039928204054, lon: -70.68389225986945, dx: 0.000, dy: 0.000 },
-    "Universidad de Concepción": { city: "Concepción", lat: -36.82993, lon: -73.03570, dx: 0.000, dy: 0.000 }
-  };
+    "Universidad de Antofagasta": {
+        "city": "Antofagasta",
+        "lat": -23.703,
+        "lon": -70.4195,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad Católica del Norte": {
+        "city": "Antofagasta",
+        "lat": -23.6813,
+        "lon": -70.4113,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de La Serena": {
+        "city": "La Serena",
+        "lat": -29.96128,
+        "lon": -71.33761,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de Valparaíso": {
+        "city": "Valparaíso",
+        "lat": -33.0306,
+        "lon": -71.6352,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad Técnica Federico Santa María": {
+        "city": "Valparaíso",
+        "lat": -33.0376,
+        "lon": -71.5956,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad Andrés Bello": {
+        "city": "Viña del Mar",
+        "lat": -33.0244,
+        "lon": -71.5504,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de Chile": {
+        "city": "Santiago",
+        "lat": -33.39605137006949,
+        "lon": -70.53511347137565,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Pontificia Universidad Católica de Chile": {
+        "city": "Santiago",
+        "lat": -33.50008507727742,
+        "lon": -70.61196766999073,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad Diego Portales": {
+        "city": "Santiago",
+        "lat": -33.45246877308848,
+        "lon": -70.66061652263141,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de Santiago de Chile": {
+        "city": "Santiago",
+        "lat": -33.45039928204054,
+        "lon": -70.68389225986945,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "European Southern Observatory Chile": {
+        "city": "Santiago",
+        "lat": -33.3974,
+        "lon": -70.5801,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de Tarapacá": {
+        "city": "Santiago",
+        "lat": -33.4372,
+        "lon": -70.6506,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de Concepción": {
+        "city": "Concepción",
+        "lat": -36.82993,
+        "lon": -73.0357,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "Universidad de Atacama": {
+        "city": "Copiapó",
+        "lat": -27.3668,
+        "lon": -70.3323,
+        "dx": 0.0,
+        "dy": 0.0
+    },
+    "The Ohio State University": {
+        "city": "Columbus, OH, USA",
+        "lat": 39.9991,
+        "lon": -83.0146,
+        "dx": 0.0,
+        "dy": 0.0
+    }
+};
 
   const cityCoords = {
     "Antofagasta": { lat: -23.692, lon: -70.415, zoomBox: null },
@@ -1152,10 +3167,13 @@
     const values = new Set();
     people.forEach(person => {
       const entry = person[category];
-      if (category === "skills") {
-        entry.forEach(item => values.add(typeof item === "string" ? item : item.name));
-      } else {
-        Array.isArray(entry) ? entry.forEach(item => values.add(item)) : values.add(entry);
+      if (Array.isArray(entry)) {
+        entry.forEach(item => {
+          if (!item) return;
+          values.add(typeof item === "object" ? (item.name || item.category || String(item)) : item);
+        });
+      } else if (entry) {
+        values.add(entry);
       }
     });
     return Array.from(values).sort((a, b) => a.localeCompare(b));
@@ -1231,29 +3249,29 @@
 
   function addFocusSelector(category = "", subcategory = "") {
     const stack = document.getElementById("xo-focus-stack");
-    const row = document.createElement("div");
-    row.className = "xo-selector-row single-select";
-    const catField = document.createElement("div");
-    catField.className = "xo-field";
-    const catSelect = document.createElement("select");
-    catSelect.dataset.category = "focusCategory";
-    const anyCat = document.createElement("option");
-    anyCat.value = "";
-    anyCat.textContent = `${t("any")} ${t("focusCategory").toLowerCase()}`;
-    catSelect.appendChild(anyCat);
-    Object.keys(focusTaxonomy).forEach(cat => {
-      const opt = document.createElement("option");
-      opt.value = cat;
-      opt.textContent = cat;
-      catSelect.appendChild(opt);
-    });
+    const row = document.createElement("div"); row.className = "xo-selector-row";
+    const catField = document.createElement("div"); catField.className = "xo-field";
+    const subField = document.createElement("div"); subField.className = "xo-field";
+    const catSelect = document.createElement("select"); catSelect.dataset.category = "focusCategory";
+    const anyCat = document.createElement("option"); anyCat.value = ""; anyCat.textContent = `${t("any")} ${t("focusCategory").toLowerCase()}`; catSelect.appendChild(anyCat);
+    Object.keys(focusTaxonomy).forEach(cat => { const opt = document.createElement("option"); opt.value = cat; opt.textContent = cat; catSelect.appendChild(opt); });
     catSelect.value = category;
-    catSelect.addEventListener("change", render);
-    catField.appendChild(catSelect);
+    const subSelect = document.createElement("select"); subSelect.dataset.category = "focusSubcategory";
+
+    function populateSubcategories() {
+      const old = subSelect.value;
+      subSelect.innerHTML = "";
+      const anySub = document.createElement("option"); anySub.value = ""; anySub.textContent = t("anySubcategory"); subSelect.appendChild(anySub);
+      const subs = catSelect.value ? focusTaxonomy[catSelect.value] : Array.from(new Set(Object.values(focusTaxonomy).flat())).sort();
+      subs.forEach(sub => { const opt = document.createElement("option"); opt.value = sub; opt.textContent = sub; subSelect.appendChild(opt); });
+      subSelect.value = subcategory || ([...subSelect.options].some(o => o.value === old) ? old : "");
+    }
+    catSelect.addEventListener("change", () => { subcategory = ""; populateSubcategories(); render(); });
+    subSelect.addEventListener("change", render);
+    populateSubcategories();
+    catField.appendChild(catSelect); subField.appendChild(subSelect);
     const removeButton = createRemoveButton("focus", row);
-    row.appendChild(catField);
-    row.appendChild(removeButton);
-    stack.appendChild(row);
+    row.appendChild(catField); row.appendChild(subField); row.appendChild(removeButton); stack.appendChild(row);
   }
 
   function createRemoveButton(category, row) {
@@ -1274,9 +3292,10 @@
     singleCategories.forEach(category => { const select = document.querySelector(`select[data-category="${category}"]`); if (select && select.value) criteria.push({ category, value: select.value }); });
 
     document.querySelectorAll("#xo-focus-stack .xo-selector-row").forEach(row => {
-      const categorySelect = row.querySelector('select[data-category="focusCategory"]');
-      const categoryValue = categorySelect ? categorySelect.value : "";
+      const categoryValue = row.querySelector('select[data-category="focusCategory"]').value;
+      const subcategoryValue = row.querySelector('select[data-category="focusSubcategory"]').value;
       if (categoryValue) criteria.push({ category: "focusCategory", value: categoryValue });
+      if (subcategoryValue) criteria.push({ category: "focusSubcategory", value: subcategoryValue });
     });
 
     multiCategories.forEach(category => {
@@ -1292,8 +3311,13 @@
     if (criterion.category === "focusCategory") return person.focus.some(f => f.category === criterion.value);
     if (criterion.category === "focusSubcategory") return person.focus.some(f => f.subcategory === criterion.value);
     const entry = person[criterion.category];
-    if (criterion.category === "skills") return entry.some(item => (typeof item === "string" ? item : item.name) === criterion.value);
-    return Array.isArray(entry) ? entry.includes(criterion.value) : entry === criterion.value;
+    if (Array.isArray(entry)) {
+      return entry.some(item => {
+        const value = typeof item === "object" ? (item.name || item.category || String(item)) : item;
+        return value === criterion.value;
+      });
+    }
+    return entry === criterion.value;
   }
   function matchCount(person, selectedCriteria) { return selectedCriteria.filter(criterion => personMatchesCriterion(person, criterion)).length; }
 
@@ -1310,137 +3334,72 @@
 
 
   const focusIconSvg = {
-    "Planet Formation and Protoplanetary Discs": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="24" r="4.2" fill="#fff6b8"/>
-      <ellipse cx="24" cy="25" rx="18" ry="7" fill="none" stroke="#4fd1c5" stroke-width="3" transform="rotate(-12 24 25)"/>
-      <ellipse cx="24" cy="25" rx="11" ry="3.7" fill="none" stroke="#7ee7ff" stroke-width="2" transform="rotate(-12 24 25)" opacity="0.9"/>
-      <circle cx="35" cy="21" r="2.8" fill="#ffb0d4"/>
-      <path d="M13 31c7 3 17 3 25-1" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.75"/>
-    </svg>`,
-    "Exoplanet Detection and Discovery": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <path d="M7 37H42" stroke="#4fd1c5" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M9 12v25" stroke="#4fd1c5" stroke-width="2.2" stroke-linecap="round"/>
-      <path d="M10 19 H18 C20 19 20 30 22 30 H27 C29 30 29 19 31 19 H40" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="24.5" cy="30" r="2.2" fill="#ffb0d4"/>
-      <text x="34" y="34" font-size="6" fill="#7ee7ff" font-weight="800">T</text>
-    </svg>`,
-    "Exoplanet Atmospheres": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <path d="M15.5 34.5h19.5c4.4 0 8-3.2 8-7.3 0-3.7-2.8-6.7-6.5-7.2C35 14.3 29.9 10.5 24 10.5c-6.3 0-11.5 4.2-12.8 9.9C7.5 21.2 5 24.1 5 27.5c0 3.9 3.4 7 7.6 7h2.9z" fill="#7ee7ff" opacity="0.78"/>
-      <path d="M15.5 34.5h19.5c4.4 0 8-3.2 8-7.3 0-3.7-2.8-6.7-6.5-7.2C35 14.3 29.9 10.5 24 10.5c-6.3 0-11.5 4.2-12.8 9.9C7.5 21.2 5 24.1 5 27.5c0 3.9 3.4 7 7.6 7h2.9z" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round"/>
-      <path d="M13 26.5c5.2-3.6 13.7-3.4 19.2 0M16 31c4-2.1 10.4-2 14.8 0" stroke="#3156d4" stroke-width="1.8" stroke-linecap="round" opacity="0.8"/>
-      <circle cx="35.5" cy="17.5" r="2.5" fill="#4fd1c5" opacity="0.9"/>
-    </svg>`,
-    "Planetary System Architecture and Dynamics": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="24" r="3.7" fill="#fff6b8"/>
-      <circle cx="24" cy="24" r="9" fill="none" stroke="#4fd1c5" stroke-width="1.7" opacity="0.9"/>
-      <circle cx="24" cy="24" r="15" fill="none" stroke="#7ee7ff" stroke-width="1.7" opacity="0.8"/>
-      <ellipse cx="24" cy="24" rx="20" ry="9" fill="none" stroke="#ffffff" stroke-width="1.6" transform="rotate(-20 24 24)" opacity="0.65"/>
-      <circle cx="33" cy="24" r="2.5" fill="#ffb0d4"/>
-      <circle cx="11" cy="28" r="2" fill="#4fd1c5"/>
-      <circle cx="36" cy="16" r="2.2" fill="#ffffff"/>
-    </svg>`,
-    "Exoplanet Populations and Demographics": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <rect x="8" y="8" width="32" height="31" rx="1.5" fill="rgba(5,8,20,0.35)" stroke="#ffffff" stroke-width="1.4"/>
-      <path d="M12 36H40M12 36V11" stroke="#4fd1c5" stroke-width="2" stroke-linecap="round"/>
-      <path d="M12 28H40M12 20H40M20 36V11M30 36V11" stroke="#ffffff" stroke-width="0.75" opacity="0.32"/>
-      <ellipse cx="20" cy="30" rx="8" ry="4.5" fill="#ffd15c" opacity="0.72"/>
-      <ellipse cx="22" cy="24" rx="11" ry="4.2" fill="#7ee7ff" opacity="0.70"/>
-      <ellipse cx="16" cy="18" rx="6" ry="4.8" fill="#ffb0d4" opacity="0.72"/>
-      <ellipse cx="33" cy="17" rx="6.5" ry="4.6" fill="#b66cff" opacity="0.70"/>
-      <circle cx="15" cy="33" r="1" fill="#ffffff"/><circle cx="18" cy="31" r="0.9" fill="#ffffff"/><circle cx="23" cy="29" r="0.85" fill="#ffffff"/>
-      <circle cx="28" cy="25" r="0.9" fill="#ffffff"/><circle cx="35" cy="18" r="0.9" fill="#ffffff"/><circle cx="18" cy="17" r="0.75" fill="#ffffff"/>
-    </svg>`,
-    "Planetary Interiors, Composition, and Evolution": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <defs><clipPath id="interiorCut"><path d="M24 24V6a18 18 0 0 1 18 18H24z"/></clipPath></defs>
-      <circle cx="24" cy="24" r="18" fill="#8b8f98"/>
-      <path d="M9 18c7-3 12-3 19 0M7 26c8 3 16 2 22-1M11 33c5 2 11 2 17 0" stroke="#ffffff" stroke-width="1" opacity="0.45" fill="none" stroke-linecap="round"/>
-      <path d="M24 24V6a18 18 0 0 1 18 18H24z" fill="#0b1020" opacity="0.98"/>
-      <path d="M24 24V8.5a15.5 15.5 0 0 1 15.5 15.5H24z" fill="#bfc7a0"/>
-      <path d="M24 24V12.2a11.8 11.8 0 0 1 11.8 11.8H24z" fill="#ff8a3d"/>
-      <path d="M24 24V16.2a7.8 7.8 0 0 1 7.8 7.8H24z" fill="#ffd15c"/>
-      <circle cx="24" cy="24" r="4.2" fill="#fff6b8"/>
-      <path d="M24 6v18h18" stroke="#ffffff" stroke-width="1.5" opacity="0.65"/>
-    </svg>`,
-    "Outreach, Education, and Public Engagement": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <rect x="8" y="19" width="32" height="19" rx="2" fill="#ff8a3d" stroke="#050814" stroke-width="2"/>
-      <path d="M15 19l9-9 9 9" fill="#ffd15c" stroke="#050814" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M6 22h13v16H6zM29 22h13v16H29z" fill="#ff5a5f" stroke="#050814" stroke-width="2" stroke-linejoin="round"/>
-      <rect x="21" y="29" width="6" height="9" rx="1" fill="#7ee7ff" stroke="#050814" stroke-width="1.5"/>
-      <rect x="11" y="26" width="5" height="5" fill="#7ee7ff" stroke="#050814" stroke-width="1.3"/>
-      <rect x="32" y="26" width="5" height="5" fill="#7ee7ff" stroke="#050814" stroke-width="1.3"/>
-      <circle cx="24" cy="20.5" r="3.2" fill="#ffffff" stroke="#050814" stroke-width="1.4"/>
-      <path d="M24 8v-5M24 3c3 0 5 1 7 0v5c-2 1-4 0-7 0z" fill="#ff5a5f" stroke="#050814" stroke-width="1.4" stroke-linejoin="round"/>
-    </svg>`,
-    "Instrumentation": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <g transform="rotate(-28 25 22)">
-        <rect x="14" y="15" width="21" height="10" rx="2" fill="#7ee7ff" stroke="#ffffff" stroke-width="2.2"/>
-        <circle cx="36" cy="20" r="5.3" fill="#0b1020" stroke="#4fd1c5" stroke-width="2.4"/>
-        <circle cx="36" cy="20" r="2.2" fill="#ffffff" opacity="0.85"/>
-        <rect x="9" y="17" width="6" height="6" rx="1.5" fill="#ffb0d4" stroke="#ffffff" stroke-width="1.6"/>
-      </g>
-      <circle cx="22" cy="29" r="2.2" fill="#fff6b8"/>
-      <path d="M22 31v10M22 34l-9 8M22 34l10 8M13 42h20" stroke="#4fd1c5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M8 15l4 2M10 10l3 4M17 9l-1 4" stroke="#fff6b8" stroke-width="1.6" stroke-linecap="round" opacity="0.85"/>
-    </svg>`,
-    "Machine Learning and Artificial Intelligence": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <rect x="13" y="15" width="22" height="20" rx="4" fill="#4fd1c5" stroke="#ffffff" stroke-width="2.2"/>
-      <rect x="10" y="22" width="4" height="8" rx="2" fill="#ffb0d4" stroke="#050814" stroke-width="1"/>
-      <rect x="34" y="22" width="4" height="8" rx="2" fill="#ffb0d4" stroke="#050814" stroke-width="1"/>
-      <circle cx="20" cy="25" r="3.1" fill="#050814"/>
-      <circle cx="28" cy="25" r="3.1" fill="#050814"/>
-      <circle cx="20" cy="24" r="1" fill="#ffffff"/><circle cx="28" cy="24" r="1" fill="#ffffff"/>
-      <path d="M20 31c2.8 2.2 5.2 2.2 8 0" stroke="#050814" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M24 15v-6" stroke="#fff6b8" stroke-width="2.2" stroke-linecap="round"/>
-      <circle cx="24" cy="7" r="2.3" fill="#fff6b8"/>
-      <path d="M17 38h14M18 35l-2 5M30 35l2 5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-      <path d="M14 12h20" stroke="#7ee7ff" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
-    </svg>`,
-    "Habitability and Biosignatures": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <ellipse cx="24" cy="25" rx="12" ry="14" fill="#4fd1c5" opacity="0.9"/>
-      <path d="M14 20c1-7 19-7 20 0" fill="none" stroke="#7ee7ff" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="19" cy="25" r="2.5" fill="#050814"/>
-      <circle cx="29" cy="25" r="2.5" fill="#050814"/>
-      <path d="M20 33c3 2 5 2 8 0" stroke="#050814" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M16 13l-4-5M32 13l4-5" stroke="#fff6b8" stroke-width="2.2" stroke-linecap="round"/>
-      <circle cx="11" cy="7" r="2.2" fill="#fff6b8"/><circle cx="37" cy="7" r="2.2" fill="#fff6b8"/>
-    </svg>`,
-    "Planetary System Evolution": `<svg viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="23" cy="24" r="4.2" fill="#fff6b8"/>
-      <ellipse cx="24" cy="24" rx="19" ry="9" fill="none" stroke="#4fd1c5" stroke-width="2.2" opacity="0.85"/>
-      <circle cx="8" cy="23" r="1.6" fill="#ffffff"/><circle cx="12" cy="29" r="1.3" fill="#7ee7ff"/>
-      <circle cx="35" cy="18" r="1.5" fill="#ffffff"/><circle cx="40" cy="25" r="1.2" fill="#7ee7ff"/>
-      <circle cx="33" cy="31" r="1.4" fill="#ffb0d4"/><circle cx="16" cy="16" r="1.1" fill="#ffffff"/>
-      <path d="M7 30c8 7 25 8 35-2" stroke="#ffffff" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.65"/>
-    </svg>`
+    "Planet Formation and Protoplanetary Discs": `<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="4" fill="#fff6b8"/><ellipse cx="24" cy="25" rx="18" ry="7" fill="none" stroke="#4fd1c5" stroke-width="3" transform="rotate(-12 24 25)"/><ellipse cx="24" cy="25" rx="11" ry="3.5" fill="none" stroke="#7ee7ff" stroke-width="2" transform="rotate(-12 24 25)"/><circle cx="35" cy="21" r="2.7" fill="#ffb0d4"/></svg>`,
+    "Exoplanet Detection and Discovery": `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 37H42M9 12v25" stroke="#4fd1c5" stroke-width="2.2" stroke-linecap="round"/><path d="M10 19H18c2 0 2 11 4 11h5c2 0 2-11 4-11h9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24.5" cy="30" r="2.2" fill="#ffb0d4"/></svg>`,
+    "Exoplanet Atmospheres": `<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M15.5 34.5h19.5c4.4 0 8-3.2 8-7.3 0-3.7-2.8-6.7-6.5-7.2C35 14.3 29.9 10.5 24 10.5c-6.3 0-11.5 4.2-12.8 9.9C7.5 21.2 5 24.1 5 27.5c0 3.9 3.4 7 7.6 7h2.9z" fill="#7ee7ff" opacity="0.78"/><path d="M15.5 34.5h19.5c4.4 0 8-3.2 8-7.3 0-3.7-2.8-6.7-6.5-7.2C35 14.3 29.9 10.5 24 10.5c-6.3 0-11.5 4.2-12.8 9.9C7.5 21.2 5 24.1 5 27.5c0 3.9 3.4 7 7.6 7h2.9z" fill="none" stroke="#fff" stroke-width="2.4"/></svg>`,
+    "Planetary System Architecture and Dynamics": `<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="3.7" fill="#fff6b8"/><circle cx="24" cy="24" r="9" fill="none" stroke="#4fd1c5" stroke-width="1.7"/><circle cx="24" cy="24" r="15" fill="none" stroke="#7ee7ff" stroke-width="1.7"/><ellipse cx="24" cy="24" rx="20" ry="9" fill="none" stroke="#fff" stroke-width="1.6" transform="rotate(-20 24 24)" opacity="0.7"/><circle cx="33" cy="24" r="2.5" fill="#ffb0d4"/><circle cx="11" cy="28" r="2" fill="#4fd1c5"/></svg>`,
+    "Exoplanet Populations and Demographics": `<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="31" rx="1.5" fill="rgba(5,8,20,0.35)" stroke="#fff" stroke-width="1.4"/><path d="M12 36H40M12 36V11" stroke="#4fd1c5" stroke-width="2" stroke-linecap="round"/><path d="M12 28H40M12 20H40M20 36V11M30 36V11" stroke="#fff" stroke-width="0.75" opacity="0.32"/><ellipse cx="20" cy="30" rx="8" ry="4.5" fill="#ffd15c" opacity="0.72"/><ellipse cx="22" cy="24" rx="11" ry="4.2" fill="#7ee7ff" opacity="0.70"/><ellipse cx="16" cy="18" rx="6" ry="4.8" fill="#ffb0d4" opacity="0.72"/><ellipse cx="33" cy="17" rx="6.5" ry="4.6" fill="#b66cff" opacity="0.70"/></svg>`,
+    "Planetary Interiors, Composition, and Evolution": `<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="#8b8f98"/><path d="M9 18c7-3 12-3 19 0M7 26c8 3 16 2 22-1M11 33c5 2 11 2 17 0" stroke="#fff" stroke-width="1" opacity="0.45" fill="none"/><path d="M24 24V6a18 18 0 0 1 18 18H24z" fill="#0b1020"/><path d="M24 24V8.5a15.5 15.5 0 0 1 15.5 15.5H24z" fill="#bfc7a0"/><path d="M24 24V12.2a11.8 11.8 0 0 1 11.8 11.8H24z" fill="#ff8a3d"/><path d="M24 24V16.2a7.8 7.8 0 0 1 7.8 7.8H24z" fill="#ffd15c"/><circle cx="24" cy="24" r="4.2" fill="#fff6b8"/></svg>`,
+    "Outreach, Education, and Public Engagement": `<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="19" width="32" height="19" rx="2" fill="#ff8a3d" stroke="#050814" stroke-width="2"/><path d="M15 19l9-9 9 9" fill="#ffd15c" stroke="#050814" stroke-width="2"/><path d="M6 22h13v16H6zM29 22h13v16H29z" fill="#ff5a5f" stroke="#050814" stroke-width="2"/><rect x="21" y="29" width="6" height="9" rx="1" fill="#7ee7ff" stroke="#050814" stroke-width="1.5"/><circle cx="24" cy="20.5" r="3.2" fill="#fff" stroke="#050814" stroke-width="1.4"/></svg>`,
+    "Instrumentation": `<svg viewBox="0 0 48 48" aria-hidden="true"><g transform="rotate(-28 25 22)"><rect x="14" y="15" width="21" height="10" rx="2" fill="#7ee7ff" stroke="#fff" stroke-width="2.2"/><circle cx="36" cy="20" r="5.3" fill="#0b1020" stroke="#4fd1c5" stroke-width="2.4"/><circle cx="36" cy="20" r="2.2" fill="#fff"/></g><circle cx="22" cy="29" r="2.2" fill="#fff6b8"/><path d="M22 31v10M22 34l-9 8M22 34l10 8M13 42h20" stroke="#4fd1c5" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+    "Machine Learning and Artificial Intelligence": `<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="13" y="15" width="22" height="20" rx="4" fill="#4fd1c5" stroke="#fff" stroke-width="2.2"/><rect x="10" y="22" width="4" height="8" rx="2" fill="#ffb0d4"/><rect x="34" y="22" width="4" height="8" rx="2" fill="#ffb0d4"/><circle cx="20" cy="25" r="3.1" fill="#050814"/><circle cx="28" cy="25" r="3.1" fill="#050814"/><path d="M20 31c2.8 2.2 5.2 2.2 8 0" stroke="#050814" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M24 15v-6" stroke="#fff6b8" stroke-width="2.2"/><circle cx="24" cy="7" r="2.3" fill="#fff6b8"/></svg>`,
+    "Habitability and Biosignatures": `<svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="25" rx="14" ry="17" fill="#7ee7ff" stroke="#fff" stroke-width="2"/><ellipse cx="18" cy="23" rx="3.5" ry="5" fill="#050814"/><ellipse cx="30" cy="23" rx="3.5" ry="5" fill="#050814"/><path d="M19 32c3 2.2 7 2.2 10 0" stroke="#050814" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M16 11l-4-5M32 11l4-5" stroke="#4fd1c5" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="5" r="2" fill="#4fd1c5"/><circle cx="37" cy="5" r="2" fill="#4fd1c5"/></svg>`,
+    "Planetary System Evolution": `<svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="23" cy="24" r="4.2" fill="#fff6b8"/><ellipse cx="24" cy="24" rx="19" ry="9" fill="none" stroke="#4fd1c5" stroke-width="2.2"/><circle cx="8" cy="23" r="1.6" fill="#fff"/><circle cx="12" cy="29" r="1.3" fill="#7ee7ff"/><circle cx="35" cy="18" r="1.5" fill="#fff"/><circle cx="40" cy="25" r="1.2" fill="#7ee7ff"/><circle cx="33" cy="31" r="1.4" fill="#ffb0d4"/><path d="M7 30c8 7 25 8 35-2" stroke="#fff" stroke-width="1.4" fill="none" opacity="0.65"/></svg>`
   };
 
-  function focusIcons(items) {
+  function focusCategories(items) {
     const seen = new Set();
-    return `<div class="xo-focus-icons">${items.map(f => f.category).filter(cat => {
+    return (items || []).map(f => f.category || f).filter(cat => {
       if (!cat || seen.has(cat)) return false;
       seen.add(cat);
       return true;
-    }).map(cat => `<span class="xo-focus-icon" title="${cat}" aria-label="${cat}">${focusIconSvg[cat] || "★"}</span>`).join("")}</div>`;
+    });
   }
 
-  function chips(items) { return `<div class="xo-chip-list">${items.map(item => `<span class="xo-chip">${item}</span>`).join("")}</div>`; }
-  function focusChips(items) { return chips(items.map(f => f.subcategory ? `${f.category}: ${f.subcategory}` : f.category)); }
-  function starRating(level) {
-    const n = Math.max(1, Math.min(3, Number(level) || 1));
-    return `<span class="xo-stars" aria-label="${n} out of 3">
-      ${[1,2,3].map(i => `<span class="${i <= n ? "xo-star-filled" : "xo-star-empty"}">★</span>`).join("")}
-    </span>`;
+  function focusIcons(items) {
+    return `<div class="xo-focus-icons">${focusCategories(items).map(cat => `<span class="xo-focus-icon" title="${cat}" aria-label="${cat}">${focusIconSvg[cat] || "★"}</span>`).join("")}</div>`;
   }
-  function skillChips(items) {
-    return `<div class="xo-chip-list">${items.map(item => {
-      const name = typeof item === "string" ? item : item.name;
-      const level = typeof item === "string" ? 1 : item.level;
-      return `<span class="xo-skill-chip"><span>${name}</span>${starRating(level)}</span>`;
-    }).join("")}</div>`;
+
+  function frontIcons(items) {
+    const cats = focusCategories(items);
+    const primary = cats[0] || "";
+    const icon = focusIconSvg[primary] || "";
+    return `<div class="xo-front-icons" aria-hidden="true">${[1,2,3,4,5].map(() => `<span class="xo-front-icon">${icon}</span>`).join("")}</div>`;
   }
-  function flipCard(card) {
-    card.classList.toggle("flipped");
+
+  function focusMainChips(items) {
+    return chips(focusCategories(items));
   }
+
+  function focusDetailsHtml(items) {
+    const groups = {};
+    (items || []).forEach(f => {
+      const cat = f.category || String(f);
+      const sub = f.subcategory || "";
+      groups[cat] = groups[cat] || [];
+      if (sub && !groups[cat].includes(sub)) groups[cat].push(sub);
+    });
+    return Object.entries(groups).map(([cat, subs]) => `<div class="xo-focus-detail-group"><strong>${cat}</strong>${subs.length ? `<ul>${subs.map(s => `<li>${s}</li>`).join("")}</ul>` : `<p class="muted">No further details provided.</p>`}</div>`).join("");
+  }
+
+  function openFocusModal(personIndex) {
+    const person = people[personIndex];
+    if (!person) return;
+    document.getElementById("xo-focus-modal-title").textContent = t("scientificFocus") || "Scientific focus";
+    document.getElementById("xo-focus-modal-person").textContent = person.name;
+    document.getElementById("xo-focus-modal-body").innerHTML = focusDetailsHtml(person.focus);
+    const modal = document.getElementById("xo-focus-modal");
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeFocusModal() {
+    const modal = document.getElementById("xo-focus-modal");
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  function flipCard(card) { card.classList.toggle("flipped"); }
   function cardKeyFlip(event, card) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -1448,44 +3407,35 @@
     }
   }
 
-  function focusPatternClass(focusItems) {
-    const primary = (focusItems || [])[0]?.category || "";
-    const classMap = {
-      "Planet Formation and Protoplanetary Discs": "xo-pattern-disc",
-      "Exoplanet Detection and Discovery": "xo-pattern-transit",
-      "Exoplanet Atmospheres": "xo-pattern-atmosphere",
-      "Planetary System Architecture and Dynamics": "xo-pattern-system",
-      "Exoplanet Populations and Demographics": "xo-pattern-populations",
-      "Planetary Interiors, Composition, and Evolution": "xo-pattern-interiors",
-      "Outreach, Education, and Public Engagement": "xo-pattern-outreach",
-      "Instrumentation": "xo-pattern-instrumentation",
-      "Machine Learning and Artificial Intelligence": "xo-pattern-ai",
-      "Habitability and Biosignatures": "xo-pattern-habitability",
-      "Planetary System Evolution": "xo-pattern-evolution"
-    };
-    return classMap[primary] || "xo-pattern-system";
+  function skillStars(level) {
+    const n = Math.max(1, Math.min(3, Number(level) || 1));
+    return `<span class="skill-stars" aria-label="${n} of 3 expertise stars">${"★".repeat(n)}${"☆".repeat(3-n)}</span>`;
   }
 
-
-  function primaryFocusIcon(items) {
-    const primary = (items || [])[0]?.category || "";
-    const icon = focusIconSvg[primary] || "";
-    if (!icon) return "";
-    const icons = Array.from({ length: 8 }, () => `<span class="xo-front-mini-icon">${icon}</span>`).join("");
-    return `<div class="xo-front-icon-pattern" aria-hidden="true">${icons}</div>`;
+  function chips(items) {
+    return `<div class="xo-chip-list">${items.map(item => {
+      if (typeof item === "object") {
+        const name = item.name || item.category || "";
+        return `<span class="xo-chip">${name}${item.level ? " " + skillStars(item.level) : ""}</span>`;
+      }
+      return `<span class="xo-chip">${item}</span>`;
+    }).join("")}</div>`;
   }
+  function focusChips(items) { return focusMainChips(items); }
 
   function renderCards(personList, selectedCount, totalSelected) {
     if (personList.length === 0) return `<p class="xo-muted">${t("noPeople")}</p>`;
-    return `<div class="xo-grid">${personList.map(person => `
-      <article class="xo-card" tabindex="0" role="button" aria-label="${person.name}: ${t("flipHint")}" onclick="flipCard(this)" onkeydown="cardKeyFlip(event, this)">
+    return `<div class="xo-grid">${personList.map(person => {
+      const personIndex = people.indexOf(person);
+      return `
+      <article class="xo-card" tabindex="0" role="button" aria-label="Flip card for ${person.name}" onclick="flipCard(this)" onkeydown="cardKeyFlip(event, this)">
         <div class="xo-card-inner">
-          <div class="xo-card-face xo-card-front ${focusPatternClass(person.focus)}">
-            ${primaryFocusIcon(person.focus)}
+          <div class="xo-card-face xo-card-front">
+            ${frontIcons(person.focus)}
             <h4>${person.name}</h4>
             <p class="xo-front-stage">${person.careerStage}</p>
             <p class="xo-front-institute">${person.institute}<br>${person.city}, Chile</p>
-            <div class="xo-flip-hint">${t("flipHint")}</div>
+            <p class="xo-flip-hint">Click to flip</p>
           </div>
           <div class="xo-card-face xo-card-back">
             ${focusIcons(person.focus)}
@@ -1493,12 +3443,14 @@
             <p><strong>${person.careerStage}</strong></p>
             <p>${person.institute}<br>${person.city}, Chile</p>
             ${selectedCount !== undefined ? `<p class="xo-muted">${t("matches")(selectedCount, totalSelected)}</p>` : ""}
-            <p><strong>${t("focusLabel")}</strong></p>${focusChips(person.focus)}
+            <p><strong>${t("focusLabel")}</strong></p>${focusMainChips(person.focus)}
+            <button class="btn btn-outline xo-focus-details-btn" type="button" onclick="event.stopPropagation(); openFocusModal(${personIndex});">Details</button>
             <p><strong>${t("languagesLabel")}</strong></p>${chips(person.languages)}
-            <p><strong>${t("skillsLabel")}</strong></p>${skillChips(person.skills)}
+            <p><strong>${t("skillsLabel")}</strong></p>${chips(person.skills)}
           </div>
         </div>
-      </article>`).join("")}</div>`;
+      </article>`;
+    }).join("")}</div>`;
   }
 
   function renderResults(selectedCriteria) {
@@ -1572,11 +3524,6 @@
     return 17.07;
   }
 
-  function zoomCityForInstitute(coords) {
-    if (coords.city === "Valparaíso" || coords.city === "Viña del Mar") return "Valparaíso / Viña del Mar";
-    return coords.city;
-  }
-
   function addMarker(inst, coords, offset = false) {
     const g = createSvgEl("g");
     g.classList.add("map-marker");
@@ -1588,14 +3535,9 @@
     g.setAttribute("transform", `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
     const c = createSvgEl("circle"); c.setAttribute("class", "main"); c.setAttribute("r", mapMode === "city" ? cityMarkerRadius().toFixed(3) : regionalMarkerRadiusForCity(coords.city).toString());
     g.appendChild(c);
-    const regionalSubtitle = `${coords.city}, Chile · click to zoom`;
-    const citySubtitle = `${coords.city}, Chile · click to search`;
-    g.addEventListener("mousemove", evt => showTooltip(evt, inst, mapMode === "regional" ? regionalSubtitle : citySubtitle));
+    g.addEventListener("mousemove", evt => showTooltip(evt, inst, `${coords.city}, Chile`));
     g.addEventListener("mouseleave", hideTooltip);
-    g.addEventListener("click", () => {
-      if (mapMode === "regional") zoomToCity(zoomCityForInstitute(coords));
-      else selectInstitute(inst);
-    });
+    g.addEventListener("click", () => selectInstitute(inst));
     mapMarkers.appendChild(g);
   }
 
@@ -1680,10 +3622,10 @@
     if ([...instSelect.options].some(o => o.value === oldInst)) instSelect.value = oldInst;
     addOptionsToSelect(document.getElementById("xo-careerStage"), "careerStage");
     document.querySelectorAll("#xo-focus-stack .xo-selector-row").forEach(row => {
-      const catSelect = row.querySelector('select[data-category="focusCategory"]');
-      const cat = catSelect ? catSelect.value : "";
+      const cat = row.querySelector('select[data-category="focusCategory"]').value;
+      const sub = row.querySelector('select[data-category="focusSubcategory"]').value;
       row.remove();
-      addFocusSelector(cat);
+      addFocusSelector(cat, sub);
     });
     multiCategories.forEach(category => { document.querySelectorAll(`#xo-${category}-stack select`).forEach(select => addOptionsToSelect(select, category)); });
   }
@@ -2149,6 +4091,15 @@
   }
 
   loadAdministrativeBoundaries();
+
+  document.getElementById("xo-focus-modal-close")?.addEventListener("click", closeFocusModal);
+  document.getElementById("xo-focus-modal")?.addEventListener("click", event => {
+    if (event.target.id === "xo-focus-modal") closeFocusModal();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeFocusModal();
+  });
+
   populateSingleSelects();
   addFocusSelector();
   multiCategories.forEach(category => addSimpleMultiSelector(category));

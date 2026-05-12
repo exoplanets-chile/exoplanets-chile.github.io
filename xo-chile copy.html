@@ -1572,6 +1572,11 @@
     return 17.07;
   }
 
+  function zoomCityForInstitute(coords) {
+    if (coords.city === "Valparaíso" || coords.city === "Viña del Mar") return "Valparaíso / Viña del Mar";
+    return coords.city;
+  }
+
   function addMarker(inst, coords, offset = false) {
     const g = createSvgEl("g");
     g.classList.add("map-marker");
@@ -1583,9 +1588,14 @@
     g.setAttribute("transform", `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
     const c = createSvgEl("circle"); c.setAttribute("class", "main"); c.setAttribute("r", mapMode === "city" ? cityMarkerRadius().toFixed(3) : regionalMarkerRadiusForCity(coords.city).toString());
     g.appendChild(c);
-    g.addEventListener("mousemove", evt => showTooltip(evt, inst, `${coords.city}, Chile`));
+    const regionalSubtitle = `${coords.city}, Chile · click to zoom`;
+    const citySubtitle = `${coords.city}, Chile · click to search`;
+    g.addEventListener("mousemove", evt => showTooltip(evt, inst, mapMode === "regional" ? regionalSubtitle : citySubtitle));
     g.addEventListener("mouseleave", hideTooltip);
-    g.addEventListener("click", () => selectInstitute(inst));
+    g.addEventListener("click", () => {
+      if (mapMode === "regional") zoomToCity(zoomCityForInstitute(coords));
+      else selectInstitute(inst);
+    });
     mapMarkers.appendChild(g);
   }
 
