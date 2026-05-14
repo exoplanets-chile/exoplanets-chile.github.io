@@ -167,7 +167,7 @@
     .cooccurrence-card { min-height: 0; }
     .cooccurrence-heatmap { min-width: 860px; }
     .matrix-code { fill: rgba(255,255,255,.88); font-size: 12px; font-weight: 700; }
-    .matrix-value { fill: #071018; font-size: 12px; font-weight: 800; text-anchor: middle; dominant-baseline: central; }
+    .matrix-value { fill: #071018; font-size: 12px; font-weight: 800; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
     .matrix-value.light { fill: rgba(255,255,255,.86); }
     .matrix-label { fill: rgba(255,255,255,.78); font-size: 11px; }
     .matrix-muted { fill: rgba(255,255,255,.48); font-size: 10px; }
@@ -326,6 +326,127 @@
       font-size: 27px !important;
     }
 
+  
+    /* ============================================================
+       Improved responsive sizing & typography
+       Charts truly adapt to mobile (smaller matrix cells, compact
+       donut legends, shorter labels) rather than relying on
+       horizontal scroll. JS detects viewport width and re-renders
+       on resize.
+       ============================================================ */
+
+    /* Remove forced min-heights so cards hug their content
+       (this kills the whitespace that appeared below charts on mobile). */
+    .chart-card { min-height: 0; }
+    .city-card { min-height: 0; }
+
+    /* Co-occurrence matrix typography (desktop baseline) */
+    .matrix-code { font-size: 13px; }
+    .matrix-value { font-size: 13px; }
+    .matrix-muted { font-size: 10.5px; }
+
+    /* === Tablet / narrow (≤ 820px) === */
+    @media (max-width: 820px) {
+      .heatmap, .cooccurrence-heatmap { min-width: 0; }
+    }
+
+    /* === Mobile (≤ 700px): compact spacing and typography === */
+    @media (max-width: 700px) {
+      main { padding: 0 1rem 2rem; }
+      section { padding: 0.95rem; margin: 0.85rem 0; }
+      .chart-card { padding: 0.85rem; }
+
+      h1 { font-size: 1.55rem; letter-spacing: 0.14rem; }
+      h2 { font-size: 1rem; letter-spacing: 0.14rem; }
+
+      .page-intro { padding: 1.5rem 1rem 0.5rem; }
+      .subtitle { font-size: 0.92rem; line-height: 1.55; }
+      .chart-title { font-size: 0.82rem; margin-bottom: 0.55rem; }
+      .section-head { margin-bottom: 0.75rem; }
+      .section-head p { font-size: 0.85rem; }
+
+      .cards { gap: 0.55rem; }
+      .stat { padding: 0.8rem 0.7rem; min-height: 78px; }
+      .stat .num { font-size: 1.65rem; }
+      .stat .label { font-size: 0.78rem; margin-top: 0.3rem; }
+
+      /* The 16.5px-bumped fonts in the original CSS are too large once the SVGs
+         scale down to fit mobile viewports — text overruns bars. Restore the
+         baseline svg font size; the JS compact renderers use plenty of inner
+         space so labels stay readable. */
+      #city-chart svg text,
+      #institute-chart svg text,
+      #career-chart svg text,
+      #skills-chart svg text,
+      #language-chart svg text,
+      #expertise-chart svg text,
+      #needs-chart svg text {
+        font-size: 13px;
+      }
+      #city-chart svg text.center-number,
+      #career-chart svg text.center-number {
+        font-size: 20px !important;
+      }
+      #city-chart .small-label,
+      #institute-chart .small-label,
+      #career-chart .small-label,
+      #skills-chart .small-label,
+      #language-chart .small-label,
+      #expertise-chart .small-label,
+      #needs-chart .small-label {
+        font-size: 11px !important;
+      }
+
+      /* Bigger HTML legends (under donuts) */
+      #city-chart + .legend,
+      #career-chart + .legend,
+      #skills-chart + .legend,
+      #language-chart + .legend,
+      .city-card .legend,
+      .institute-card .legend {
+        font-size: 0.85rem !important;
+        gap: 0.4rem 0.7rem;
+      }
+      .legend { font-size: 0.82rem; gap: 0.5rem; }
+
+      /* Compact toggle group */
+      .toggle-btn { font-size: 0.72rem; padding: 0.4rem 0.7rem; letter-spacing: 0.03em; }
+      .toggle-group { gap: 0.3rem; margin: 0.5rem 0 0.8rem; }
+
+      /* Smaller helper text */
+      .matrix-help { font-size: 0.8rem; }
+      .note { font-size: 0.78rem; }
+      .needs-caption { font-size: 0.8rem; }
+
+      .matrix-code { font-size: 12px; }
+      .matrix-value { font-size: 11px; }
+
+      /* Tighter card padding */
+      .chart-card,
+      .dashboard-card,
+      .stat-card {
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+      }
+    }
+
+    /* === Very small screens (≤ 460px) === */
+    @media (max-width: 460px) {
+      h1 { font-size: 1.35rem; }
+      main { padding: 0 0.8rem 1.6rem; }
+      section { padding: 0.8rem; }
+      .chart-card { padding: 0.7rem; }
+
+      .stat { padding: 0.7rem 0.6rem; min-height: 68px; }
+      .stat .num { font-size: 1.45rem; }
+      .stat .label { font-size: 0.72rem; }
+
+      .cards { gap: 0.45rem; }
+
+      .matrix-code { font-size: 11px; }
+      .matrix-value { font-size: 10px; }
+    }
+
   </style>
 </head>
 <body>
@@ -398,7 +519,15 @@
   </section>
   <section>
     <div class="section-head"><div><h2>Collaboration overlap</h2><p>Co-occurrence between expertise areas: brighter cells indicate areas that are selected together more often.</p></div></div>
-    <div class="chart-card cooccurrence-card"><div class="chart-title">Expertise co-occurrence matrix</div><p class="matrix-help">Each cell shows how many people selected both expertise areas. Hover over a code or cell to see the full names.</p><div class="heatmap-wrap"><div id="cooccurrence-heatmap" class="heatmap cooccurrence-heatmap"></div></div></div>
+    <div class="chart-card cooccurrence-card">
+      <div class="chart-title">Expertise co-occurrence matrix</div>
+      <p class="matrix-help">Hover over a code or cell for full names and details. Use the toggle to switch between absolute counts and row percentages.</p>
+      <div class="toggle-group" role="group" aria-label="Select matrix display mode">
+        <button class="toggle-btn active" type="button" data-matrix-mode="absolute">Absolute</button>
+        <button class="toggle-btn" type="button" data-matrix-mode="percent">Percent</button>
+      </div>
+      <div class="heatmap-wrap"><div id="cooccurrence-heatmap" class="heatmap cooccurrence-heatmap"></div></div>
+    </div>
   </section>
 </main>
 <footer>© Exoplanetary Research in Chile. Dashboard generated from the XO-Chile database.</footer>
@@ -495,6 +624,23 @@ function initNeedsToggle() {
   });
 }
 
+
+function careerStageRank(stage) {
+  const s = String(stage || '').toLowerCase();
+
+  if (s.includes('licenciatura') || s.includes('undergraduate')) return 10;
+  if (s.includes('magíster') || s.includes('magister') || s.includes('master')) return 20;
+  if (s.includes('phd') || s.includes('doctoral')) return 30;
+  if (s.includes('postdoc') || s.includes('postdoctoral')) return 40;
+  if (s.includes('staff astronomer')) return 50;
+  if (s.includes('assistant professor') || s.includes('assistant faculty')) return 60;
+  if (s.includes('associate professor') || s.includes('associate faculty')) return 70;
+  if (s.includes('full professor') || s === 'professor') return 80;
+  if (s.includes('faculty')) return 75;
+
+  return 999;
+}
+
 function countBy(items) { const m = new Map(); items.forEach(x => m.set(x, (m.get(x)||0)+1)); return Array.from(m, ([key,value]) => ({key,value})).sort((a,b)=>b.value-a.value||a.key.localeCompare(b.key)); }
 function categoriesForPerson(p) { return unique((p.focus||[]).map(f => f.category)); }
 function allCities() { return unique(people.map(p => p.city)).sort(); }
@@ -570,11 +716,11 @@ function donut(el, data, opts = {}) {
   const r = fillBox ? 145 : (bottomLegend ? 118 : 92);
   const innerR = fillBox ? 62 : (bottomLegend ? 58 : 48);
   const legendStep = fillBox ? 24 : (bottomLegend ? 24 : 28);
-  const legendCols = fillBox ? 2 : (bottomLegend ? 2 : 1);
+  const legendCols = opts.legendCols || (fillBox ? 2 : (bottomLegend ? 2 : 1));
   const legendStartX = fillBox ? 34 : (bottomLegend ? 58 : 285);
   const legendStartY = fillBox ? 340 : (bottomLegend ? 300 : 35);
-  const legendColW = fillBox ? 200 : (bottomLegend ? 245 : 0);
-  const legendLen = fillBox ? 24 : (bottomLegend ? 26 : 30);
+  const legendColW = opts.legendColW || (fillBox ? 200 : (bottomLegend ? 245 : 0));
+  const legendLen = opts.legendLen || (fillBox ? 24 : (bottomLegend ? 26 : 30));
   const h = fillBox
     ? Math.max(410, legendStartY + Math.ceil(data.length / legendCols) * legendStep + 24)
     : (bottomLegend
@@ -635,16 +781,42 @@ function expertiseCode(name) {
   return codes[name] || name.split(/\s+/).map(w => w[0]).join('').slice(0,4).toUpperCase();
 }
 
-function cooccurrenceMatrix(el, rows, values) {
-  const cell = 46;
-  const gap = 5;
-  const left = 82;
+let currentMatrixMode = 'absolute';
+let currentMatrixData = { rows: [], values: {} };
+
+function cooccurrenceMatrix(el, rows, values, mode, layout) {
+  mode = mode || 'absolute';
+  layout = layout || {};
+  const cell = layout.cell || 46;
+  const gap = layout.gap || 5;
+  const left = layout.left || 82;
+  const fontScale = layout.fontScale || 1;
   const top = 56;
   const n = rows.length;
   const matrixW = n * (cell + gap) - gap;
   const h = top + matrixW + 56;
-  const w = Math.max(860, left + matrixW + 40);
-  const max = Math.max(1, ...Object.values(values));
+  const w = left + matrixW + 16;
+
+  // Row totals = number of people in the row category (diagonal value).
+  const rowTotals = {};
+  rows.forEach(r => { rowTotals[r] = values[`${r}|||${r}`] || 0; });
+
+  // In percent mode, the value at (row r, col c) means:
+  // "X% of people working on r also work on c" = count(r AND c) / count(r) * 100.
+  // This is asymmetric and the diagonal is always 100% (when count(r) > 0).
+  function displayValue(r, c) {
+    const v = values[`${r}|||${c}`] || 0;
+    if (mode === 'percent') {
+      const total = rowTotals[r];
+      return total > 0 ? Math.round(100 * v / total) : 0;
+    }
+    return v;
+  }
+
+  // Color scale max: 100 in percent mode (since diagonals are 100%),
+  // otherwise the largest raw count.
+  const max = mode === 'percent' ? 100 : Math.max(1, ...Object.values(values));
+
   const codes = rows.map(expertiseCode);
   const colors = v => {
     if (!v) return 'rgba(255,255,255,.045)';
@@ -665,27 +837,79 @@ function cooccurrenceMatrix(el, rows, values) {
     const rgb = a.c.map((x, idx) => Math.round(x + (b.c[idx] - x) * f));
     return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
   };
+  const codeFont = Math.max(9, Math.round(13 * fontScale));
+  // Percent labels add a '%' character, so they're a bit wider — shrink them
+  // slightly so they don't visually crowd the cell on mobile.
+  const valueFont = Math.max(8, Math.round(13 * fontScale));
+  const percentFont = Math.max(7, Math.round(11 * fontScale));
+  const radius = Math.max(3, Math.round(10 * fontScale));
   const headers = codes.map((code, i) => {
     const x = left + i * (cell + gap) + cell / 2;
-    const y = top - 16;
-    return `<text class="matrix-code" x="${x}" y="${y}" text-anchor="middle" data-tooltip="${esc(rows[i])}">${esc(code)}</text>`;
+    const y = top - Math.round(12 * fontScale);
+    return `<text class="matrix-code" style="font-size:${codeFont}px" x="${x}" y="${y}" text-anchor="middle" data-tooltip="${esc(rows[i])}">${esc(code)}</text>`;
   }).join('');
   const rowHeaders = codes.map((code, i) => {
-    const x = left - 16;
+    const x = left - Math.round(10 * fontScale);
     const y = top + i * (cell + gap) + cell / 2 + 4;
-    return `<text class="matrix-code" x="${x}" y="${y}" text-anchor="end" data-tooltip="${esc(rows[i])}">${esc(code)}</text>`;
+    return `<text class="matrix-code" style="font-size:${codeFont}px" x="${x}" y="${y}" text-anchor="end" data-tooltip="${esc(rows[i])}">${esc(code)}</text>`;
   }).join('');
   const cells = [];
   rows.forEach((rowName, i) => rows.forEach((colName, j) => {
-    const v = values[`${rowName}|||${colName}`] || 0;
+    const rawV = values[`${rowName}|||${colName}`] || 0;
+    const dv = displayValue(rowName, colName);
     const x = left + j * (cell + gap);
     const y = top + i * (cell + gap);
     const isDiag = i === j;
-    const valueClass = v > max * 0.55 ? 'matrix-value' : 'matrix-value light';
-    cells.push(`<rect class="matrix-cell" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="10" fill="${colors(v)}" stroke="${isDiag ? 'rgba(255,255,255,.62)' : 'rgba(255,255,255,.10)'}" stroke-width="${isDiag ? 1.4 : 0.8}" data-tooltip="<strong>Row:</strong> ${esc(rowName)}<br><strong>Column:</strong> ${esc(colName)}<br><strong>People:</strong> ${v}"></rect><text class="${valueClass}" x="${x + cell/2}" y="${y + cell/2}">${v || ''}</text>`);
+    const valueClass = dv > max * 0.55 ? 'matrix-value' : 'matrix-value light';
+
+    let displayText, tooltip;
+    if (mode === 'percent') {
+      // Diagonal would always be 100% by construction, which doesn't add
+      // information — leave it blank for a cleaner look. The tooltip still
+      // explains what the highlighted diagonal represents.
+      displayText = (isDiag || !dv) ? '' : `${dv}%`;
+      const total = rowTotals[rowName];
+      if (isDiag) {
+        const peopleWord = total === 1 ? 'person works' : 'people work';
+        tooltip = `<strong>${esc(rowName)}</strong><br>${total} ${peopleWord} on this area`;
+      } else if (total > 0) {
+        tooltip = `<strong>${dv}%</strong> of people working on <strong>${esc(rowName)}</strong> also work on <strong>${esc(colName)}</strong><br><span style='opacity:.75'>(${rawV} of ${total})</span>`;
+      } else {
+        tooltip = `No people working on <strong>${esc(rowName)}</strong>`;
+      }
+    } else {
+      displayText = dv || '';
+      tooltip = `<strong>Row:</strong> ${esc(rowName)}<br><strong>Column:</strong> ${esc(colName)}<br><strong>People:</strong> ${rawV}`;
+    }
+
+    const textFont = mode === 'percent' ? percentFont : valueFont;
+    cells.push(`<rect class="matrix-cell" x="${x}" y="${y}" width="${cell}" height="${cell}" rx="${radius}" fill="${colors(dv)}" stroke="${isDiag ? 'rgba(255,255,255,.62)' : 'rgba(255,255,255,.10)'}" stroke-width="${isDiag ? 1.4 : 0.8}" data-tooltip="${tooltip}"></rect><text class="${valueClass}" style="font-size:${textFont}px" x="${x + cell/2}" y="${y + cell/2}">${displayText}</text>`);
   }));
-  const caption = `<text class="matrix-muted" x="${left}" y="${top + matrixW + 24}">Diagonal cells show how many people selected each individual area; off-diagonal cells show overlaps. Hover over codes or cells for full names.</text>`;
+  const compact = (cell <= 32);
+  const captionText = mode === 'percent'
+    ? (compact
+        ? 'Share of row in column. Diagonal = 100%.'
+        : 'Each cell shows the share of people in the row category who also selected the column category. Diagonal = 100% by definition.')
+    : (compact
+        ? 'Diagonal: count per area. Off-diagonal: overlaps.'
+        : 'Diagonal cells show how many people selected each individual area; off-diagonal cells show overlaps. Hover over codes or cells for full names.');
+  const caption = `<text class="matrix-muted" x="${left}" y="${top + matrixW + 24}">${esc(captionText)}</text>`;
   document.getElementById(el).innerHTML = `<svg class="chart" viewBox="0 0 ${w} ${h}">${headers}${rowHeaders}${cells.join('')}${caption}</svg>`;
+}
+
+function renderCooccurrenceMatrix() {
+  if (!currentMatrixData.rows.length) return;
+  cooccurrenceMatrix('cooccurrence-heatmap', currentMatrixData.rows, currentMatrixData.values, currentMatrixMode, currentMatrixData.opts);
+}
+
+function initMatrixToggle() {
+  document.querySelectorAll('[data-matrix-mode]').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('[data-matrix-mode]').forEach(b => b.classList.toggle('active', b === button));
+      currentMatrixMode = button.dataset.matrixMode || 'absolute';
+      renderCooccurrenceMatrix();
+    });
+  });
 }
 
 
@@ -730,28 +954,97 @@ function initCustomTooltips() {
   });
 }
 
+function isMobile() {
+  return window.matchMedia('(max-width: 700px)').matches;
+}
+function isVerySmall() {
+  return window.matchMedia('(max-width: 460px)').matches;
+}
+
 function renderAll() {
+  const mobile = isMobile();
+  const tiny = isVerySmall();
+
   renderSummary();
-  donut('city-chart', countBy(people.map(p=>p.city)), {legendPosition:'bottom', fillBox:true});
-  multiSelectBar('institute-chart', countBy(people.flatMap(p=>p.affiliations&&p.affiliations.length?p.affiliations:[p.institute])).slice(0,14), {left:300,labelLen:42,scaleToMax:true,w:820});
-  donut('career-chart', countBy(people.map(p=>p.careerStage)));
-  const expertiseCounts = allExpertise().map(e => ({key:e, value:people.filter(p=>categoriesForPerson(p).includes(e)).length})).filter(d=>d.value>0).sort((a,b)=>b.value-a.value);
-  horizontalBar('expertise-chart', expertiseCounts, {left:310,labelLen:46,rowH:25});
-  const exps=expertiseCounts.map(d=>d.key);
+
+  // Donuts: use the compact "fillBox" layout on mobile so legends wrap below
+  // (the side-legend layout truncates labels at narrow widths).
+  donut('city-chart', countBy(people.map(p=>p.city)),
+    mobile ? {fillBox:true} : {legendPosition:'bottom', fillBox:true});
+  donut('career-chart', countBy(people.map(p=>p.careerStage)),
+    mobile ? {fillBox:true, legendLen:15, legendColW:210} : {});
+
+  // Affiliations bar — labels need more room on mobile so they don't run into bars.
+  multiSelectBar('institute-chart',
+    countBy(people.flatMap(p=>p.affiliations&&p.affiliations.length?p.affiliations:[p.institute])).slice(0,14),
+    mobile
+      ? {left:260, labelLen:22, scaleToMax:true, w:720, rowH:32}
+      : {left:300, labelLen:42, scaleToMax:true, w:820});
+
+  // Expertise bar
+  const expertiseCounts = allExpertise()
+    .map(e => ({key:e, value:people.filter(p=>categoriesForPerson(p).includes(e)).length}))
+    .filter(d=>d.value>0)
+    .sort((a,b)=>b.value-a.value);
+  horizontalBar('expertise-chart', expertiseCounts,
+    mobile
+      ? {left:290, labelLen:26, rowH:32, w:720}
+      : {left:310, labelLen:46, rowH:25});
+
+  // Skills (stacked bars). The signature is fixed so we accept it as-is on mobile;
+  // it already fits reasonably in a 760-viewBox.
+  const exps = expertiseCounts.map(d=>d.key);
   const skillAgg = new Map();
   people.forEach(p => (p.skills||[]).forEach(s => {
     const name=s.name; if(!skillAgg.has(name)) skillAgg.set(name, {key:name,l1:0,l2:0,l3:0,total:0});
     const o=skillAgg.get(name); const lvl=Math.max(1,Math.min(3,Number(s.level)||1)); o[`l${lvl}`]++; o.total++;
   }));
-  stackedSkillBar('skills-chart', Array.from(skillAgg.values()).sort((a,b)=>b.total-a.total||a.key.localeCompare(b.key)).slice(0,16));
-  multiSelectBar('language-chart', countBy(people.flatMap(p=>p.languages||[])), {left:145,labelLen:20});
+  stackedSkillBar('skills-chart',
+    Array.from(skillAgg.values()).sort((a,b)=>b.total-a.total||a.key.localeCompare(b.key)).slice(0,16));
+
+  // Languages
+  multiSelectBar('language-chart', countBy(people.flatMap(p=>p.languages||[])),
+    mobile ? {left:120, labelLen:16, rowH:30} : {left:145, labelLen:20});
+
   renderNeedsChart('all');
+
+  // Build co-occurrence data and render. Cell size shrinks on mobile.
   const coVals={}, coRows=exps;
-  coRows.forEach(a=>coRows.forEach(b=>{ coVals[`${a}|||${b}`]=people.filter(p=>{const cats=categoriesForPerson(p); return cats.includes(a)&&cats.includes(b);}).length; }));
-  cooccurrenceMatrix('cooccurrence-heatmap', coRows, coVals);
+  coRows.forEach(a=>coRows.forEach(b=>{
+    coVals[`${a}|||${b}`]=people.filter(p=>{const cats=categoriesForPerson(p); return cats.includes(a)&&cats.includes(b);}).length;
+  }));
+  currentMatrixData = {
+    rows: coRows,
+    values: coVals,
+    opts: tiny ? {cell:24, gap:3, left:48, fontScale:0.78}
+        : mobile ? {cell:30, gap:3, left:56, fontScale:0.85}
+        : {cell:46, gap:5, left:82, fontScale:1}
+  };
+  renderCooccurrenceMatrix();
 }
+
+// Re-render charts when the viewport crosses mobile breakpoints
+// (e.g. on rotation), with a small debounce so we don't thrash.
+let _resizeTimer = null;
+let _wasMobile = null;
+let _wasTiny = null;
+function _onResize() {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => {
+    const m = isMobile(), t = isVerySmall();
+    if (m !== _wasMobile || t !== _wasTiny) {
+      _wasMobile = m; _wasTiny = t;
+      renderAll();
+    }
+  }, 150);
+}
+window.addEventListener('resize', _onResize);
+window.addEventListener('orientationchange', _onResize);
+_wasMobile = isMobile(); _wasTiny = isVerySmall();
+
 initCustomTooltips();
 initNeedsToggle();
+initMatrixToggle();
 renderAll();
 </script>
 </body>
