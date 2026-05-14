@@ -93,6 +93,23 @@
 				.language-toggle-home { top: 0.65rem; right: 0.65rem; }
 				.language-toggle-home button { padding: 0 0.5rem; }
 			}
+			.news-item {
+				border: solid 1px rgba(255,255,255,0.35);
+				border-radius: 4px;
+				padding: 1rem 1.15rem;
+				margin: 0 0 1.5rem 0;
+				background: rgba(255,255,255,0.055);
+			}
+			.news-item h3 {
+				margin-bottom: 0.55rem;
+			}
+			.news-item p {
+				margin-bottom: 0.85rem;
+			}
+			.news-item p:last-child {
+				margin-bottom: 0;
+			}
+
 
 		</style>
 	</head>
@@ -188,9 +205,24 @@
 						<!-- News -->
 							<article id="intro">
 								<h2 class="major" data-i18n="newsTitle">News</h2>
-								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p data-i18n="newsParagraph1">Updates, announcements, and community news will appear here.</p>
-								<p data-i18n="newsParagraph2">The site is meant to remain simple and easy to update as the Chilean exoplanet community develops new meetings, tools, initiatives, and collaborations.</p>
+
+								<div class="news-item">
+									<h3 data-i18n="sochiasNewsTitle">XXI SOCHIAS Annual Meeting 2026</h3>
+									<p data-i18n="sochiasNewsText">The XXI SOCHIAS Annual Meeting will take place at Universidad Técnica Federico Santa María, Valparaíso Campus, from 26 to 30 October 2026.</p>
+									<p><a href="https://sochias.cl/call-for-abstract-submission-xxi-sochias-annual-meeting/" class="button primary" data-i18n="sochiasAbstractLink">Submit an abstract</a></p>
+								</div>
+
+								<div class="news-item">
+									<h3 data-i18n="exochileNewsTitle">ExoChile2026 meeting</h3>
+									<p data-i18n="exochileNewsText">ExoChile2026 will take place at Universidad Católica de la Santísima Concepción, Concepción, from 27 to 29 April 2026.</p>
+									<p><a href="https://exochile2026.github.io/" class="button primary" data-i18n="exochileNewsLink">Visit the meeting website</a></p>
+								</div>
+
+								<div class="news-item">
+									<h3 data-i18n="bridgingNewsTitle">ESO workshop: Bridging Horizons</h3>
+									<p data-i18n="bridgingNewsText">The ESO workshop “Bridging Horizons: Harnessing ESO’s Current Facilities for the Dawn of Exoplanet Population Studies” will take place from 2 to 6 November 2026, with a Santiago de Chile node. Abstract submission closes on 15 May 2026.</p>
+									<p><a href="https://www.eso.org/sci/meetings/2026/BridgingHorizons/abstract-submission.html" class="button primary" data-i18n="bridgingNewsLink">Submit an abstract</a></p>
+								</div>
 							</article>
 
 						<!-- Work -->
@@ -492,8 +524,15 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						navXOChile: "XO-Chile",
 						navLinks: "Links",
 						newsTitle: "News",
-						newsParagraph1: "Updates, announcements, and community news will appear here.",
-						newsParagraph2: "The site is meant to remain simple and easy to update as the Chilean exoplanet community develops new meetings, tools, initiatives, and collaborations.",
+						sochiasNewsTitle: "XXI SOCHIAS Annual Meeting 2026",
+						sochiasNewsText: "The XXI SOCHIAS Annual Meeting will take place at Universidad Técnica Federico Santa María, Valparaíso Campus, from 26 to 30 October 2026.",
+						sochiasAbstractLink: "Submit an abstract",
+						exochileNewsTitle: "ExoChile2026 meeting",
+						exochileNewsText: "ExoChile2026 will take place at Universidad Católica de la Santísima Concepción, Concepción, from 27 to 29 April 2026.",
+						exochileNewsLink: "Visit the meeting website",
+						bridgingNewsTitle: "ESO workshop: Bridging Horizons",
+						bridgingNewsText: "The ESO workshop “Bridging Horizons: Harnessing ESO’s Current Facilities for the Dawn of Exoplanet Population Studies” will take place from 2 to 6 November 2026, with a Santiago de Chile node. Abstract submission closes on 15 May 2026.",
+						bridgingNewsLink: "Submit an abstract",
 						linksTitle: "Links",
 						linksIntro: "Useful entry points for the Chilean exoplanet community.",
 						linkSOCHIAS: "Sociedad Chilena de Astronomía (SOCHIAS)",
@@ -514,8 +553,15 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						navXOChile: "XO-Chile",
 						navLinks: "Enlaces",
 						newsTitle: "Noticias",
-						newsParagraph1: "Aquí aparecerán actualizaciones, anuncios y noticias de la comunidad.",
-						newsParagraph2: "El sitio está pensado para mantenerse simple y fácil de actualizar a medida que la comunidad chilena de exoplanetas desarrolla nuevas reuniones, herramientas, iniciativas y colaboraciones.",
+						sochiasNewsTitle: "XXI Reunión Anual SOCHIAS 2026",
+						sochiasNewsText: "La XXI Reunión Anual de SOCHIAS se realizará en la Universidad Técnica Federico Santa María, Campus Valparaíso, del 26 al 30 de octubre de 2026.",
+						sochiasAbstractLink: "Enviar resumen",
+						exochileNewsTitle: "Encuentro ExoChile2026",
+						exochileNewsText: "ExoChile2026 se realizará en la Universidad Católica de la Santísima Concepción, Concepción, del 27 al 29 de abril de 2026.",
+						exochileNewsLink: "Visitar el sitio del encuentro",
+						bridgingNewsTitle: "Taller ESO: Bridging Horizons",
+						bridgingNewsText: "El taller de ESO “Bridging Horizons: Harnessing ESO’s Current Facilities for the Dawn of Exoplanet Population Studies” se realizará del 2 al 6 de noviembre de 2026, con un nodo en Santiago de Chile. El envío de resúmenes cierra el 15 de mayo de 2026.",
+						bridgingNewsLink: "Enviar resumen",
 						linksTitle: "Enlaces",
 						linksIntro: "Puntos de entrada útiles para la comunidad chilena de exoplanetas.",
 						linkSOCHIAS: "Sociedad Chilena de Astronomía (SOCHIAS)",

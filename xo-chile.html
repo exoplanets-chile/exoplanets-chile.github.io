@@ -152,8 +152,8 @@
     .country-border.real { display: inline; stroke: rgba(255,255,255,0.72); stroke-width: 0.62; stroke-dasharray: none; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .map-cluster circle { fill: #f5f7ff; stroke: var(--accent); stroke-width: 1.0; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 3px rgba(79,209,197,0.45)); }
     .map-cluster text { fill: #050814; font-size: 16px; font-weight: 900; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-    .osm-tile { opacity: 0.68; }
-    .osm-tile-bg { fill: rgba(245,247,255,0.06); }
+    .osm-tile { opacity: 0.96 !important; }
+    .osm-tile-bg { fill: #eef0ed; }
     .map-marker:hover, .map-cluster:hover { opacity: 0.88; }
     .zoom-label { position: absolute; left: 0.8rem; bottom: 0.65rem; z-index: 3; font-size: 0.75rem; color: var(--muted); background: rgba(5,8,20,0.75); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); padding: 0.22rem 0.65rem; }
     .tooltip {
@@ -413,6 +413,15 @@
     .xo-focus-detail-group strong { color: var(--text); display: block; margin-bottom: 0.35rem; }
     .xo-focus-detail-group ul { margin: 0; padding-left: 1.1rem; color: var(--muted); }
 
+    /* Clearer street-map rendering for city zoom maps */
+    .osm-tile {
+      opacity: 0.96 !important;
+      filter: saturate(1.18) contrast(1.08) brightness(1.02);
+    }
+    .osm-tile-bg {
+      fill: #d9e2df !important;
+    }
+
   </style>
 </head>
 <body>
@@ -446,7 +455,7 @@
         <div class="map-header">
           <div>
             <div class="map-title" data-i18n="mapTitle">Institutes map</div>
-            <div class="map-note" data-i18n="mapNote">Click a cluster to zoom. Click an institute to search.</div>
+            <div class="map-note" data-i18n="mapNote">Click a city or cluster to zoom. Click an institute in the local map to search.</div>
           </div>
           <button id="map-reset" class="btn btn-outline map-reset" type="button" data-i18n="regionalView">Regional view</button>
         </div>
@@ -557,7 +566,7 @@
       homeButton: "← Home", navNews: "News", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navDemographics: "ExoChile Demographics", navLinks: "Links", navResearch: "Research", navSciComm: "Science Communication", heroSubtitle: "Legacy · Community Search · Exoplanets in Chile",
       heroText: "A searchable prototype database for the Chilean exoplanet community. Select tags for institute, city, career stage, scientific focus, language, and technical skills to identify potential collaborators.",
       chipPrototype: "Prototype with fictional entries", chipMatching: "Exact + near-match search", chipStatic: "Static GitHub Pages compatible",
-      searchDatabase: "Search database", backMain: "Back to main site", mapTitle: "Institutes map", mapNote: "Click a cluster to zoom. Click an institute to search.", regionalView: "Regional view",
+      searchDatabase: "Search database", backMain: "Back to main site", mapTitle: "Institutes map", mapNote: "Click a city or cluster to zoom. Click an institute in the local map to search.", regionalView: "Regional view",
       searchEngine: "Search Engine", findTitle: "Find collaborators by tags", findSubtitle: "Choose only the fields you need. Exact matches are listed first. If you select more than two criteria, XO-Chile also lists people matching all but one criterion.",
       institute: "Institute", city: "City", cityInstitute: "City / institute", cityInstituteHelp: "Choose a city first; the institute list is then limited to institutes in that city.", careerStage: "Career stage", singleFilter: "Optional single-choice filter.", scientificFocus: "Scientific focus", focusHelp: "Choose a main category and, optionally, a more specific sub-category.",
       language: "Language", languageHelp: "Optional multi-choice filter. For example: Spanish + English.", skills: "Skills / tools", skillsHelp: "Optional multi-choice filter. For example: RADMC-3D + CASA.",
@@ -572,7 +581,7 @@
       homeButton: "← Inicio", navNews: "Noticias", navExoChile: "ExoChile2026", navXOChile: "XO-Chile", navDemographics: "ExoChile Demographics", navLinks: "Enlaces", navResearch: "Investigación", navSciComm: "Comunicación científica", heroSubtitle: "Legado · Búsqueda comunitaria · Exoplanetas en Chile",
       heroText: "Un prototipo de base de datos searchable para la comunidad chilena de exoplanetas. Selecciona etiquetas de instituto, ciudad, etapa profesional, foco científico, idioma y habilidades técnicas para identificar posibles colaboradores.",
       chipPrototype: "Prototipo con entradas ficticias", chipMatching: "Búsqueda exacta + aproximada", chipStatic: "Compatible con GitHub Pages estático",
-      searchDatabase: "Buscar en la base de datos", backMain: "Volver al sitio principal", mapTitle: "Mapa de institutos", mapNote: "Haz clic en un grupo para acercar. Haz clic en un instituto para buscar.", regionalView: "Vista regional",
+      searchDatabase: "Buscar en la base de datos", backMain: "Volver al sitio principal", mapTitle: "Mapa de institutos", mapNote: "Haz clic en una ciudad o grupo para acercar. Haz clic en un instituto en el mapa local para buscar.", regionalView: "Vista regional",
       searchEngine: "Buscador", findTitle: "Encuentra colaboradores por etiquetas", findSubtitle: "Elige solo los campos que necesites. Las coincidencias exactas aparecen primero. Si seleccionas más de dos criterios, XO-Chile también muestra personas que cumplen todos menos uno.",
       institute: "Instituto", city: "Ciudad", cityInstitute: "Ciudad / instituto", cityInstituteHelp: "Elige primero una ciudad; la lista de institutos se limita a esa ciudad.", careerStage: "Etapa profesional", singleFilter: "Filtro opcional de selección única.", scientificFocus: "Foco científico", focusHelp: "Elige una categoría principal y, opcionalmente, una sub-categoría más específica.",
       language: "Idioma", languageHelp: "Filtro opcional de selección múltiple. Por ejemplo: español + inglés.", skills: "Habilidades / herramientas", skillsHelp: "Filtro opcional de selección múltiple. Por ejemplo: RADMC-3D + CASA.",
@@ -729,2081 +738,2474 @@
 };
 
   const people = [
-    {
-        "name": "Sebastián Pérez",
-        "institute": "Universidad de Santiago de Chile",
-        "affiliations": [
-            "Universidad de Santiago de Chile",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "Associate Professor",
-        "focus": [
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "School visits"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Teacher training"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Planetarium and museum activities"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Educational resources"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Debris discs"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Anomaly detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted planet detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Simulation emulators"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Computer vision for imaging data"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Radiative Transfer"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Planet-Disc Interaction"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "FUor/EXor outbursts and planet formation"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Hydrodynamics"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Interferometry"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "NIR observations"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "ALMA",
-                "level": 3
-            },
-            {
-                "name": "VLT/SPHERE",
-                "level": 2
-            },
-            {
-                "name": "VLT/ERIS",
-                "level": 2
-            },
-            {
-                "name": "VLT/ESPRESSO",
-                "level": 3
-            },
-            {
-                "name": "VLT/CRIRES+",
-                "level": 3
-            },
-            {
-                "name": "FARGO3D",
-                "level": 3
-            },
-            {
-                "name": "RADMC-3D",
-                "level": 3
-            },
-            {
-                "name": "CASA",
-                "level": 2
-            },
-            {
-                "name": "Machine learning",
-                "level": 2
-            },
-            {
-                "name": "Public talks",
-                "level": 3
-            }
-        ]
-    },
-    {
-        "name": "Lenin Andrés Valeria Rivas",
-        "institute": "Universidad de Concepción",
-        "affiliations": [
-            "Universidad de Concepción",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Concepción",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted candidate detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted planet detection"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Machine-learning-assisted candidate detection"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "Machine learning",
-                "level": 2
-            },
-            {
-                "name": "Candidate classification",
-                "level": 2
-            },
-            {
-                "name": "Python",
-                "level": 2
-            },
-            {
-                "name": "Light curves",
-                "level": 1
-            }
-        ]
-    },
-    {
-        "name": "Fernando Matías Castillo Morales",
-        "institute": "Universidad de Santiago de Chile",
-        "affiliations": [
-            "Universidad de Santiago de Chile",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "Student (Magíster)",
-        "focus": [
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "N-Body Simulations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Radiative Transfer"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Planet-Disc Interaction"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Hydrodynamics"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Gravitational instability"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Debris discs"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "FARGO-ADSG",
-                "level": 2
-            },
-            {
-                "name": "CARTA",
-                "level": 1
-            },
-            {
-                "name": "RADMC-3D",
-                "level": 1
-            },
-            {
-                "name": "N-body simulations",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Philipp Weber",
-        "institute": "Universidad de Santiago de Chile",
-        "affiliations": [
-            "Universidad de Santiago de Chile",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "Postdoc",
-        "focus": [
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Hydrodynamics"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Interferometry"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Planet-Disc Interaction"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "NIR observations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "FUor/EXor outbursts and planet formation"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Radiative Transfer"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Gravitational instability"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Planetary system evolution after disc dispersal"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Debris discs"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "German"
-        ],
-        "skills": [
-            {
-                "name": "FARGO3D",
-                "level": 3
-            },
-            {
-                "name": "RADMC-3D",
-                "level": 3
-            },
-            {
-                "name": "ALMA",
-                "level": 2
-            },
-            {
-                "name": "VLT/SPHERE",
-                "level": 2
-            },
-            {
-                "name": "CASA",
-                "level": 2
-            },
-            {
-                "name": "Python",
-                "level": 3
-            }
-        ]
-    },
-    {
-        "name": "Gijs D. Mulders",
-        "institute": "Pontificia Universidad Católica de Chile",
-        "affiliations": [
-            "Pontificia Universidad Católica de Chile",
-            "Centro de Astrofísica y Tecnologías Afines (CATA)"
-        ],
-        "city": "Santiago",
-        "careerStage": "Assistant Professor",
-        "focus": [
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Mass–radius relations"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Water worlds"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Sub-Neptune envelopes"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Atmospheric loss"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Occurrence rates"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Planet radius distribution"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Planet mass distribution"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Radius valley"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Super-Earths"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Sub-Neptunes"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Cold giant planets"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Dependence on stellar mass"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Dependence on stellar metallicity"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Population synthesis"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Demographic comparisons between surveys"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Population synthesis of forming planets"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Pebble accretion"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "N-Body Simulations"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "Population synthesis",
-                "level": 3
-            },
-            {
-                "name": "N-body simulations",
-                "level": 2
-            },
-            {
-                "name": "Python",
-                "level": 2
-            },
-            {
-                "name": "ALMA",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Patricio Rojo",
-        "institute": "Universidad de Chile",
-        "affiliations": [
-            "Universidad de Chile"
-        ],
-        "city": "Santiago",
-        "careerStage": "Associate Professor",
-        "focus": [
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "School visits"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Undergraduate teaching"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "High-contrast imaging instruments"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Adaptive optics"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Ground-based surveys"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Pipeline development for instruments"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Observing strategy and performance forecasts"
-            },
-            {
-                "category": "Habitability and Biosignatures",
-                "subcategory": "Climate stability"
-            },
-            {
-                "category": "Habitability and Biosignatures",
-                "subcategory": "Atmospheric biosignatures"
-            },
-            {
-                "category": "Habitability and Biosignatures",
-                "subcategory": "Solar System analogues"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Transmission spectroscopy"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Emission spectroscopy"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "High-resolution spectroscopy"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Atmospheric retrievals"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Atmospheric chemistry"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Clouds and hazes"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Disequilibrium chemistry"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Atmospheric escape"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Phase curves"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Climate modelling"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "3D general circulation models"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Stellar contamination in atmospheric spectra"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "VLT/ESPRESSO",
-                "level": 3
-            },
-            {
-                "name": "VLT/CRIRES+",
-                "level": 3
-            },
-            {
-                "name": "HARPS",
-                "level": 3
-            },
-            {
-                "name": "VLT/SPHERE",
-                "level": 2
-            },
-            {
-                "name": "ALMA",
-                "level": 2
-            },
-            {
-                "name": "Atmospheric retrievals",
-                "level": 3
-            },
-            {
-                "name": "Public talks",
-                "level": 3
-            }
-        ]
-    },
-    {
-        "name": "Sidharth Aroli-Veettil",
-        "institute": "Pontificia Universidad Católica de Chile",
-        "affiliations": [
-            "Pontificia Universidad Católica de Chile",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Chemical evolution of planet-forming material"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Interferometry"
-            }
-        ],
-        "languages": [
-            "English",
-            "Hindi",
-            "Malayalam"
-        ],
-        "skills": [
-            {
-                "name": "ALMA",
-                "level": 3
-            },
-            {
-                "name": "RADMC-3D",
-                "level": 2
-            },
-            {
-                "name": "Interferometry",
-                "level": 2
-            },
-            {
-                "name": "Python",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Marcelo Tala",
-        "institute": "The Ohio State University",
-        "affiliations": [
-            "The Ohio State University"
-        ],
-        "city": "Columbus, OH, USA",
-        "careerStage": "Postdoc",
-        "focus": [
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit photometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Survey design and target selection"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "False-positive vetting and validation"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Spectrograph development"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Ground-based surveys"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Telescope operations"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Instrument calibration"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Pipeline development for instruments"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Observing strategy and performance forecasts"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Mass–radius relations"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "German"
-        ],
-        "skills": [
-            {
-                "name": "HARPS",
-                "level": 3
-            },
-            {
-                "name": "VLT/ESPRESSO",
-                "level": 3
-            },
-            {
-                "name": "Radial velocities",
-                "level": 3
-            },
-            {
-                "name": "Transit photometry",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Matthias R. Schreiber",
-        "institute": "Universidad Técnica Federico Santa María",
-        "affiliations": [
-            "Universidad Técnica Federico Santa María (Viña del Mar)"
-        ],
-        "city": "Valparaíso",
-        "careerStage": "Full Professor",
-        "focus": [
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "White dwarf planetary systems"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Debris discs around white dwarfs"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "White dwarf pollution / contamination"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Tidal disruption of planetesimals"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Post-main-sequence planetary system evolution"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Debris discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Pebble accretion"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Migration and resonances"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Hydrodynamics"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Direct imaging"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Astrometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Timing methods"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Dependence on stellar mass"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Dependence on stellar metallicity"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Population synthesis"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Demographic comparisons between surveys"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "German",
-            "French"
-        ],
-        "skills": [
-            {
-                "name": "VLT/SPHERE",
-                "level": 3
-            },
-            {
-                "name": "Direct imaging",
-                "level": 3
-            },
-            {
-                "name": "Astrometry",
-                "level": 3
-            },
-            {
-                "name": "N-body simulations",
-                "level": 3
-            }
-        ]
-    },
-    {
-        "name": "Alice Zurlo",
-        "institute": "Universidad Diego Portales",
-        "affiliations": [
-            "Universidad Diego Portales",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "Full Professor",
-        "focus": [
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Direct imaging"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "High-contrast imaging instruments"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Adaptive optics"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Coronagraphy"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Space missions"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Pipeline development for instruments"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "School visits"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Planetarium and museum activities"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Gravitational instability"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "FUor/EXor outbursts and planet formation"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "NIR observations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "N-Body Simulations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Planet-Disc Interaction"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Deep Learning for planet detection"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Dynamical stability"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Long-term N-body simulations"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "French",
-            "Italian"
-        ],
-        "skills": [
-            {
-                "name": "VLT/SPHERE",
-                "level": 3
-            },
-            {
-                "name": "VLT/ERIS",
-                "level": 3
-            },
-            {
-                "name": "Direct imaging",
-                "level": 3
-            },
-            {
-                "name": "ADI/PCA",
-                "level": 3
-            },
-            {
-                "name": "Python",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Daniela González Vargas",
-        "institute": "Universidad de Chile",
-        "affiliations": [
-            "Universidad de Chile"
-        ],
-        "city": "Santiago",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Astrometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "False-positive vetting and validation"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Optical Interferometry"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "VLTI/GRAVITY",
-                "level": 1
-            },
-            {
-                "name": "Pyaneti",
-                "level": 2
-            },
-            {
-                "name": "Octofitter",
-                "level": 1
-            },
-            {
-                "name": "Radial velocities",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Florian Rodler",
-        "institute": "European Southern Observatory Chile",
-        "affiliations": [
-            "European Southern Observatory Chile"
-        ],
-        "city": "Santiago",
-        "careerStage": "Associate Faculty Astronomer",
-        "focus": [
-            {
-                "category": "Instrumentation",
-                "subcategory": "Spectrograph development"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Ground-based surveys"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Telescope operations"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Instrument calibration"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Observing strategy and performance forecasts"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public observing events"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "Emission spectroscopy"
-            },
-            {
-                "category": "Exoplanet Atmospheres",
-                "subcategory": "High-resolution spectroscopy"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "German"
-        ],
-        "skills": [
-            {
-                "name": "VLT/ESPRESSO",
-                "level": 3
-            },
-            {
-                "name": "VLT/CRIRES+",
-                "level": 3
-            },
-            {
-                "name": "HARPS",
-                "level": 3
-            },
-            {
-                "name": "High-resolution spectroscopy",
-                "level": 3
-            },
-            {
-                "name": "Public observing events",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Ilaria Giovannini",
-        "institute": "Universidad Diego Portales",
-        "affiliations": [
-            "Universidad Diego Portales",
-            "Núcleo Milenio YEMS",
-            "INAF (Italy)"
-        ],
-        "city": "Padova + Italy, and Santiago",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit photometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Direct imaging"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit timing variations"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "Italian"
-        ],
-        "skills": [
-            {
-                "name": "pyorbit",
-                "level": 2
-            },
-            {
-                "name": "Radial velocities",
-                "level": 2
-            },
-            {
-                "name": "Transit photometry",
-                "level": 2
-            },
-            {
-                "name": "Direct imaging",
-                "level": 1
-            }
-        ]
-    },
-    {
-        "name": "Felipe Ignacio Burgos Rubilar",
-        "institute": "Universidad de Concepción",
-        "affiliations": [
-            "Universidad de Concepción"
-        ],
-        "city": "Concepción",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Candidate classification"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Anomaly detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted planet detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Time-domain alert brokers"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Large survey data mining"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Interpretable AI for astrophysics"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Deep Learning for planet detection"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Machine-learning-assisted candidate detection"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "Machine learning",
-                "level": 3
-            },
-            {
-                "name": "Candidate classification",
-                "level": 3
-            },
-            {
-                "name": "Python",
-                "level": 2
-            },
-            {
-                "name": "Radial velocities",
-                "level": 1
-            }
-        ]
-    },
-    {
-        "name": "Matias Jones",
-        "institute": "European Southern Observatory Chile",
-        "affiliations": [
-            "European Southern Observatory Chile"
-        ],
-        "city": "Santiago",
-        "careerStage": "Staff astronomer",
-        "focus": [
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Occurrence rates"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Cold giant planets"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Dependence on stellar mass"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Dependence on stellar metallicity"
-            },
-            {
-                "category": "Planetary System Evolution",
-                "subcategory": "Post-main-sequence planetary system evolution"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Orbital dynamics"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Dynamical stability"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit photometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Direct imaging"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Astrometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit timing variations"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Mass–radius relations"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Interior structure models"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "High-contrast imaging instruments"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Adaptive optics"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Coronagraphy"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Spectrograph development"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Space missions"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Ground-based surveys"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Telescope operations"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Instrument calibration"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Pipeline development for instruments"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Observing strategy and performance forecasts"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "VLT/SPHERE",
-                "level": 3
-            },
-            {
-                "name": "Radial velocities",
-                "level": 3
-            },
-            {
-                "name": "Direct imaging",
-                "level": 3
-            },
-            {
-                "name": "Astrometry",
-                "level": 3
-            },
-            {
-                "name": "High-resolution spectroscopy",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Jose Vines",
-        "institute": "Universidad Católica del Norte",
-        "affiliations": [
-            "Universidad Católica del Norte"
-        ],
-        "city": "Santiago",
-        "careerStage": "Postdoc",
-        "focus": [
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit photometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Astrometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Machine-learning-assisted candidate detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Candidate classification"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Anomaly detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted planet detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Bayesian inference and probabilistic ML"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Deep Learning for planet detection"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "FEROS",
-                "level": 3
-            },
-            {
-                "name": "ARIADNE",
-                "level": 3
-            },
-            {
-                "name": "Isochrones",
-                "level": 3
-            },
-            {
-                "name": "CORALIE",
-                "level": 2
-            },
-            {
-                "name": "Machine learning",
-                "level": 3
-            },
-            {
-                "name": "Radial velocities",
-                "level": 3
-            }
-        ]
-    },
-    {
-        "name": "Danyla Ignacia Santiago Carrasco",
-        "institute": "Universidad de Atacama",
-        "affiliations": [
-            "Universidad de Atacama"
-        ],
-        "city": "Copiapó",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Habitability and Biosignatures",
-                "subcategory": "Habitable zone theory"
-            },
-            {
-                "category": "Habitability and Biosignatures",
-                "subcategory": "M-dwarf habitability"
-            },
-            {
-                "category": "Habitability and Biosignatures",
-                "subcategory": "Solar System analogues"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Orbital dynamics"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Mean-motion resonances"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Secular dynamics"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Planet–planet scattering"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Dynamical stability"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Compact multi-planet systems"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Eccentric and inclined systems"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Planetary obliquity"
-            },
-            {
-                "category": "Planetary System Architecture and Dynamics",
-                "subcategory": "Long-term N-body simulations"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "REBOUND",
-                "level": 2
-            },
-            {
-                "name": "N-body simulations",
-                "level": 2
-            },
-            {
-                "name": "Public talks",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Carla Hernández Silva",
-        "institute": "Universidad de Santiago de Chile",
-        "affiliations": [
-            "Universidad de Santiago de Chile"
-        ],
-        "city": "Santiago",
-        "careerStage": "Associate Professor",
-        "focus": [
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Teacher training"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Educational resources"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Undergraduate teaching"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public observing events"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
-            }
-        ],
-        "languages": [
-            "Spanish"
-        ],
-        "skills": [
-            {
-                "name": "Public talks",
-                "level": 3
-            },
-            {
-                "name": "Teacher training",
-                "level": 3
-            },
-            {
-                "name": "Educational resources",
-                "level": 3
-            },
-            {
-                "name": "Public observing events",
-                "level": 3
-            },
-            {
-                "name": "Data visualisation",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Vicente Salazar Ortega",
-        "institute": "Universidad de Concepción",
-        "affiliations": [
-            "Universidad de Concepción"
-        ],
-        "city": "Concepción",
-        "careerStage": "Student (Licenciatura)",
-        "focus": [
-            {
-                "category": "Instrumentation",
-                "subcategory": "Telescope operations"
-            },
-            {
-                "category": "Instrumentation",
-                "subcategory": "Instrument calibration"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Citizen science"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public observing events"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "German",
-            "Italian",
-            "Portuguese"
-        ],
-        "skills": [
-            {
-                "name": "Telescope operations",
-                "level": 1
-            },
-            {
-                "name": "Instrument calibration",
-                "level": 1
-            },
-            {
-                "name": "Public observing events",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Jorge Luis Guzmán Lazo",
-        "institute": "Universidad de Santiago de Chile",
-        "affiliations": [
-            "Universidad de Santiago de Chile",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "Student (Licenciatura)",
-        "focus": [
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "School visits"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Planetarium and museum activities"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Citizen science"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Media communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Social media and digital outreach"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Educational resources"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public observing events"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Radiative Transfer"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Hydrodynamics"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Planet-Disc Interaction"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Interferometry"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "NIR observations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "N-Body Simulations"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Radial velocities"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit photometry"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Direct imaging"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Transit timing variations"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Machine-learning-assisted candidate detection"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Survey design and target selection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Candidate classification"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Anomaly detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted planet detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Simulation emulators"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Bayesian inference and probabilistic ML"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Computer vision for imaging data"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Large survey data mining"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Interpretable AI for astrophysics"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Deep Learning for planet detection"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "Machine learning",
-                "level": 2
-            },
-            {
-                "name": "RADMC-3D",
-                "level": 1
-            },
-            {
-                "name": "Python",
-                "level": 2
-            },
-            {
-                "name": "Public talks",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Bhavya Ambalapatta Kannancheri",
-        "institute": "Pontificia Universidad Católica de Chile",
-        "affiliations": [
-            "Pontificia Universidad Católica de Chile"
-        ],
-        "city": "Santiago",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Occurrence rates"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Planet radius distribution"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Planet mass distribution"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Demographic comparisons between surveys"
-            },
-            {
-                "category": "Exoplanet Populations and Demographics",
-                "subcategory": "Hot Neptunes"
-            }
-        ],
-        "languages": [
-            "English",
-            "Malayalam"
-        ],
-        "skills": [
-            {
-                "name": "Demographics",
-                "level": 2
-            },
-            {
-                "name": "Population statistics",
-                "level": 2
-            },
-            {
-                "name": "Python",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Neda Hejazi",
-        "institute": "Universidad de Tarapacá",
-        "affiliations": [
-            "Universidad de Tarapacá"
-        ],
-        "city": "Santiago",
-        "careerStage": "Postdoc",
-        "focus": [
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Star-planet chemical connections"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Mass–radius relations"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Interior structure models"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Core composition"
-            },
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Super-Earth interiors"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "ARCES/APO",
-                "level": 1
-            },
-            {
-                "name": "iSHELL/IRTF",
-                "level": 1
-            },
-            {
-                "name": "Mass-radius modelling",
-                "level": 3
-            }
-        ]
-    },
-    {
-        "name": "Camilo González Ruilova",
-        "institute": "Universidad de Santiago de Chile",
-        "affiliations": [
-            "Universidad de Santiago de Chile",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Santiago",
-        "careerStage": "Postdoc",
-        "focus": [
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Public talks and science communication"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "School visits"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Teacher training"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Educational resources"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Undergraduate teaching"
-            },
-            {
-                "category": "Outreach, Education, and Public Engagement",
-                "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Interferometry"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Protoplanetary disc evolution"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "ALMA",
-                "level": 3
-            },
-            {
-                "name": "Interferometry",
-                "level": 3
-            },
-            {
-                "name": "CASA",
-                "level": 2
-            },
-            {
-                "name": "Public talks",
-                "level": 2
-            }
-        ]
-    },
-    {
-        "name": "Grace Angela Batalla Falcon",
-        "institute": "Universidad Diego Portales",
-        "affiliations": [
-            "Universidad Diego Portales"
-        ],
-        "city": "Santiago",
-        "careerStage": "Postdoc",
-        "focus": [
-            {
-                "category": "Planetary Interiors, Composition, and Evolution",
-                "subcategory": "Core composition"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Dust evolution and coagulation"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Chemical evolution of planet-forming material"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "FUor/EXor outbursts and planet formation"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "MIR observations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "MIR measurements of dust"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English",
-            "Portuguese"
-        ],
-        "skills": [
-            {
-                "name": "Infrared laboratory measurements",
-                "level": 3
-            },
-            {
-                "name": "Dust evolution",
-                "level": 2
-            },
-            {
-                "name": "MIR observations",
-                "level": 2
-            },
-            {
-                "name": "Core composition",
-                "level": 1
-            }
-        ]
-    },
-    {
-        "name": "Lucas Gonzalez-Rivas",
-        "institute": "Universidad de Concepción",
-        "affiliations": [
-            "Universidad de Concepción",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Concepción",
-        "careerStage": "Student (Magíster)",
-        "focus": [
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "N-Body Simulations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Migration and resonances"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Hydrodynamics"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Circumplanetary discs"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Analytical calculations"
-            },
-            {
-                "category": "Planet Formation and Protoplanetary Discs",
-                "subcategory": "Planet-Disc Interaction"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "Public talks",
-                "level": 2
-            },
-            {
-                "name": "School visits",
-                "level": 3
-            },
-            {
-                "name": "Teacher training",
-                "level": 2
-            },
-            {
-                "name": "FARGO3D",
-                "level": 2
-            },
-            {
-                "name": "PHANTOM",
-                "level": 2
-            },
-            {
-                "name": "REBOUND",
-                "level": 2
-            }
-        ],
-        "needs": [
-            "Academic Guidance",
-            "Financial Support",
-            "Help finding collaborators",
-            "Workshops or Schools",
-            "Networking with national / international researchers",
-            "Information about conferences and workshops",
-            "Information about job / funding opportunities"
-        ]
-    },
-    {
-        "name": "Alejandra Fernández Molina",
-        "institute": "Universidad de Concepción",
-        "affiliations": [
-            "Universidad de Concepción",
-            "Núcleo Milenio YEMS"
-        ],
-        "city": "Concepción",
-        "careerStage": "PhD Student",
-        "focus": [
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Machine-learning-assisted planet detection"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Computer vision for imaging data"
-            },
-            {
-                "category": "Machine Learning and Artificial Intelligence",
-                "subcategory": "Deep Learning for planet detection"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Direct imaging"
-            },
-            {
-                "category": "Exoplanet Detection and Discovery",
-                "subcategory": "Machine-learning-assisted candidate detection"
-            }
-        ],
-        "languages": [
-            "Spanish",
-            "English"
-        ],
-        "skills": [
-            {
-                "name": "Public talks",
-                "level": 1
-            },
-            {
-                "name": "Data visualisation",
-                "level": 1
-            },
-            {
-                "name": "Python",
-                "level": 2
-            },
-            {
-                "name": "Machine learning",
-                "level": 2
-            },
-            {
-                "name": "Deep learning",
-                "level": 2
-            },
-            {
-                "name": "Computer vision",
-                "level": 2
-            }
-        ],
-        "needs": [
-            "Machine learning / AI support",
-            "Access to computing resources",
-            "Information about conferences and workshops",
-            "Information about job / funding opportunities",
-            "Support with teaching material"
-        ]
-    }];
+  {
+    "name": "Sebastián Pérez",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "Associate Professor",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Teacher training"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Planetarium and museum activities"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Educational resources"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Debris discs"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Anomaly detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted planet detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Simulation emulators"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Computer vision for imaging data"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Radiative Transfer"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Planet-Disc Interaction"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "FUor/EXor outbursts and planet formation"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Interferometry"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "NIR observations"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "ALMA",
+        "level": 3
+      },
+      {
+        "name": "VLT/SPHERE",
+        "level": 2
+      },
+      {
+        "name": "VLT/ERIS",
+        "level": 2
+      },
+      {
+        "name": "VLT/ESPRESSO",
+        "level": 3
+      },
+      {
+        "name": "VLT/CRIRES+",
+        "level": 3
+      },
+      {
+        "name": "FARGO3D",
+        "level": 3
+      },
+      {
+        "name": "RADMC-3D",
+        "level": 3
+      },
+      {
+        "name": "CASA",
+        "level": 2
+      },
+      {
+        "name": "Machine learning",
+        "level": 2
+      },
+      {
+        "name": "Public talks",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "name": "Lenin Andrés Valeria Rivas",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Concepción",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted planet detection"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Machine learning",
+        "level": 2
+      },
+      {
+        "name": "Candidate classification",
+        "level": 2
+      },
+      {
+        "name": "Python",
+        "level": 2
+      },
+      {
+        "name": "Light curves",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "name": "Fernando Matías Castillo Morales",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "Student (Magíster)",
+    "focus": [
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "N-Body Simulations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Radiative Transfer"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Planet-Disc Interaction"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Gravitational instability"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Debris discs"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "FARGO-ADSG",
+        "level": 2
+      },
+      {
+        "name": "CARTA",
+        "level": 1
+      },
+      {
+        "name": "RADMC-3D",
+        "level": 1
+      },
+      {
+        "name": "N-body simulations",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Philipp Weber",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "Postdoc",
+    "focus": [
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Interferometry"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Planet-Disc Interaction"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "NIR observations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "FUor/EXor outbursts and planet formation"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Radiative Transfer"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Gravitational instability"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Planetary system evolution after disc dispersal"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Debris discs"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "German"
+    ],
+    "skills": [
+      {
+        "name": "FARGO3D",
+        "level": 3
+      },
+      {
+        "name": "RADMC-3D",
+        "level": 3
+      },
+      {
+        "name": "ALMA",
+        "level": 2
+      },
+      {
+        "name": "VLT/SPHERE",
+        "level": 2
+      },
+      {
+        "name": "CASA",
+        "level": 2
+      },
+      {
+        "name": "Python",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "name": "Gijs D. Mulders",
+    "institute": "Pontificia Universidad Católica de Chile",
+    "affiliations": [
+      "Pontificia Universidad Católica de Chile",
+      "Centro de Astrofísica y Tecnologías Afines (CATA)"
+    ],
+    "city": "Santiago",
+    "careerStage": "Assistant Professor",
+    "focus": [
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Mass–radius relations"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Water worlds"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Sub-Neptune envelopes"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Atmospheric loss"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Occurrence rates"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Planet radius distribution"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Planet mass distribution"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Radius valley"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Super-Earths"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Sub-Neptunes"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Cold giant planets"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Dependence on stellar mass"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Dependence on stellar metallicity"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Population synthesis"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Demographic comparisons between surveys"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Population synthesis of forming planets"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Pebble accretion"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "N-Body Simulations"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Population synthesis",
+        "level": 3
+      },
+      {
+        "name": "N-body simulations",
+        "level": 2
+      },
+      {
+        "name": "Python",
+        "level": 2
+      },
+      {
+        "name": "ALMA",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Patricio Rojo",
+    "institute": "Universidad de Chile",
+    "affiliations": [
+      "Universidad de Chile"
+    ],
+    "city": "Santiago",
+    "careerStage": "Associate Professor",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Undergraduate teaching"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "High-contrast imaging instruments"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Adaptive optics"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Ground-based surveys"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Pipeline development for instruments"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Observing strategy and performance forecasts"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Climate stability"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Atmospheric biosignatures"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Solar System analogues"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Transmission spectroscopy"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Emission spectroscopy"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "High-resolution spectroscopy"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Atmospheric retrievals"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Atmospheric chemistry"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Clouds and hazes"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Disequilibrium chemistry"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Atmospheric escape"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Phase curves"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Climate modelling"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "3D general circulation models"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Stellar contamination in atmospheric spectra"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "VLT/ESPRESSO",
+        "level": 3
+      },
+      {
+        "name": "VLT/CRIRES+",
+        "level": 3
+      },
+      {
+        "name": "HARPS",
+        "level": 3
+      },
+      {
+        "name": "VLT/SPHERE",
+        "level": 2
+      },
+      {
+        "name": "ALMA",
+        "level": 2
+      },
+      {
+        "name": "Atmospheric retrievals",
+        "level": 3
+      },
+      {
+        "name": "Public talks",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "name": "Sidharth Aroli-Veettil",
+    "institute": "Pontificia Universidad Católica de Chile",
+    "affiliations": [
+      "Pontificia Universidad Católica de Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Chemical evolution of planet-forming material"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Interferometry"
+      }
+    ],
+    "languages": [
+      "English",
+      "Hindi",
+      "Malayalam"
+    ],
+    "skills": [
+      {
+        "name": "ALMA",
+        "level": 3
+      },
+      {
+        "name": "RADMC-3D",
+        "level": 2
+      },
+      {
+        "name": "Interferometry",
+        "level": 2
+      },
+      {
+        "name": "Python",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Marcelo Tala",
+    "institute": "The Ohio State University",
+    "affiliations": [
+      "The Ohio State University"
+    ],
+    "city": "Columbus, OH, USA",
+    "careerStage": "Postdoc",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Survey design and target selection"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "False-positive vetting and validation"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Spectrograph development"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Ground-based surveys"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Telescope operations"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Instrument calibration"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Pipeline development for instruments"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Observing strategy and performance forecasts"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Mass–radius relations"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "German"
+    ],
+    "skills": [
+      {
+        "name": "HARPS",
+        "level": 3
+      },
+      {
+        "name": "VLT/ESPRESSO",
+        "level": 3
+      },
+      {
+        "name": "Radial velocities",
+        "level": 3
+      },
+      {
+        "name": "Transit photometry",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Matthias R. Schreiber",
+    "institute": "Universidad Técnica Federico Santa María",
+    "affiliations": [
+      "Universidad Técnica Federico Santa María (Viña del Mar)"
+    ],
+    "city": "Valparaíso",
+    "careerStage": "Full Professor",
+    "focus": [
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "White dwarf planetary systems"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Debris discs around white dwarfs"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "White dwarf pollution / contamination"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Tidal disruption of planetesimals"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Post-main-sequence planetary system evolution"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Debris discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Pebble accretion"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Migration and resonances"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Astrometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Timing methods"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Dependence on stellar mass"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Dependence on stellar metallicity"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Population synthesis"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Demographic comparisons between surveys"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "German",
+      "French"
+    ],
+    "skills": [
+      {
+        "name": "VLT/SPHERE",
+        "level": 3
+      },
+      {
+        "name": "Direct imaging",
+        "level": 3
+      },
+      {
+        "name": "Astrometry",
+        "level": 3
+      },
+      {
+        "name": "N-body simulations",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "name": "Alice Zurlo",
+    "institute": "Universidad Diego Portales",
+    "affiliations": [
+      "Universidad Diego Portales",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "Full Professor",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "High-contrast imaging instruments"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Adaptive optics"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Coronagraphy"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Space missions"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Pipeline development for instruments"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Planetarium and museum activities"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Gravitational instability"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "FUor/EXor outbursts and planet formation"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "NIR observations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "N-Body Simulations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Planet-Disc Interaction"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Deep Learning for planet detection"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Dynamical stability"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Long-term N-body simulations"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "French",
+      "Italian"
+    ],
+    "skills": [
+      {
+        "name": "VLT/SPHERE",
+        "level": 3
+      },
+      {
+        "name": "VLT/ERIS",
+        "level": 3
+      },
+      {
+        "name": "Direct imaging",
+        "level": 3
+      },
+      {
+        "name": "ADI/PCA",
+        "level": 3
+      },
+      {
+        "name": "Python",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Daniela González Vargas",
+    "institute": "Universidad de Chile",
+    "affiliations": [
+      "Universidad de Chile"
+    ],
+    "city": "Santiago",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Astrometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "False-positive vetting and validation"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Optical Interferometry"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "VLTI/GRAVITY",
+        "level": 1
+      },
+      {
+        "name": "Pyaneti",
+        "level": 2
+      },
+      {
+        "name": "Octofitter",
+        "level": 1
+      },
+      {
+        "name": "Radial velocities",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Florian Rodler",
+    "institute": "European Southern Observatory Chile",
+    "affiliations": [
+      "European Southern Observatory Chile"
+    ],
+    "city": "Santiago",
+    "careerStage": "Associate Faculty Astronomer",
+    "focus": [
+      {
+        "category": "Instrumentation",
+        "subcategory": "Spectrograph development"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Ground-based surveys"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Telescope operations"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Instrument calibration"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Observing strategy and performance forecasts"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public observing events"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Emission spectroscopy"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "High-resolution spectroscopy"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "German"
+    ],
+    "skills": [
+      {
+        "name": "VLT/ESPRESSO",
+        "level": 3
+      },
+      {
+        "name": "VLT/CRIRES+",
+        "level": 3
+      },
+      {
+        "name": "HARPS",
+        "level": 3
+      },
+      {
+        "name": "High-resolution spectroscopy",
+        "level": 3
+      },
+      {
+        "name": "Public observing events",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Ilaria Giovannini",
+    "institute": "Universidad Diego Portales",
+    "affiliations": [
+      "Universidad Diego Portales",
+      "Núcleo Milenio YEMS",
+      "INAF (Italy)"
+    ],
+    "city": "Padova + Italy, and Santiago",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit timing variations"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "Italian"
+    ],
+    "skills": [
+      {
+        "name": "pyorbit",
+        "level": 2
+      },
+      {
+        "name": "Radial velocities",
+        "level": 2
+      },
+      {
+        "name": "Transit photometry",
+        "level": 2
+      },
+      {
+        "name": "Direct imaging",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "name": "Felipe Ignacio Burgos Rubilar",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción"
+    ],
+    "city": "Concepción",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Candidate classification"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Anomaly detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted planet detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Time-domain alert brokers"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Large survey data mining"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Interpretable AI for astrophysics"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Deep Learning for planet detection"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Machine learning",
+        "level": 3
+      },
+      {
+        "name": "Candidate classification",
+        "level": 3
+      },
+      {
+        "name": "Python",
+        "level": 2
+      },
+      {
+        "name": "Radial velocities",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "name": "Matias Jones",
+    "institute": "European Southern Observatory Chile",
+    "affiliations": [
+      "European Southern Observatory Chile"
+    ],
+    "city": "Santiago",
+    "careerStage": "Staff astronomer",
+    "focus": [
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Occurrence rates"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Cold giant planets"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Dependence on stellar mass"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Dependence on stellar metallicity"
+      },
+      {
+        "category": "Planetary System Evolution",
+        "subcategory": "Post-main-sequence planetary system evolution"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Orbital dynamics"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Dynamical stability"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Astrometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit timing variations"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Mass–radius relations"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Interior structure models"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "High-contrast imaging instruments"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Adaptive optics"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Coronagraphy"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Spectrograph development"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Space missions"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Ground-based surveys"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Telescope operations"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Instrument calibration"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Pipeline development for instruments"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Observing strategy and performance forecasts"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "VLT/SPHERE",
+        "level": 3
+      },
+      {
+        "name": "Radial velocities",
+        "level": 3
+      },
+      {
+        "name": "Direct imaging",
+        "level": 3
+      },
+      {
+        "name": "Astrometry",
+        "level": 3
+      },
+      {
+        "name": "High-resolution spectroscopy",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Jose Vines",
+    "institute": "Universidad Católica del Norte",
+    "affiliations": [
+      "Universidad Católica del Norte"
+    ],
+    "city": "Santiago",
+    "careerStage": "Postdoc",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Astrometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Candidate classification"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Anomaly detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted planet detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Bayesian inference and probabilistic ML"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Deep Learning for planet detection"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "FEROS",
+        "level": 3
+      },
+      {
+        "name": "ARIADNE",
+        "level": 3
+      },
+      {
+        "name": "Isochrones",
+        "level": 3
+      },
+      {
+        "name": "CORALIE",
+        "level": 2
+      },
+      {
+        "name": "Machine learning",
+        "level": 3
+      },
+      {
+        "name": "Radial velocities",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "name": "Danyla Ignacia Santiago Carrasco",
+    "institute": "Universidad de Atacama",
+    "affiliations": [
+      "Universidad de Atacama"
+    ],
+    "city": "Copiapó",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Habitable zone theory"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "M-dwarf habitability"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Solar System analogues"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Orbital dynamics"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Mean-motion resonances"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Secular dynamics"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Planet–planet scattering"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Dynamical stability"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Compact multi-planet systems"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Eccentric and inclined systems"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Planetary obliquity"
+      },
+      {
+        "category": "Planetary System Architecture and Dynamics",
+        "subcategory": "Long-term N-body simulations"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "REBOUND",
+        "level": 2
+      },
+      {
+        "name": "N-body simulations",
+        "level": 2
+      },
+      {
+        "name": "Public talks",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Carla Hernández Silva",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile"
+    ],
+    "city": "Santiago",
+    "careerStage": "Associate Professor",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Teacher training"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Educational resources"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Undergraduate teaching"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public observing events"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+      }
+    ],
+    "languages": [
+      "Spanish"
+    ],
+    "skills": [
+      {
+        "name": "Public talks",
+        "level": 3
+      },
+      {
+        "name": "Teacher training",
+        "level": 3
+      },
+      {
+        "name": "Educational resources",
+        "level": 3
+      },
+      {
+        "name": "Public observing events",
+        "level": 3
+      },
+      {
+        "name": "Data visualisation",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Vicente Salazar Ortega",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción"
+    ],
+    "city": "Concepción",
+    "careerStage": "Student (Licenciatura)",
+    "focus": [
+      {
+        "category": "Instrumentation",
+        "subcategory": "Telescope operations"
+      },
+      {
+        "category": "Instrumentation",
+        "subcategory": "Instrument calibration"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Citizen science"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public observing events"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "German",
+      "Italian",
+      "Portuguese"
+    ],
+    "skills": [
+      {
+        "name": "Telescope operations",
+        "level": 1
+      },
+      {
+        "name": "Instrument calibration",
+        "level": 1
+      },
+      {
+        "name": "Public observing events",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Jorge Luis Guzmán Lazo",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "Student (Licenciatura)",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Planetarium and museum activities"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Citizen science"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Media communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Social media and digital outreach"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Educational resources"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public observing events"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Radiative Transfer"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Planet-Disc Interaction"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Interferometry"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "NIR observations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "N-Body Simulations"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit timing variations"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Survey design and target selection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Candidate classification"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Anomaly detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted planet detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Simulation emulators"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Bayesian inference and probabilistic ML"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Computer vision for imaging data"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Large survey data mining"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Interpretable AI for astrophysics"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Deep Learning for planet detection"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Machine learning",
+        "level": 2
+      },
+      {
+        "name": "RADMC-3D",
+        "level": 1
+      },
+      {
+        "name": "Python",
+        "level": 2
+      },
+      {
+        "name": "Public talks",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Bhavya Ambalapatta Kannancheri",
+    "institute": "Pontificia Universidad Católica de Chile",
+    "affiliations": [
+      "Pontificia Universidad Católica de Chile"
+    ],
+    "city": "Santiago",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Occurrence rates"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Planet radius distribution"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Planet mass distribution"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Demographic comparisons between surveys"
+      },
+      {
+        "category": "Exoplanet Populations and Demographics",
+        "subcategory": "Hot Neptunes"
+      }
+    ],
+    "languages": [
+      "English",
+      "Malayalam"
+    ],
+    "skills": [
+      {
+        "name": "Demographics",
+        "level": 2
+      },
+      {
+        "name": "Population statistics",
+        "level": 2
+      },
+      {
+        "name": "Python",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Neda Hejazi",
+    "institute": "Universidad de Tarapacá",
+    "affiliations": [
+      "Universidad de Tarapacá"
+    ],
+    "city": "Santiago",
+    "careerStage": "Postdoc",
+    "focus": [
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Star-planet chemical connections"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Mass–radius relations"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Interior structure models"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Core composition"
+      },
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Super-Earth interiors"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "ARCES/APO",
+        "level": 1
+      },
+      {
+        "name": "iSHELL/IRTF",
+        "level": 1
+      },
+      {
+        "name": "Mass-radius modelling",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "name": "Camilo González Ruilova",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "Postdoc",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Teacher training"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Educational resources"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Undergraduate teaching"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Interferometry"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Protoplanetary disc evolution"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "ALMA",
+        "level": 3
+      },
+      {
+        "name": "Interferometry",
+        "level": 3
+      },
+      {
+        "name": "CASA",
+        "level": 2
+      },
+      {
+        "name": "Public talks",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "name": "Grace Angela Batalla Falcon",
+    "institute": "Universidad Diego Portales",
+    "affiliations": [
+      "Universidad Diego Portales"
+    ],
+    "city": "Santiago",
+    "careerStage": "Postdoc",
+    "focus": [
+      {
+        "category": "Planetary Interiors, Composition, and Evolution",
+        "subcategory": "Core composition"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Dust evolution and coagulation"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Chemical evolution of planet-forming material"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "FUor/EXor outbursts and planet formation"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "MIR observations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "MIR measurements of dust"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English",
+      "Portuguese"
+    ],
+    "skills": [
+      {
+        "name": "Infrared laboratory measurements",
+        "level": 3
+      },
+      {
+        "name": "Dust evolution",
+        "level": 2
+      },
+      {
+        "name": "MIR observations",
+        "level": 2
+      },
+      {
+        "name": "Core composition",
+        "level": 1
+      }
+    ]
+  },
+  {
+    "name": "Lucas Gonzalez-Rivas",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Concepción",
+    "careerStage": "Student (Magíster)",
+    "focus": [
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "N-Body Simulations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Migration and resonances"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Analytical calculations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Planet-Disc Interaction"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Public talks",
+        "level": 2
+      },
+      {
+        "name": "School visits",
+        "level": 3
+      },
+      {
+        "name": "Teacher training",
+        "level": 2
+      },
+      {
+        "name": "FARGO3D",
+        "level": 2
+      },
+      {
+        "name": "PHANTOM",
+        "level": 2
+      },
+      {
+        "name": "REBOUND",
+        "level": 2
+      }
+    ],
+    "needs": [
+      "Academic Guidance",
+      "Financial Support",
+      "Help finding collaborators",
+      "Workshops or Schools",
+      "Networking with national / international researchers",
+      "Information about conferences and workshops",
+      "Information about job / funding opportunities"
+    ]
+  },
+  {
+    "name": "Alejandra Fernández Molina",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Concepción",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Machine-learning-assisted planet detection"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Computer vision for imaging data"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Deep Learning for planet detection"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Public talks",
+        "level": 1
+      },
+      {
+        "name": "Data visualisation",
+        "level": 1
+      },
+      {
+        "name": "Python",
+        "level": 2
+      },
+      {
+        "name": "Machine learning",
+        "level": 2
+      },
+      {
+        "name": "Deep learning",
+        "level": 2
+      },
+      {
+        "name": "Computer vision",
+        "level": 2
+      }
+    ],
+    "needs": [
+      "Machine learning / AI support",
+      "Access to computing resources",
+      "Information about conferences and workshops",
+      "Information about job / funding opportunities",
+      "Support with teaching material"
+    ]
+  },
+  {
+    "name": "Simone González Vidal",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción",
+      "Independent"
+    ],
+    "city": "Concepción",
+    "careerStage": "Student (Magíster)",
+    "focus": [
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Educational resources"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Undergraduate teaching"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Habitable zone theory"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Climate stability"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Ocean worlds"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Atmospheric biosignatures"
+      },
+      {
+        "category": "Habitability and Biosignatures",
+        "subcategory": "Solar System analogues"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Emission spectroscopy"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Atmospheric retrievals"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Atmospheric chemistry"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Clouds and hazes"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "Climate modelling"
+      },
+      {
+        "category": "Exoplanet Atmospheres",
+        "subcategory": "3D general circulation models"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Neural networks for spectra"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Interpretable AI for astrophysics"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Direct imaging"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Public talks",
+        "level": 2
+      },
+      {
+        "name": "School visits",
+        "level": 1
+      },
+      {
+        "name": "Educational resources",
+        "level": 2
+      },
+      {
+        "name": "Diversity, equity, inclusion, and accessibility",
+        "level": 2
+      },
+      {
+        "name": "Direct imaging",
+        "level": 1
+      },
+      {
+        "name": "Atmospheric retrievals",
+        "level": 2
+      },
+      {
+        "name": "Climate modelling",
+        "level": 2
+      },
+      {
+        "name": "Planetary Spectrum Generator",
+        "level": 2
+      }
+    ],
+    "needs": [
+      "Academic Guidance",
+      "Financial Support",
+      "Help finding collaborators",
+      "Support with academic writing (articles/proposals/grant applications)",
+      "Machine learning / AI support",
+      "Access to computing resources",
+      "Workshops or Schools",
+      "Networking with national / international researchers",
+      "Information about conferences and workshops",
+      "Information about job / funding opportunities",
+      "Support with teaching material",
+      "Support for women and underrepresented groups",
+      "Support with administrative processes"
+    ]
+  },
+  {
+    "name": "Sebastián Elias Cabrera Astudillo",
+    "institute": "Universidad Católica del Norte",
+    "affiliations": [
+      "Universidad Católica del Norte"
+    ],
+    "city": "Antofagasta",
+    "careerStage": "Student (Magíster)",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Machine-learning-assisted candidate detection"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "False-positive vetting and validation"
+      },
+      {
+        "category": "Machine Learning and Artificial Intelligence",
+        "subcategory": "Candidate classification"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public observing events"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Diversity, equity, inclusion, and accessibility in astronomy"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Tour guide on Paranal"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Public observing events",
+        "level": 2
+      },
+      {
+        "name": "Radial velocities",
+        "level": 1
+      },
+      {
+        "name": "Transit photometry",
+        "level": 2
+      },
+      {
+        "name": "Machine learning",
+        "level": 1
+      },
+      {
+        "name": "Candidate classification",
+        "level": 2
+      },
+      {
+        "name": "Python",
+        "level": 1
+      }
+    ],
+    "needs": [
+      "Academic Guidance",
+      "Financial Support",
+      "Help finding collaborators",
+      "Machine learning / AI support",
+      "Access to computing resources",
+      "Workshops or Schools",
+      "Networking with national / international researchers",
+      "Information about conferences and workshops",
+      "Information about job / funding opportunities"
+    ]
+  },
+  {
+    "name": "Erick Franco Montoya Calderón",
+    "institute": "Universidad de Santiago de Chile",
+    "affiliations": [
+      "Universidad de Santiago de Chile",
+      "European Southern Observatory Chile",
+      "Núcleo Milenio YEMS"
+    ],
+    "city": "Santiago",
+    "careerStage": "PhD Student",
+    "focus": [
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Analytical calculations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Gravitational instability"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Hydrodynamics"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "NIR observations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "FUor/EXor outbursts and planet formation"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "N-Body Simulations"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Radiative Transfer"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Circumplanetary discs"
+      },
+      {
+        "category": "Planet Formation and Protoplanetary Discs",
+        "subcategory": "Streaming Instability"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Hydrodynamics",
+        "level": 2
+      },
+      {
+        "name": "Analytical calculations",
+        "level": 2
+      },
+      {
+        "name": "Radiative Transfer",
+        "level": 2
+      },
+      {
+        "name": "N-body simulations",
+        "level": 2
+      },
+      {
+        "name": "NIR observations",
+        "level": 2
+      },
+      {
+        "name": "FARGO3D",
+        "level": 2
+      }
+    ],
+    "needs": [
+      "Access to computing resources",
+      "Workshops or Schools",
+      "Networking with national / international researchers",
+      "Information about conferences and workshops"
+    ]
+  },
+  {
+    "name": "Agustin Andres Gutierrez Bravo",
+    "institute": "Universidad de Concepción",
+    "affiliations": [
+      "Universidad de Concepción"
+    ],
+    "city": "Concepción",
+    "careerStage": "Student (Licenciatura)",
+    "focus": [
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Radial velocities"
+      },
+      {
+        "category": "Exoplanet Detection and Discovery",
+        "subcategory": "Transit photometry"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public talks and science communication"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "School visits"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Citizen science"
+      },
+      {
+        "category": "Outreach, Education, and Public Engagement",
+        "subcategory": "Public observing events"
+      }
+    ],
+    "languages": [
+      "Spanish",
+      "English"
+    ],
+    "skills": [
+      {
+        "name": "Public talks",
+        "level": 1
+      },
+      {
+        "name": "School visits",
+        "level": 2
+      },
+      {
+        "name": "Citizen science",
+        "level": 1
+      },
+      {
+        "name": "Public observing events",
+        "level": 2
+      },
+      {
+        "name": "Radial velocities",
+        "level": 1
+      },
+      {
+        "name": "Transit photometry",
+        "level": 2
+      },
+      {
+        "name": "pyaneti",
+        "level": 1
+      }
+    ],
+    "needs": [
+      "Academic Guidance",
+      "Financial Support",
+      "Help finding collaborators",
+      "Support with academic writing (articles/proposals/grant applications)",
+      "Machine learning / AI support",
+      "Access to computing resources",
+      "Workshops or Schools",
+      "Networking with national / international researchers",
+      "Information about conferences and workshops",
+      "Information about job / funding opportunities",
+      "Support with teaching material"
+    ]
+  }
+];
 
   function shuffledCopy(array) {
     const copy = array.slice();
@@ -2931,7 +3333,10 @@
     "Viña del Mar": { lat: -33.024, lon: -71.550, zoomBox: null },
     "Valparaíso / Viña del Mar": { lat: -33.027, lon: -71.595, zoomBox: null, cities: ["Valparaíso", "Viña del Mar"] },
     "Santiago": { lat: -33.450, lon: -70.623, zoomBox: null },
-    "Concepción": { lat: -36.830, lon: -73.036, zoomBox: null }
+    "Concepción": { lat: -36.830, lon: -73.036, zoomBox: null },
+    "Copiapó": { lat: -27.367, lon: -70.332, zoomBox: null },
+    "Columbus, OH, USA": { lat: 39.999, lon: -83.015, zoomBox: null },
+    "Padova + Italy, and Santiago": { lat: -33.450, lon: -70.623, zoomBox: null }
   };
 
   const mapBounds = { minLon: -73.35, maxLon: -69.95, minLat: -37.15, maxLat: -23.25 };
@@ -2978,6 +3383,9 @@
     }
     if (city === "Concepción") {
       return { minLat: -36.850, maxLat: -36.810, minLon: -73.055, maxLon: -73.015 };
+    }
+    if (city === "Copiapó") {
+      return { minLat: -27.390, maxLat: -27.345, minLon: -70.355, maxLon: -70.305 };
     }
     const c = cityCoords[city];
     return { minLat: c.lat - 0.03, maxLat: c.lat + 0.03, minLon: c.lon - 0.04, maxLon: c.lon + 0.04 };
@@ -3245,6 +3653,8 @@
     const bg = createSvgEl("rect");
     const vb = cityViewBox(zoomedCity).split(/\s+/).map(Number);
     bg.setAttribute("class", "osm-tile-bg");
+    bg.setAttribute("fill", "#eef0ed");
+    bg.setAttribute("fill", "#c9d1d0");
     bg.setAttribute("x", vb[0]);
     bg.setAttribute("y", vb[1]);
     bg.setAttribute("width", vb[2]);
@@ -3275,7 +3685,77 @@
     }
   }
 
-  function renderBaseMap() {
+  
+  function handleRegionalMapClick(city, instituteName) {
+    // Regional overview: every click opens the local map first,
+    // even when there is only a single institute in that city.
+    if (mapMode === "regional" && city) {
+      const cityKey = (city === "Valparaíso" || city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : city;
+      zoomToCity(cityKey);
+      return;
+    }
+
+    // In a zoomed-in city map, clicking an institute runs the search.
+    if (instituteName) {
+      searchByInstitute(instituteName);
+    }
+  }
+
+
+  
+  function annotateRegionalInstituteMarkers() {
+    document.querySelectorAll("#map-markers g").forEach(function(node) {
+      if (node.getAttribute("data-map-city")) return;
+      const title = node.querySelector("title");
+      const instituteName = title ? title.textContent.trim() : "";
+      if (instituteName && instituteCoords[instituteName] && instituteCoords[instituteName].city) {
+        node.setAttribute("data-map-city", regionalCityForInstitute(instituteName));
+        node.setAttribute("data-institute", instituteName);
+      }
+    });
+  }
+
+function regionalCityForInstitute(instituteName) {
+    const coords = instituteCoords[instituteName];
+    if (!coords || !coords.city) return "";
+    return (coords.city === "Valparaíso" || coords.city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : coords.city;
+  }
+
+
+  function zoomCityForInstituteClick(instituteName) {
+    const coords = instituteCoords[instituteName];
+    if (!coords || !coords.city) return false;
+    const cityKey = (coords.city === "Valparaíso" || coords.city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : coords.city;
+    zoomToCity(cityKey);
+    return true;
+  }
+
+  function handleInstituteMarkerClick(instituteName) {
+    if (mapMode === "regional") {
+      if (zoomCityForInstituteClick(instituteName)) return;
+    }
+    searchByInstitute(instituteName);
+  }
+
+
+  function cityKeyFromInstitute(instituteName) {
+    const coords = instituteCoords[instituteName];
+    if (!coords || !coords.city) return "";
+    return (coords.city === "Valparaíso" || coords.city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : coords.city;
+  }
+
+  function clickRegionalInstituteOrSearch(instituteName) {
+    if (mapMode === "regional") {
+      const cityKey = cityKeyFromInstitute(instituteName);
+      if (cityKey) {
+        zoomToCity(cityKey);
+        return;
+      }
+    }
+    searchByInstitute(instituteName);
+  }
+
+function renderBaseMap() {
     renderOsmTiles();
     const outline = document.getElementById("chile-outline");
     const coast = document.getElementById("coastline");
@@ -3310,7 +3790,9 @@
           text.setAttribute("x", (p.x + 12).toFixed(1));
           text.setAttribute("y", (p.y - 10).toFixed(1));
           text.setAttribute("class", "city-label");
+          text.style.cursor = "pointer";
           text.textContent = city;
+          text.addEventListener("click", () => zoomToCity(city));
           labels.appendChild(text);
         });
       }
@@ -3748,9 +4230,23 @@
     g.setAttribute("transform", `translate(${p.x.toFixed(1)},${p.y.toFixed(1)})`);
     const c = createSvgEl("circle"); c.setAttribute("class", "main"); c.setAttribute("r", mapMode === "city" ? cityMarkerRadius().toFixed(3) : regionalMarkerRadiusForCity(coords.city).toString());
     g.appendChild(c);
+    if (mapMode === "regional") {
+      const hit = createSvgEl("circle");
+      hit.setAttribute("r", "22");
+      hit.setAttribute("fill", "transparent");
+      hit.setAttribute("stroke", "none");
+      g.appendChild(hit);
+    }
     g.addEventListener("mousemove", evt => showTooltip(evt, inst, `${coords.city}, Chile`));
     g.addEventListener("mouseleave", hideTooltip);
-    g.addEventListener("click", () => selectInstitute(inst));
+    g.addEventListener("click", () => {
+      if (mapMode === "regional") {
+        const cityKey = (coords.city === "Valparaíso" || coords.city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : coords.city;
+        zoomToCity(cityKey);
+      } else {
+        selectInstitute(inst);
+      }
+    });
     mapMarkers.appendChild(g);
   }
 
@@ -4320,6 +4816,62 @@
   render();
   renderMap();
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // regional-single-city-zoom delegation
+  document.addEventListener("click", function(event) {
+    const marker = event.target.closest && event.target.closest("[data-map-city]");
+    if (!marker || mapMode !== "regional") return;
+    const city = marker.getAttribute("data-map-city");
+    if (!city) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const cityKey = (city === "Valparaíso" || city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : city;
+    zoomToCity(cityKey);
+  }, true);
+
+
+  // force-single-institute-city-zoom
+document.addEventListener("click", function(event) {
+    if (typeof mapMode === "undefined" || mapMode !== "regional") return;
+    const target = event.target.closest && event.target.closest("[data-map-city]");
+    if (!target) return;
+    const city = target.getAttribute("data-map-city");
+    if (!city) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const cityKey = (city === "Valparaíso" || city === "Viña del Mar") ? "Valparaíso / Viña del Mar" : city;
+    zoomToCity(cityKey);
+  }, true);
+
+
+  // map-marker-annotation-observer
+  const mapMarkerLayerForAnnotation = document.getElementById("map-markers");
+  if (mapMarkerLayerForAnnotation) {
+    const mapMarkerObserver = new MutationObserver(function() {
+      annotateRegionalInstituteMarkers();
+    });
+    mapMarkerObserver.observe(mapMarkerLayerForAnnotation, { childList: true, subtree: true });
+    annotateRegionalInstituteMarkers();
+  }
+
+
+  // single-institute-regional-click-capture-v3
+  document.addEventListener("click", function(event) {
+    if (typeof mapMode === "undefined" || mapMode !== "regional") return;
+    const node = event.target.closest && event.target.closest("#map-markers g");
+    if (!node) return;
+    let instituteName = node.getAttribute("data-institute");
+    if (!instituteName) {
+      const title = node.querySelector("title");
+      instituteName = title ? title.textContent.trim() : "";
+    }
+    const cityKey = cityKeyFromInstitute(instituteName);
+    if (!cityKey) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    zoomToCity(cityKey);
+  }, true);
+
 </script>
 </body>
 </html>
