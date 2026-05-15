@@ -279,6 +279,8 @@
       overflow: auto;
       transition: box-shadow var(--transition), border-color var(--transition), background var(--transition);
     }
+    .xo-card.flipped .xo-card-front { opacity: 0; }
+    .xo-card:not(.flipped) .xo-card-back { opacity: 0; }
     .xo-card:hover .xo-card-face,
     .xo-card:focus-visible .xo-card-face {
       box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
